@@ -94,13 +94,13 @@ export default class jsmjXslbDialog extends BaseUI {
     }
 
     getAdOrderAwardAck(msg: adOrder.IGetAdOrderAwardAck) {
-        cc.log("getAdOrderAwardAck",msg)
+        izx.log("getAdOrderAwardAck",msg)
         if (msg.service !== this.ackParams.adOrder.service || msg.orderId !== this.ackParams.adOrder.orderId) {
             return
         }
 
         this.pop()
-        izx.pushDialog("bonus","prefabs/gxhdDialog", null, {initParam:{
+        izx.pushDialog("bonus","prefabs/gxhdDialog", null, {mask:true, maskClose:false,initParam:{
             award:msg.award,
             callback:()=>{
                 izx.dispatchEvent(Constants.EventName.AD_SPOT_Deng_Lu_Jiang_Li_Req,{

@@ -75,7 +75,7 @@ export default class GameClock extends cc.Component {
     }
 
     startClientTimer(second, chairid) {
-        cc.log("startClientTimer", second, chairid)
+        izx.log("startClientTimer", second, chairid)
         this.unscheduleClientTimer()
         if (second <= 0) {
             return
@@ -124,6 +124,16 @@ export default class GameClock extends cc.Component {
         if (this.second < 0) {
             this.unscheduleClientTimer()
         }
+    }
+
+    onDestroy () {
+        this.node.stopAllActions()
+        for (let i = 0; i < 4; i++) {
+            if (this["dir_"+i]) {
+                this["dir_"+i].stopAllActions()
+            }
+        }
+        izx.offByTag(this)
     }
 
 }

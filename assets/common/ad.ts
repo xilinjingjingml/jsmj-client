@@ -7,9 +7,10 @@
  * @LastEditTime: 2021-01-11 13:34:52
  */
 import { izx } from "../framework/izx";
-import Constants from "../common/constants";
+import Constants, { AdPos } from "../common/constants";
 import AdMode, {} from "./mode/adMode"
 import { Types } from "../framework/plugin/pluginTypes"
+import { AD_EVENT } from "../ad/adEvents";
 
 const GAME_BUNDLE_NAME = "ad"
 
@@ -131,6 +132,13 @@ export default class Ad {
         izx.on(Constants.EventName.AD_SPOT_Deng_Lu_Jiang_Li_Get_Award_Req, this.getLoginRewardReq, this)
         izx.on(Constants.EventName.AD_SPOT_Zhuan_Pan_Get_Award_Req, this.getZhuanPanRewardReq, this)
         izx.on(Constants.EventName.AD_SPOT_Deng_Lu_Jiang_Li_Get_Daily_First_Login_Req, this.getFirstLoginRewardReq, this)
+
+        izx.on(AD_EVENT.GET_AD_SPOT_REQ, this.GetAdSpotsReq, this)
+
+    }
+
+    GetAdSpotsReq (msg){
+        this._ad.GetAdSpotsReq(msg)
     }
 
     initAd(msg) {
@@ -192,4 +200,13 @@ export default class Ad {
     dengLuJiangLi(msg) {
         this._ad.DengLuJiangLiReq(msg)
     }
+
+    getAreaInfo(id: AdPos) {
+        izx.log("getAreaInfo id = ", id)
+        let areas = this._ad.adRecords
+        if (areas!= null && areas[id] != null) {
+          return areas[id]
+        }
+        return null
+      }
 }

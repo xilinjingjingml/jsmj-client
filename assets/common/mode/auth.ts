@@ -4,12 +4,13 @@
  * @Autor: liuhongbin
  * @Date: 2020-11-02 10:40:56
  * @LastEditors: liuhongbin
- * @LastEditTime: 2021-01-11 16:57:16
+ * @LastEditTime: 2021-01-26 15:18:39
  */
 import BaseMode from "../../framework/base/baseMode"
 import { izx } from "../../framework/izx"
 import Constants, {LoadingMsgType} from "../../common/constants"
 import { App } from "../common"
+import WxWrapper from "../../framework/plugin/WxWrapper"
 
 const GUEST_LOGIN = "mcbeam-authen-srv/auth/accountLogin"
 
@@ -57,18 +58,36 @@ export default class Auth extends BaseMode{
             }
 
             izx.pluginMgr.login(p)
+        } else if (cc.sys.platform == cc.sys.WECHAT_GAME) {
+            WxWrapper.login((res) => {
+                izx.log("WxWrapper.login:",res)
+
+                if (!res || res.code !== "00000") {
+                    izx.logW("auth login err!")
+                    izx.dispatchEvent(Constants.EventName.ACCOUNT_WEB_AUTH, false, "Auth Error")
+                    return
+                }
+
+                this.setResultData(res)
+
+                izx.setData("last_login", "guest", true)
+
+                izx.dispatchEvent(Constants.EventName.ACCOUNT_WEB_AUTH, true)
+            }, false)
+        // } else {
         } else {
-            let url = izx.httpUrl + GUEST_LOGIN
+            let url = izx.authUrl + GUEST_LOGIN
             let body = {
                 mid: izx.mid,
                 pn: izx.packetName,
                 imei: izx.imei,
                 device: izx.device,
-                auth_type: "1"
+                auth_type: "1",
             }
 
             let account = izx.getData("account_" + izx.imei)
             let password = izx.getData("password_" + izx.imei)
+
             izx.log(account + " : " + password)
             if (account) body["account"] = account
             if (password) body["password"] = password

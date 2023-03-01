@@ -4,13 +4,12 @@
  * @Autor: liuhongbin
  * @Date: 2020-11-02 10:40:56
  * @LastEditors: liuhongbin
- * @LastEditTime: 2021-01-15 12:37:45
+ * @LastEditTime: 2021-01-26 13:33:39
  */
 import Login from "./mode/login"
 import { izx } from "../framework/izx"
 import Constants from "../common/constants"
 import Auth from "./mode/auth"
-import { App } from "../common/common";
 
 export default class Account {
     static _instacne: Account = null
@@ -28,6 +27,7 @@ export default class Account {
     _login: Login = null
 
     private _init() {
+
         // 初始化账号系统
         this._auth = new Auth()
         this._login = new Login()
@@ -46,10 +46,13 @@ export default class Account {
 
     login(isSuccess, msg: string) {
         izx.log("login",isSuccess,msg)
+        let self = this
         if (isSuccess) {
             this._login.login()
         } else {
-            izx.dispatchEvent(Constants.EventName.ACCOUNT_ON_LOGIN, false, msg)
+            izx.dispatchEvent(Constants.EventName.ACCOUNT_ON_LOGIN, false, msg, ()=>{
+                self.checkAccount()
+            })
         }
     }
 }

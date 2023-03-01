@@ -12,10 +12,10 @@ export enum AdOrderState {
 export interface IPair {
 
     /** Pair key */
-    key?: (string | null);
+    key?: (string|null);
 
     /** Pair value */
-    value?: (string | null);
+    value?: (string|null);
 }
 
 /** Represents a Pair. */
@@ -64,7 +64,7 @@ export class Pair implements IPair {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decode(reader: ($protobuf.Reader | Uint8Array), length?: number): Pair;
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): Pair;
 
     /**
      * Decodes a Pair message from the specified reader or buffer, length delimited.
@@ -73,14 +73,14 @@ export class Pair implements IPair {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decodeDelimited(reader: ($protobuf.Reader | Uint8Array)): Pair;
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): Pair;
 
     /**
      * Verifies a Pair message.
      * @param message Plain object to verify
      * @returns `null` if valid, otherwise the reason why it is not
      */
-    public static verify(message: { [k: string]: any }): (string | null);
+    public static verify(message: { [k: string]: any }): (string|null);
 
     /**
      * Creates a Pair message from a plain object. Also converts values to their respective internal types.
@@ -108,13 +108,13 @@ export class Pair implements IPair {
 export interface IAward {
 
     /** Award index */
-    index?: (number | null);
+    index?: (number|null);
 
     /** Award num */
-    num?: (number | Long | null);
+    num?: (number|Long|null);
 
     /** Award param */
-    param?: (IPair[] | null);
+    param?: (IPair[]|null);
 }
 
 /** Represents an Award. */
@@ -130,7 +130,7 @@ export class Award implements IAward {
     public index: number;
 
     /** Award num. */
-    public num: (number | Long);
+    public num: (number|Long);
 
     /** Award param. */
     public param: IPair[];
@@ -166,7 +166,7 @@ export class Award implements IAward {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decode(reader: ($protobuf.Reader | Uint8Array), length?: number): Award;
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): Award;
 
     /**
      * Decodes an Award message from the specified reader or buffer, length delimited.
@@ -175,14 +175,14 @@ export class Award implements IAward {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decodeDelimited(reader: ($protobuf.Reader | Uint8Array)): Award;
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): Award;
 
     /**
      * Verifies an Award message.
      * @param message Plain object to verify
      * @returns `null` if valid, otherwise the reason why it is not
      */
-    public static verify(message: { [k: string]: any }): (string | null);
+    public static verify(message: { [k: string]: any }): (string|null);
 
     /**
      * Creates an Award message from a plain object. Also converts values to their respective internal types.
@@ -276,34 +276,34 @@ export namespace Ad {
      * @param error Error, if any
      * @param [response] AdOrderNot
      */
-    type InitOrderCallback = (error: (Error | null), response?: AdOrderNot) => void;
+    type InitOrderCallback = (error: (Error|null), response?: AdOrderNot) => void;
 
     /**
      * Callback as used by {@link Ad#orderAward}.
      * @param error Error, if any
      * @param [response] GetAdOrderAwardAck
      */
-    type OrderAwardCallback = (error: (Error | null), response?: GetAdOrderAwardAck) => void;
+    type OrderAwardCallback = (error: (Error|null), response?: GetAdOrderAwardAck) => void;
 
     /**
      * Callback as used by {@link Ad#updateOrderStatus}.
      * @param error Error, if any
      * @param [response] UpdateAdOrderStatusAck
      */
-    type UpdateOrderStatusCallback = (error: (Error | null), response?: UpdateAdOrderStatusAck) => void;
+    type UpdateOrderStatusCallback = (error: (Error|null), response?: UpdateAdOrderStatusAck) => void;
 }
 
 /** Properties of an AwardItem. */
 export interface IAwardItem {
 
     /** AwardItem id */
-    id?: (number | null);
+    id?: (number|null);
 
     /** AwardItem sequence */
-    sequence?: (number | null);
+    sequence?: (number|null);
 
     /** AwardItem award */
-    award?: (IAward[] | null);
+    award?: (IAward[]|null);
 }
 
 /** Represents an AwardItem. */
@@ -355,7 +355,7 @@ export class AwardItem implements IAwardItem {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decode(reader: ($protobuf.Reader | Uint8Array), length?: number): AwardItem;
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): AwardItem;
 
     /**
      * Decodes an AwardItem message from the specified reader or buffer, length delimited.
@@ -364,14 +364,14 @@ export class AwardItem implements IAwardItem {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decodeDelimited(reader: ($protobuf.Reader | Uint8Array)): AwardItem;
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): AwardItem;
 
     /**
      * Verifies an AwardItem message.
      * @param message Plain object to verify
      * @returns `null` if valid, otherwise the reason why it is not
      */
-    public static verify(message: { [k: string]: any }): (string | null);
+    public static verify(message: { [k: string]: any }): (string|null);
 
     /**
      * Creates an AwardItem message from a plain object. Also converts values to their respective internal types.
@@ -399,10 +399,10 @@ export class AwardItem implements IAwardItem {
 export interface IAdTimes {
 
     /** AdTimes adArea */
-    adArea?: (number | null);
+    adArea?: (number|null);
 
     /** AdTimes adTimes */
-    adTimes?: (number | Long | null);
+    adTimes?: (number|Long|null);
 }
 
 /** Represents an AdTimes. */
@@ -418,7 +418,7 @@ export class AdTimes implements IAdTimes {
     public adArea: number;
 
     /** AdTimes adTimes. */
-    public adTimes: (number | Long);
+    public adTimes: (number|Long);
 
     /**
      * Creates a new AdTimes instance using the specified properties.
@@ -451,7 +451,7 @@ export class AdTimes implements IAdTimes {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decode(reader: ($protobuf.Reader | Uint8Array), length?: number): AdTimes;
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): AdTimes;
 
     /**
      * Decodes an AdTimes message from the specified reader or buffer, length delimited.
@@ -460,14 +460,14 @@ export class AdTimes implements IAdTimes {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decodeDelimited(reader: ($protobuf.Reader | Uint8Array)): AdTimes;
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): AdTimes;
 
     /**
      * Verifies an AdTimes message.
      * @param message Plain object to verify
      * @returns `null` if valid, otherwise the reason why it is not
      */
-    public static verify(message: { [k: string]: any }): (string | null);
+    public static verify(message: { [k: string]: any }): (string|null);
 
     /**
      * Creates an AdTimes message from a plain object. Also converts values to their respective internal types.
@@ -495,19 +495,19 @@ export class AdTimes implements IAdTimes {
 export interface IAdInfo {
 
     /** AdInfo service */
-    service?: (string | null);
+    service?: (string|null);
 
     /** AdInfo adArea */
-    adArea?: (number | null);
+    adArea?: (number|null);
 
     /** AdInfo adType */
-    adType?: (number | null);
+    adType?: (number|null);
 
     /** AdInfo awardId */
-    awardId?: (number | null);
+    awardId?: (number|null);
 
     /** AdInfo award */
-    award?: (IAwardItem | null);
+    award?: (IAwardItem|null);
 }
 
 /** Represents an AdInfo. */
@@ -532,7 +532,7 @@ export class AdInfo implements IAdInfo {
     public awardId: number;
 
     /** AdInfo award. */
-    public award?: (IAwardItem | null);
+    public award?: (IAwardItem|null);
 
     /**
      * Creates a new AdInfo instance using the specified properties.
@@ -565,7 +565,7 @@ export class AdInfo implements IAdInfo {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decode(reader: ($protobuf.Reader | Uint8Array), length?: number): AdInfo;
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): AdInfo;
 
     /**
      * Decodes an AdInfo message from the specified reader or buffer, length delimited.
@@ -574,14 +574,14 @@ export class AdInfo implements IAdInfo {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decodeDelimited(reader: ($protobuf.Reader | Uint8Array)): AdInfo;
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): AdInfo;
 
     /**
      * Verifies an AdInfo message.
      * @param message Plain object to verify
      * @returns `null` if valid, otherwise the reason why it is not
      */
-    public static verify(message: { [k: string]: any }): (string | null);
+    public static verify(message: { [k: string]: any }): (string|null);
 
     /**
      * Creates an AdInfo message from a plain object. Also converts values to their respective internal types.
@@ -609,10 +609,10 @@ export class AdInfo implements IAdInfo {
 export interface IAdInfoBundle {
 
     /** AdInfoBundle info */
-    info?: (IAdInfo | null);
+    info?: (IAdInfo|null);
 
     /** AdInfoBundle params */
-    params?: (IPair[] | null);
+    params?: (IPair[]|null);
 }
 
 /** Represents an AdInfoBundle. */
@@ -625,7 +625,7 @@ export class AdInfoBundle implements IAdInfoBundle {
     constructor(properties?: IAdInfoBundle);
 
     /** AdInfoBundle info. */
-    public info?: (IAdInfo | null);
+    public info?: (IAdInfo|null);
 
     /** AdInfoBundle params. */
     public params: IPair[];
@@ -661,7 +661,7 @@ export class AdInfoBundle implements IAdInfoBundle {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decode(reader: ($protobuf.Reader | Uint8Array), length?: number): AdInfoBundle;
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): AdInfoBundle;
 
     /**
      * Decodes an AdInfoBundle message from the specified reader or buffer, length delimited.
@@ -670,14 +670,14 @@ export class AdInfoBundle implements IAdInfoBundle {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decodeDelimited(reader: ($protobuf.Reader | Uint8Array)): AdInfoBundle;
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): AdInfoBundle;
 
     /**
      * Verifies an AdInfoBundle message.
      * @param message Plain object to verify
      * @returns `null` if valid, otherwise the reason why it is not
      */
-    public static verify(message: { [k: string]: any }): (string | null);
+    public static verify(message: { [k: string]: any }): (string|null);
 
     /**
      * Creates an AdInfoBundle message from a plain object. Also converts values to their respective internal types.
@@ -705,10 +705,10 @@ export class AdInfoBundle implements IAdInfoBundle {
 export interface IAdOrderReq {
 
     /** AdOrderReq uid */
-    uid?: (number | Long | null);
+    uid?: (number|Long|null);
 
     /** AdOrderReq areaId */
-    areaId?: (number | null);
+    areaId?: (number|null);
 }
 
 /** Represents an AdOrderReq. */
@@ -721,7 +721,7 @@ export class AdOrderReq implements IAdOrderReq {
     constructor(properties?: IAdOrderReq);
 
     /** AdOrderReq uid. */
-    public uid: (number | Long);
+    public uid: (number|Long);
 
     /** AdOrderReq areaId. */
     public areaId: number;
@@ -757,7 +757,7 @@ export class AdOrderReq implements IAdOrderReq {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decode(reader: ($protobuf.Reader | Uint8Array), length?: number): AdOrderReq;
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): AdOrderReq;
 
     /**
      * Decodes an AdOrderReq message from the specified reader or buffer, length delimited.
@@ -766,14 +766,14 @@ export class AdOrderReq implements IAdOrderReq {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decodeDelimited(reader: ($protobuf.Reader | Uint8Array)): AdOrderReq;
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): AdOrderReq;
 
     /**
      * Verifies an AdOrderReq message.
      * @param message Plain object to verify
      * @returns `null` if valid, otherwise the reason why it is not
      */
-    public static verify(message: { [k: string]: any }): (string | null);
+    public static verify(message: { [k: string]: any }): (string|null);
 
     /**
      * Creates an AdOrderReq message from a plain object. Also converts values to their respective internal types.
@@ -801,25 +801,25 @@ export class AdOrderReq implements IAdOrderReq {
 export interface IAdOrderNot {
 
     /** AdOrderNot errCode */
-    errCode?: (number | null);
+    errCode?: (number|null);
 
     /** AdOrderNot errMsg */
-    errMsg?: (string | null);
+    errMsg?: (string|null);
 
     /** AdOrderNot service */
-    service?: (string | null);
+    service?: (string|null);
 
     /** AdOrderNot orderId */
-    orderId?: (string | null);
+    orderId?: (string|null);
 
     /** AdOrderNot areaId */
-    areaId?: (number | null);
+    areaId?: (number|null);
 
     /** AdOrderNot award */
-    award?: (IAward[] | null);
+    award?: (IAward[]|null);
 
     /** AdOrderNot params */
-    params?: (IPair[] | null);
+    params?: (IPair[]|null);
 }
 
 /** Represents an AdOrderNot. */
@@ -883,7 +883,7 @@ export class AdOrderNot implements IAdOrderNot {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decode(reader: ($protobuf.Reader | Uint8Array), length?: number): AdOrderNot;
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): AdOrderNot;
 
     /**
      * Decodes an AdOrderNot message from the specified reader or buffer, length delimited.
@@ -892,14 +892,14 @@ export class AdOrderNot implements IAdOrderNot {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decodeDelimited(reader: ($protobuf.Reader | Uint8Array)): AdOrderNot;
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): AdOrderNot;
 
     /**
      * Verifies an AdOrderNot message.
      * @param message Plain object to verify
      * @returns `null` if valid, otherwise the reason why it is not
      */
-    public static verify(message: { [k: string]: any }): (string | null);
+    public static verify(message: { [k: string]: any }): (string|null);
 
     /**
      * Creates an AdOrderNot message from a plain object. Also converts values to their respective internal types.
@@ -927,16 +927,16 @@ export class AdOrderNot implements IAdOrderNot {
 export interface IUpdateAdOrderStatusReq {
 
     /** UpdateAdOrderStatusReq uid */
-    uid?: (number | Long | null);
+    uid?: (number|Long|null);
 
     /** UpdateAdOrderStatusReq service */
-    service?: (string | null);
+    service?: (string|null);
 
     /** UpdateAdOrderStatusReq orderId */
-    orderId?: (string | null);
+    orderId?: (string|null);
 
     /** UpdateAdOrderStatusReq state */
-    state?: (AdOrderState | null);
+    state?: (AdOrderState|null);
 }
 
 /** Represents an UpdateAdOrderStatusReq. */
@@ -949,7 +949,7 @@ export class UpdateAdOrderStatusReq implements IUpdateAdOrderStatusReq {
     constructor(properties?: IUpdateAdOrderStatusReq);
 
     /** UpdateAdOrderStatusReq uid. */
-    public uid: (number | Long);
+    public uid: (number|Long);
 
     /** UpdateAdOrderStatusReq service. */
     public service: string;
@@ -991,7 +991,7 @@ export class UpdateAdOrderStatusReq implements IUpdateAdOrderStatusReq {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decode(reader: ($protobuf.Reader | Uint8Array), length?: number): UpdateAdOrderStatusReq;
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): UpdateAdOrderStatusReq;
 
     /**
      * Decodes an UpdateAdOrderStatusReq message from the specified reader or buffer, length delimited.
@@ -1000,14 +1000,14 @@ export class UpdateAdOrderStatusReq implements IUpdateAdOrderStatusReq {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decodeDelimited(reader: ($protobuf.Reader | Uint8Array)): UpdateAdOrderStatusReq;
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): UpdateAdOrderStatusReq;
 
     /**
      * Verifies an UpdateAdOrderStatusReq message.
      * @param message Plain object to verify
      * @returns `null` if valid, otherwise the reason why it is not
      */
-    public static verify(message: { [k: string]: any }): (string | null);
+    public static verify(message: { [k: string]: any }): (string|null);
 
     /**
      * Creates an UpdateAdOrderStatusReq message from a plain object. Also converts values to their respective internal types.
@@ -1035,19 +1035,19 @@ export class UpdateAdOrderStatusReq implements IUpdateAdOrderStatusReq {
 export interface IUpdateAdOrderStatusAck {
 
     /** UpdateAdOrderStatusAck errCode */
-    errCode?: (number | null);
+    errCode?: (number|null);
 
     /** UpdateAdOrderStatusAck errMsg */
-    errMsg?: (string | null);
+    errMsg?: (string|null);
 
     /** UpdateAdOrderStatusAck service */
-    service?: (string | null);
+    service?: (string|null);
 
     /** UpdateAdOrderStatusAck orderId */
-    orderId?: (string | null);
+    orderId?: (string|null);
 
     /** UpdateAdOrderStatusAck state */
-    state?: (AdOrderState | null);
+    state?: (AdOrderState|null);
 }
 
 /** Represents an UpdateAdOrderStatusAck. */
@@ -1105,7 +1105,7 @@ export class UpdateAdOrderStatusAck implements IUpdateAdOrderStatusAck {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decode(reader: ($protobuf.Reader | Uint8Array), length?: number): UpdateAdOrderStatusAck;
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): UpdateAdOrderStatusAck;
 
     /**
      * Decodes an UpdateAdOrderStatusAck message from the specified reader or buffer, length delimited.
@@ -1114,14 +1114,14 @@ export class UpdateAdOrderStatusAck implements IUpdateAdOrderStatusAck {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decodeDelimited(reader: ($protobuf.Reader | Uint8Array)): UpdateAdOrderStatusAck;
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): UpdateAdOrderStatusAck;
 
     /**
      * Verifies an UpdateAdOrderStatusAck message.
      * @param message Plain object to verify
      * @returns `null` if valid, otherwise the reason why it is not
      */
-    public static verify(message: { [k: string]: any }): (string | null);
+    public static verify(message: { [k: string]: any }): (string|null);
 
     /**
      * Creates an UpdateAdOrderStatusAck message from a plain object. Also converts values to their respective internal types.
@@ -1149,13 +1149,13 @@ export class UpdateAdOrderStatusAck implements IUpdateAdOrderStatusAck {
 export interface IGetAdOrderAwardReq {
 
     /** GetAdOrderAwardReq uid */
-    uid?: (number | Long | null);
+    uid?: (number|Long|null);
 
     /** GetAdOrderAwardReq service */
-    service?: (string | null);
+    service?: (string|null);
 
     /** GetAdOrderAwardReq orderId */
-    orderId?: (string | null);
+    orderId?: (string|null);
 }
 
 /** Represents a GetAdOrderAwardReq. */
@@ -1168,7 +1168,7 @@ export class GetAdOrderAwardReq implements IGetAdOrderAwardReq {
     constructor(properties?: IGetAdOrderAwardReq);
 
     /** GetAdOrderAwardReq uid. */
-    public uid: (number | Long);
+    public uid: (number|Long);
 
     /** GetAdOrderAwardReq service. */
     public service: string;
@@ -1207,7 +1207,7 @@ export class GetAdOrderAwardReq implements IGetAdOrderAwardReq {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decode(reader: ($protobuf.Reader | Uint8Array), length?: number): GetAdOrderAwardReq;
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): GetAdOrderAwardReq;
 
     /**
      * Decodes a GetAdOrderAwardReq message from the specified reader or buffer, length delimited.
@@ -1216,14 +1216,14 @@ export class GetAdOrderAwardReq implements IGetAdOrderAwardReq {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decodeDelimited(reader: ($protobuf.Reader | Uint8Array)): GetAdOrderAwardReq;
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): GetAdOrderAwardReq;
 
     /**
      * Verifies a GetAdOrderAwardReq message.
      * @param message Plain object to verify
      * @returns `null` if valid, otherwise the reason why it is not
      */
-    public static verify(message: { [k: string]: any }): (string | null);
+    public static verify(message: { [k: string]: any }): (string|null);
 
     /**
      * Creates a GetAdOrderAwardReq message from a plain object. Also converts values to their respective internal types.
@@ -1251,22 +1251,22 @@ export class GetAdOrderAwardReq implements IGetAdOrderAwardReq {
 export interface IGetAdOrderAwardAck {
 
     /** GetAdOrderAwardAck errCode */
-    errCode?: (number | null);
+    errCode?: (number|null);
 
     /** GetAdOrderAwardAck errMsg */
-    errMsg?: (string | null);
+    errMsg?: (string|null);
 
     /** GetAdOrderAwardAck service */
-    service?: (string | null);
+    service?: (string|null);
 
     /** GetAdOrderAwardAck orderId */
-    orderId?: (string | null);
+    orderId?: (string|null);
 
     /** GetAdOrderAwardAck award */
-    award?: (IAward[] | null);
+    award?: (IAward[]|null);
 
     /** GetAdOrderAwardAck params */
-    params?: (IPair[] | null);
+    params?: (IPair[]|null);
 }
 
 /** Represents a GetAdOrderAwardAck. */
@@ -1327,7 +1327,7 @@ export class GetAdOrderAwardAck implements IGetAdOrderAwardAck {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decode(reader: ($protobuf.Reader | Uint8Array), length?: number): GetAdOrderAwardAck;
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): GetAdOrderAwardAck;
 
     /**
      * Decodes a GetAdOrderAwardAck message from the specified reader or buffer, length delimited.
@@ -1336,14 +1336,14 @@ export class GetAdOrderAwardAck implements IGetAdOrderAwardAck {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decodeDelimited(reader: ($protobuf.Reader | Uint8Array)): GetAdOrderAwardAck;
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): GetAdOrderAwardAck;
 
     /**
      * Verifies a GetAdOrderAwardAck message.
      * @param message Plain object to verify
      * @returns `null` if valid, otherwise the reason why it is not
      */
-    public static verify(message: { [k: string]: any }): (string | null);
+    public static verify(message: { [k: string]: any }): (string|null);
 
     /**
      * Creates a GetAdOrderAwardAck message from a plain object. Also converts values to their respective internal types.
@@ -1428,6 +1428,20 @@ export class AdSpot extends $protobuf.rpc.Service {
      * @returns Promise
      */
     public getLotteryReward(request: IGetZhuanPanChouJiangAwardReq): Promise<GetZhuanPanChouJiangAwardAck>;
+
+    /**
+     * Calls GetAdSpots.
+     * @param request GetAdSpotsReq message or plain object
+     * @param callback Node-style callback called with the error, if any, and GetAdSpotsAck
+     */
+    public getAdSpots(request: IGetAdSpotsReq, callback: AdSpot.GetAdSpotsCallback): void;
+
+    /**
+     * Calls GetAdSpots.
+     * @param request GetAdSpotsReq message or plain object
+     * @returns Promise
+     */
+    public getAdSpots(request: IGetAdSpotsReq): Promise<GetAdSpotsAck>;
 }
 
 export namespace AdSpot {
@@ -1437,21 +1451,28 @@ export namespace AdSpot {
      * @param error Error, if any
      * @param [response] GetZhuanPanChouJiangAck
      */
-    type ZhuanPanCallback = (error: (Error | null), response?: GetZhuanPanChouJiangAck) => void;
+    type ZhuanPanCallback = (error: (Error|null), response?: GetZhuanPanChouJiangAck) => void;
 
     /**
      * Callback as used by {@link AdSpot#xinShouHaoLi}.
      * @param error Error, if any
      * @param [response] GetXinShouHaoLiAck
      */
-    type XinShouHaoLiCallback = (error: (Error | null), response?: GetXinShouHaoLiAck) => void;
+    type XinShouHaoLiCallback = (error: (Error|null), response?: GetXinShouHaoLiAck) => void;
 
     /**
      * Callback as used by {@link AdSpot#getLotteryReward}.
      * @param error Error, if any
      * @param [response] GetZhuanPanChouJiangAwardAck
      */
-    type GetLotteryRewardCallback = (error: (Error | null), response?: GetZhuanPanChouJiangAwardAck) => void;
+    type GetLotteryRewardCallback = (error: (Error|null), response?: GetZhuanPanChouJiangAwardAck) => void;
+
+    /**
+     * Callback as used by {@link AdSpot#getAdSpots}.
+     * @param error Error, if any
+     * @param [response] GetAdSpotsAck
+     */
+    type GetAdSpotsCallback = (error: (Error|null), response?: GetAdSpotsAck) => void;
 }
 
 /** Properties of an Empty. */
@@ -1498,7 +1519,7 @@ export class Empty implements IEmpty {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decode(reader: ($protobuf.Reader | Uint8Array), length?: number): Empty;
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): Empty;
 
     /**
      * Decodes an Empty message from the specified reader or buffer, length delimited.
@@ -1507,14 +1528,14 @@ export class Empty implements IEmpty {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decodeDelimited(reader: ($protobuf.Reader | Uint8Array)): Empty;
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): Empty;
 
     /**
      * Verifies an Empty message.
      * @param message Plain object to verify
      * @returns `null` if valid, otherwise the reason why it is not
      */
-    public static verify(message: { [k: string]: any }): (string | null);
+    public static verify(message: { [k: string]: any }): (string|null);
 
     /**
      * Creates an Empty message from a plain object. Also converts values to their respective internal types.
@@ -1542,10 +1563,10 @@ export class Empty implements IEmpty {
 export interface IZhuanPanItem {
 
     /** ZhuanPanItem award */
-    award?: (IAward[] | null);
+    award?: (IAward[]|null);
 
     /** ZhuanPanItem desc */
-    desc?: (string | null);
+    desc?: (string|null);
 }
 
 /** Represents a ZhuanPanItem. */
@@ -1594,7 +1615,7 @@ export class ZhuanPanItem implements IZhuanPanItem {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decode(reader: ($protobuf.Reader | Uint8Array), length?: number): ZhuanPanItem;
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): ZhuanPanItem;
 
     /**
      * Decodes a ZhuanPanItem message from the specified reader or buffer, length delimited.
@@ -1603,14 +1624,14 @@ export class ZhuanPanItem implements IZhuanPanItem {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decodeDelimited(reader: ($protobuf.Reader | Uint8Array)): ZhuanPanItem;
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): ZhuanPanItem;
 
     /**
      * Verifies a ZhuanPanItem message.
      * @param message Plain object to verify
      * @returns `null` if valid, otherwise the reason why it is not
      */
-    public static verify(message: { [k: string]: any }): (string | null);
+    public static verify(message: { [k: string]: any }): (string|null);
 
     /**
      * Creates a ZhuanPanItem message from a plain object. Also converts values to their respective internal types.
@@ -1638,7 +1659,7 @@ export class ZhuanPanItem implements IZhuanPanItem {
 export interface IGetZhuanPanChouJiangReq {
 
     /** GetZhuanPanChouJiangReq uid */
-    uid?: (number | Long | null);
+    uid?: (number|Long|null);
 }
 
 /** Represents a GetZhuanPanChouJiangReq. */
@@ -1651,7 +1672,7 @@ export class GetZhuanPanChouJiangReq implements IGetZhuanPanChouJiangReq {
     constructor(properties?: IGetZhuanPanChouJiangReq);
 
     /** GetZhuanPanChouJiangReq uid. */
-    public uid: (number | Long);
+    public uid: (number|Long);
 
     /**
      * Creates a new GetZhuanPanChouJiangReq instance using the specified properties.
@@ -1684,7 +1705,7 @@ export class GetZhuanPanChouJiangReq implements IGetZhuanPanChouJiangReq {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decode(reader: ($protobuf.Reader | Uint8Array), length?: number): GetZhuanPanChouJiangReq;
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): GetZhuanPanChouJiangReq;
 
     /**
      * Decodes a GetZhuanPanChouJiangReq message from the specified reader or buffer, length delimited.
@@ -1693,14 +1714,14 @@ export class GetZhuanPanChouJiangReq implements IGetZhuanPanChouJiangReq {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decodeDelimited(reader: ($protobuf.Reader | Uint8Array)): GetZhuanPanChouJiangReq;
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): GetZhuanPanChouJiangReq;
 
     /**
      * Verifies a GetZhuanPanChouJiangReq message.
      * @param message Plain object to verify
      * @returns `null` if valid, otherwise the reason why it is not
      */
-    public static verify(message: { [k: string]: any }): (string | null);
+    public static verify(message: { [k: string]: any }): (string|null);
 
     /**
      * Creates a GetZhuanPanChouJiangReq message from a plain object. Also converts values to their respective internal types.
@@ -1728,22 +1749,22 @@ export class GetZhuanPanChouJiangReq implements IGetZhuanPanChouJiangReq {
 export interface IGetZhuanPanChouJiangAck {
 
     /** GetZhuanPanChouJiangAck errCode */
-    errCode?: (number | null);
+    errCode?: (number|null);
 
     /** GetZhuanPanChouJiangAck errMsg */
-    errMsg?: (string | null);
+    errMsg?: (string|null);
 
     /** GetZhuanPanChouJiangAck hitIndex */
-    hitIndex?: (number | null);
+    hitIndex?: (number|null);
 
     /** GetZhuanPanChouJiangAck remainCount */
-    remainCount?: (number | null);
+    remainCount?: (number|null);
 
     /** GetZhuanPanChouJiangAck AllItems */
-    AllItems?: (IZhuanPanItem[] | null);
+    AllItems?: (IZhuanPanItem[]|null);
 
     /** GetZhuanPanChouJiangAck adOrder */
-    adOrder?: (IAdOrderNot | null);
+    adOrder?: (IAdOrderNot|null);
 }
 
 /** Represents a GetZhuanPanChouJiangAck. */
@@ -1771,7 +1792,7 @@ export class GetZhuanPanChouJiangAck implements IGetZhuanPanChouJiangAck {
     public AllItems: IZhuanPanItem[];
 
     /** GetZhuanPanChouJiangAck adOrder. */
-    public adOrder?: (IAdOrderNot | null);
+    public adOrder?: (IAdOrderNot|null);
 
     /**
      * Creates a new GetZhuanPanChouJiangAck instance using the specified properties.
@@ -1804,7 +1825,7 @@ export class GetZhuanPanChouJiangAck implements IGetZhuanPanChouJiangAck {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decode(reader: ($protobuf.Reader | Uint8Array), length?: number): GetZhuanPanChouJiangAck;
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): GetZhuanPanChouJiangAck;
 
     /**
      * Decodes a GetZhuanPanChouJiangAck message from the specified reader or buffer, length delimited.
@@ -1813,14 +1834,14 @@ export class GetZhuanPanChouJiangAck implements IGetZhuanPanChouJiangAck {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decodeDelimited(reader: ($protobuf.Reader | Uint8Array)): GetZhuanPanChouJiangAck;
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): GetZhuanPanChouJiangAck;
 
     /**
      * Verifies a GetZhuanPanChouJiangAck message.
      * @param message Plain object to verify
      * @returns `null` if valid, otherwise the reason why it is not
      */
-    public static verify(message: { [k: string]: any }): (string | null);
+    public static verify(message: { [k: string]: any }): (string|null);
 
     /**
      * Creates a GetZhuanPanChouJiangAck message from a plain object. Also converts values to their respective internal types.
@@ -1848,13 +1869,13 @@ export class GetZhuanPanChouJiangAck implements IGetZhuanPanChouJiangAck {
 export interface IGetZhuanPanChouJiangAwardReq {
 
     /** GetZhuanPanChouJiangAwardReq uid */
-    uid?: (number | Long | null);
+    uid?: (number|Long|null);
 
     /** GetZhuanPanChouJiangAwardReq service */
-    service?: (string | null);
+    service?: (string|null);
 
     /** GetZhuanPanChouJiangAwardReq orderId */
-    orderId?: (string | null);
+    orderId?: (string|null);
 }
 
 /** Represents a GetZhuanPanChouJiangAwardReq. */
@@ -1867,7 +1888,7 @@ export class GetZhuanPanChouJiangAwardReq implements IGetZhuanPanChouJiangAwardR
     constructor(properties?: IGetZhuanPanChouJiangAwardReq);
 
     /** GetZhuanPanChouJiangAwardReq uid. */
-    public uid: (number | Long);
+    public uid: (number|Long);
 
     /** GetZhuanPanChouJiangAwardReq service. */
     public service: string;
@@ -1906,7 +1927,7 @@ export class GetZhuanPanChouJiangAwardReq implements IGetZhuanPanChouJiangAwardR
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decode(reader: ($protobuf.Reader | Uint8Array), length?: number): GetZhuanPanChouJiangAwardReq;
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): GetZhuanPanChouJiangAwardReq;
 
     /**
      * Decodes a GetZhuanPanChouJiangAwardReq message from the specified reader or buffer, length delimited.
@@ -1915,14 +1936,14 @@ export class GetZhuanPanChouJiangAwardReq implements IGetZhuanPanChouJiangAwardR
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decodeDelimited(reader: ($protobuf.Reader | Uint8Array)): GetZhuanPanChouJiangAwardReq;
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): GetZhuanPanChouJiangAwardReq;
 
     /**
      * Verifies a GetZhuanPanChouJiangAwardReq message.
      * @param message Plain object to verify
      * @returns `null` if valid, otherwise the reason why it is not
      */
-    public static verify(message: { [k: string]: any }): (string | null);
+    public static verify(message: { [k: string]: any }): (string|null);
 
     /**
      * Creates a GetZhuanPanChouJiangAwardReq message from a plain object. Also converts values to their respective internal types.
@@ -1950,10 +1971,10 @@ export class GetZhuanPanChouJiangAwardReq implements IGetZhuanPanChouJiangAwardR
 export interface IGetZhuanPanChouJiangAwardAck {
 
     /** GetZhuanPanChouJiangAwardAck errCode */
-    errCode?: (number | null);
+    errCode?: (number|null);
 
     /** GetZhuanPanChouJiangAwardAck errMsg */
-    errMsg?: (string | null);
+    errMsg?: (string|null);
 }
 
 /** Represents a GetZhuanPanChouJiangAwardAck. */
@@ -2002,7 +2023,7 @@ export class GetZhuanPanChouJiangAwardAck implements IGetZhuanPanChouJiangAwardA
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decode(reader: ($protobuf.Reader | Uint8Array), length?: number): GetZhuanPanChouJiangAwardAck;
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): GetZhuanPanChouJiangAwardAck;
 
     /**
      * Decodes a GetZhuanPanChouJiangAwardAck message from the specified reader or buffer, length delimited.
@@ -2011,14 +2032,14 @@ export class GetZhuanPanChouJiangAwardAck implements IGetZhuanPanChouJiangAwardA
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decodeDelimited(reader: ($protobuf.Reader | Uint8Array)): GetZhuanPanChouJiangAwardAck;
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): GetZhuanPanChouJiangAwardAck;
 
     /**
      * Verifies a GetZhuanPanChouJiangAwardAck message.
      * @param message Plain object to verify
      * @returns `null` if valid, otherwise the reason why it is not
      */
-    public static verify(message: { [k: string]: any }): (string | null);
+    public static verify(message: { [k: string]: any }): (string|null);
 
     /**
      * Creates a GetZhuanPanChouJiangAwardAck message from a plain object. Also converts values to their respective internal types.
@@ -2046,7 +2067,7 @@ export class GetZhuanPanChouJiangAwardAck implements IGetZhuanPanChouJiangAwardA
 export interface IGetXinShouHaoLiReq {
 
     /** GetXinShouHaoLiReq uid */
-    uid?: (number | Long | null);
+    uid?: (number|Long|null);
 }
 
 /** Represents a GetXinShouHaoLiReq. */
@@ -2059,7 +2080,7 @@ export class GetXinShouHaoLiReq implements IGetXinShouHaoLiReq {
     constructor(properties?: IGetXinShouHaoLiReq);
 
     /** GetXinShouHaoLiReq uid. */
-    public uid: (number | Long);
+    public uid: (number|Long);
 
     /**
      * Creates a new GetXinShouHaoLiReq instance using the specified properties.
@@ -2092,7 +2113,7 @@ export class GetXinShouHaoLiReq implements IGetXinShouHaoLiReq {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decode(reader: ($protobuf.Reader | Uint8Array), length?: number): GetXinShouHaoLiReq;
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): GetXinShouHaoLiReq;
 
     /**
      * Decodes a GetXinShouHaoLiReq message from the specified reader or buffer, length delimited.
@@ -2101,14 +2122,14 @@ export class GetXinShouHaoLiReq implements IGetXinShouHaoLiReq {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decodeDelimited(reader: ($protobuf.Reader | Uint8Array)): GetXinShouHaoLiReq;
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): GetXinShouHaoLiReq;
 
     /**
      * Verifies a GetXinShouHaoLiReq message.
      * @param message Plain object to verify
      * @returns `null` if valid, otherwise the reason why it is not
      */
-    public static verify(message: { [k: string]: any }): (string | null);
+    public static verify(message: { [k: string]: any }): (string|null);
 
     /**
      * Creates a GetXinShouHaoLiReq message from a plain object. Also converts values to their respective internal types.
@@ -2136,13 +2157,13 @@ export class GetXinShouHaoLiReq implements IGetXinShouHaoLiReq {
 export interface IGetXinShouHaoLiAck {
 
     /** GetXinShouHaoLiAck errCode */
-    errCode?: (number | null);
+    errCode?: (number|null);
 
     /** GetXinShouHaoLiAck errMsg */
-    errMsg?: (string | null);
+    errMsg?: (string|null);
 
     /** GetXinShouHaoLiAck adOrder */
-    adOrder?: (IAdOrderNot | null);
+    adOrder?: (IAdOrderNot|null);
 }
 
 /** Represents a GetXinShouHaoLiAck. */
@@ -2161,7 +2182,7 @@ export class GetXinShouHaoLiAck implements IGetXinShouHaoLiAck {
     public errMsg: string;
 
     /** GetXinShouHaoLiAck adOrder. */
-    public adOrder?: (IAdOrderNot | null);
+    public adOrder?: (IAdOrderNot|null);
 
     /**
      * Creates a new GetXinShouHaoLiAck instance using the specified properties.
@@ -2194,7 +2215,7 @@ export class GetXinShouHaoLiAck implements IGetXinShouHaoLiAck {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decode(reader: ($protobuf.Reader | Uint8Array), length?: number): GetXinShouHaoLiAck;
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): GetXinShouHaoLiAck;
 
     /**
      * Decodes a GetXinShouHaoLiAck message from the specified reader or buffer, length delimited.
@@ -2203,14 +2224,14 @@ export class GetXinShouHaoLiAck implements IGetXinShouHaoLiAck {
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decodeDelimited(reader: ($protobuf.Reader | Uint8Array)): GetXinShouHaoLiAck;
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): GetXinShouHaoLiAck;
 
     /**
      * Verifies a GetXinShouHaoLiAck message.
      * @param message Plain object to verify
      * @returns `null` if valid, otherwise the reason why it is not
      */
-    public static verify(message: { [k: string]: any }): (string | null);
+    public static verify(message: { [k: string]: any }): (string|null);
 
     /**
      * Creates a GetXinShouHaoLiAck message from a plain object. Also converts values to their respective internal types.
@@ -2229,6 +2250,528 @@ export class GetXinShouHaoLiAck implements IGetXinShouHaoLiAck {
 
     /**
      * Converts this GetXinShouHaoLiAck to JSON.
+     * @returns JSON object
+     */
+    public toJSON(): { [k: string]: any };
+}
+
+/** Properties of an AwardConfig. */
+export interface IAwardConfig {
+
+    /** AwardConfig index */
+    index?: (number|null);
+
+    /** AwardConfig minNum */
+    minNum?: (number|null);
+
+    /** AwardConfig maxNum */
+    maxNum?: (number|null);
+}
+
+/** Represents an AwardConfig. */
+export class AwardConfig implements IAwardConfig {
+
+    /**
+     * Constructs a new AwardConfig.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IAwardConfig);
+
+    /** AwardConfig index. */
+    public index: number;
+
+    /** AwardConfig minNum. */
+    public minNum: number;
+
+    /** AwardConfig maxNum. */
+    public maxNum: number;
+
+    /**
+     * Creates a new AwardConfig instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns AwardConfig instance
+     */
+    public static create(properties?: IAwardConfig): AwardConfig;
+
+    /**
+     * Encodes the specified AwardConfig message. Does not implicitly {@link AwardConfig.verify|verify} messages.
+     * @param message AwardConfig message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IAwardConfig, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Encodes the specified AwardConfig message, length delimited. Does not implicitly {@link AwardConfig.verify|verify} messages.
+     * @param message AwardConfig message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encodeDelimited(message: IAwardConfig, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes an AwardConfig message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns AwardConfig
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): AwardConfig;
+
+    /**
+     * Decodes an AwardConfig message from the specified reader or buffer, length delimited.
+     * @param reader Reader or buffer to decode from
+     * @returns AwardConfig
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): AwardConfig;
+
+    /**
+     * Verifies an AwardConfig message.
+     * @param message Plain object to verify
+     * @returns `null` if valid, otherwise the reason why it is not
+     */
+    public static verify(message: { [k: string]: any }): (string|null);
+
+    /**
+     * Creates an AwardConfig message from a plain object. Also converts values to their respective internal types.
+     * @param object Plain object
+     * @returns AwardConfig
+     */
+    public static fromObject(object: { [k: string]: any }): AwardConfig;
+
+    /**
+     * Creates a plain object from an AwardConfig message. Also converts values to other types if specified.
+     * @param message AwardConfig
+     * @param [options] Conversion options
+     * @returns Plain object
+     */
+    public static toObject(message: AwardConfig, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+    /**
+     * Converts this AwardConfig to JSON.
+     * @returns JSON object
+     */
+    public toJSON(): { [k: string]: any };
+}
+
+/** Properties of an IdItem. */
+export interface IIdItem {
+
+    /** IdItem channel */
+    channel?: (number|null);
+
+    /** IdItem id */
+    id?: (string|null);
+
+    /** IdItem percentage */
+    percentage?: (number|null);
+}
+
+/** Represents an IdItem. */
+export class IdItem implements IIdItem {
+
+    /**
+     * Constructs a new IdItem.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IIdItem);
+
+    /** IdItem channel. */
+    public channel: number;
+
+    /** IdItem id. */
+    public id: string;
+
+    /** IdItem percentage. */
+    public percentage: number;
+
+    /**
+     * Creates a new IdItem instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns IdItem instance
+     */
+    public static create(properties?: IIdItem): IdItem;
+
+    /**
+     * Encodes the specified IdItem message. Does not implicitly {@link IdItem.verify|verify} messages.
+     * @param message IdItem message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IIdItem, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Encodes the specified IdItem message, length delimited. Does not implicitly {@link IdItem.verify|verify} messages.
+     * @param message IdItem message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encodeDelimited(message: IIdItem, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes an IdItem message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns IdItem
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): IdItem;
+
+    /**
+     * Decodes an IdItem message from the specified reader or buffer, length delimited.
+     * @param reader Reader or buffer to decode from
+     * @returns IdItem
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): IdItem;
+
+    /**
+     * Verifies an IdItem message.
+     * @param message Plain object to verify
+     * @returns `null` if valid, otherwise the reason why it is not
+     */
+    public static verify(message: { [k: string]: any }): (string|null);
+
+    /**
+     * Creates an IdItem message from a plain object. Also converts values to their respective internal types.
+     * @param object Plain object
+     * @returns IdItem
+     */
+    public static fromObject(object: { [k: string]: any }): IdItem;
+
+    /**
+     * Creates a plain object from an IdItem message. Also converts values to other types if specified.
+     * @param message IdItem
+     * @param [options] Conversion options
+     * @returns Plain object
+     */
+    public static toObject(message: IdItem, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+    /**
+     * Converts this IdItem to JSON.
+     * @returns JSON object
+     */
+    public toJSON(): { [k: string]: any };
+}
+
+/** Properties of a Record. */
+export interface IRecord {
+
+    /** Record area */
+    area?: (number|null);
+
+    /** Record type */
+    type?: (number|null);
+
+    /** Record curNum */
+    curNum?: (number|null);
+
+    /** Record maxNum */
+    maxNum?: (number|null);
+
+    /** Record awards */
+    awards?: (IAwardConfig[]|null);
+
+    /** Record desc */
+    desc?: (string|null);
+
+    /** Record ids */
+    ids?: (IIdItem[]|null);
+}
+
+/** Represents a Record. */
+export class Record implements IRecord {
+
+    /**
+     * Constructs a new Record.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IRecord);
+
+    /** Record area. */
+    public area: number;
+
+    /** Record type. */
+    public type: number;
+
+    /** Record curNum. */
+    public curNum: number;
+
+    /** Record maxNum. */
+    public maxNum: number;
+
+    /** Record awards. */
+    public awards: IAwardConfig[];
+
+    /** Record desc. */
+    public desc: string;
+
+    /** Record ids. */
+    public ids: IIdItem[];
+
+    /**
+     * Creates a new Record instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns Record instance
+     */
+    public static create(properties?: IRecord): Record;
+
+    /**
+     * Encodes the specified Record message. Does not implicitly {@link Record.verify|verify} messages.
+     * @param message Record message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IRecord, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Encodes the specified Record message, length delimited. Does not implicitly {@link Record.verify|verify} messages.
+     * @param message Record message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encodeDelimited(message: IRecord, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a Record message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns Record
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): Record;
+
+    /**
+     * Decodes a Record message from the specified reader or buffer, length delimited.
+     * @param reader Reader or buffer to decode from
+     * @returns Record
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): Record;
+
+    /**
+     * Verifies a Record message.
+     * @param message Plain object to verify
+     * @returns `null` if valid, otherwise the reason why it is not
+     */
+    public static verify(message: { [k: string]: any }): (string|null);
+
+    /**
+     * Creates a Record message from a plain object. Also converts values to their respective internal types.
+     * @param object Plain object
+     * @returns Record
+     */
+    public static fromObject(object: { [k: string]: any }): Record;
+
+    /**
+     * Creates a plain object from a Record message. Also converts values to other types if specified.
+     * @param message Record
+     * @param [options] Conversion options
+     * @returns Plain object
+     */
+    public static toObject(message: Record, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+    /**
+     * Converts this Record to JSON.
+     * @returns JSON object
+     */
+    public toJSON(): { [k: string]: any };
+}
+
+/** Properties of a GetAdSpotsReq. */
+export interface IGetAdSpotsReq {
+
+    /** GetAdSpotsReq uid */
+    uid?: (number|Long|null);
+}
+
+/** Represents a GetAdSpotsReq. */
+export class GetAdSpotsReq implements IGetAdSpotsReq {
+
+    /**
+     * Constructs a new GetAdSpotsReq.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IGetAdSpotsReq);
+
+    /** GetAdSpotsReq uid. */
+    public uid: (number|Long);
+
+    /**
+     * Creates a new GetAdSpotsReq instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns GetAdSpotsReq instance
+     */
+    public static create(properties?: IGetAdSpotsReq): GetAdSpotsReq;
+
+    /**
+     * Encodes the specified GetAdSpotsReq message. Does not implicitly {@link GetAdSpotsReq.verify|verify} messages.
+     * @param message GetAdSpotsReq message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IGetAdSpotsReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Encodes the specified GetAdSpotsReq message, length delimited. Does not implicitly {@link GetAdSpotsReq.verify|verify} messages.
+     * @param message GetAdSpotsReq message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encodeDelimited(message: IGetAdSpotsReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a GetAdSpotsReq message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns GetAdSpotsReq
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): GetAdSpotsReq;
+
+    /**
+     * Decodes a GetAdSpotsReq message from the specified reader or buffer, length delimited.
+     * @param reader Reader or buffer to decode from
+     * @returns GetAdSpotsReq
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): GetAdSpotsReq;
+
+    /**
+     * Verifies a GetAdSpotsReq message.
+     * @param message Plain object to verify
+     * @returns `null` if valid, otherwise the reason why it is not
+     */
+    public static verify(message: { [k: string]: any }): (string|null);
+
+    /**
+     * Creates a GetAdSpotsReq message from a plain object. Also converts values to their respective internal types.
+     * @param object Plain object
+     * @returns GetAdSpotsReq
+     */
+    public static fromObject(object: { [k: string]: any }): GetAdSpotsReq;
+
+    /**
+     * Creates a plain object from a GetAdSpotsReq message. Also converts values to other types if specified.
+     * @param message GetAdSpotsReq
+     * @param [options] Conversion options
+     * @returns Plain object
+     */
+    public static toObject(message: GetAdSpotsReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+    /**
+     * Converts this GetAdSpotsReq to JSON.
+     * @returns JSON object
+     */
+    public toJSON(): { [k: string]: any };
+}
+
+/** Properties of a GetAdSpotsAck. */
+export interface IGetAdSpotsAck {
+
+    /** GetAdSpotsAck errCode */
+    errCode?: (number|null);
+
+    /** GetAdSpotsAck errMsg */
+    errMsg?: (string|null);
+
+    /** GetAdSpotsAck records */
+    records?: (IRecord[]|null);
+}
+
+/** Represents a GetAdSpotsAck. */
+export class GetAdSpotsAck implements IGetAdSpotsAck {
+
+    /**
+     * Constructs a new GetAdSpotsAck.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IGetAdSpotsAck);
+
+    /** GetAdSpotsAck errCode. */
+    public errCode: number;
+
+    /** GetAdSpotsAck errMsg. */
+    public errMsg: string;
+
+    /** GetAdSpotsAck records. */
+    public records: IRecord[];
+
+    /**
+     * Creates a new GetAdSpotsAck instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns GetAdSpotsAck instance
+     */
+    public static create(properties?: IGetAdSpotsAck): GetAdSpotsAck;
+
+    /**
+     * Encodes the specified GetAdSpotsAck message. Does not implicitly {@link GetAdSpotsAck.verify|verify} messages.
+     * @param message GetAdSpotsAck message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IGetAdSpotsAck, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Encodes the specified GetAdSpotsAck message, length delimited. Does not implicitly {@link GetAdSpotsAck.verify|verify} messages.
+     * @param message GetAdSpotsAck message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encodeDelimited(message: IGetAdSpotsAck, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a GetAdSpotsAck message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns GetAdSpotsAck
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): GetAdSpotsAck;
+
+    /**
+     * Decodes a GetAdSpotsAck message from the specified reader or buffer, length delimited.
+     * @param reader Reader or buffer to decode from
+     * @returns GetAdSpotsAck
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): GetAdSpotsAck;
+
+    /**
+     * Verifies a GetAdSpotsAck message.
+     * @param message Plain object to verify
+     * @returns `null` if valid, otherwise the reason why it is not
+     */
+    public static verify(message: { [k: string]: any }): (string|null);
+
+    /**
+     * Creates a GetAdSpotsAck message from a plain object. Also converts values to their respective internal types.
+     * @param object Plain object
+     * @returns GetAdSpotsAck
+     */
+    public static fromObject(object: { [k: string]: any }): GetAdSpotsAck;
+
+    /**
+     * Creates a plain object from a GetAdSpotsAck message. Also converts values to other types if specified.
+     * @param message GetAdSpotsAck
+     * @param [options] Conversion options
+     * @returns Plain object
+     */
+    public static toObject(message: GetAdSpotsAck, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+    /**
+     * Converts this GetAdSpotsAck to JSON.
      * @returns JSON object
      */
     public toJSON(): { [k: string]: any };

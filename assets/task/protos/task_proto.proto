@@ -1,0 +1,111 @@
+syntax="proto3";
+
+package task;
+
+service Task {
+  //获取任务列表和相应进度
+  rpc GetTaskProgress(GetTaskProgressReq) returns (GetTaskProgressRsp) {}
+  //获取任务奖励
+  rpc GetTaskAward(GetTaskAwardReq) returns (GetTaskAwardRsp) {}
+  //通过任务序号更新任务进度 更新成功之后发送UptTaskProgressNot
+  rpc UptTaskProgressByIndex(UptTaskProgressByIndexReq) returns (UptTaskProgressByIndexRsp) {}
+  //通过任务组别更新任务进度 更新成功之后发送UptTaskProgressNot
+  rpc UptTaskProgressByGroup(UptTaskProgressByGroupReq) returns (UptTaskProgressByGroupRsp) {}
+}
+
+message GetTaskProgressReq {
+  int32 type = 1;         //类型 0:获取全部任务类型 1:获取每日单次任务类型 2:获取每日累计任务类型 3:获取每周累计任务类型 4:成就类型
+  int64 uid = 2;          //用户id
+}
+
+message AwardItem {
+  int32 type = 1;         //奖励类型 1:活跃度 2:道具
+  int32 prop_id = 2;      //道具id
+  int64 min_num = 3;      //道具最少数量
+  int64 max_num = 4;      //道具最多数量
+  int64 effect_time = 5;  //道具有效时间
+}
+
+message TaskItem {
+  int64 uid = 1;          //用户id
+  string mid = 2;         //大厅id
+  int32 gid = 3;          //游戏id
+  string prog_id = 4;     //任务进度id
+  int32 task_id = 5;     //任务id
+  int32 task_type = 6;    //任务类型 1:每日单次任务 2:每日累计任务 3:每周累计任务 4:成就任务
+  int32 task_cond = 7;    //分组 类似 累计局数、累计赢金豆数量，用于多条任务或者成就数据更新
+  string desc = 8;        //描述
+  string title = 9;       //称号
+  repeated AwardItem awards = 10; //奖励内容
+  int64 cond_num = 11;     //完成任务进度所需数量
+  int64 cur_num = 12;      //任务当前进度数量
+  int32 status = 13;      //任务状态 1:未完成 2:可领取 3:已领取
+  int64 head_frame_index = 14; // 头像框索引
+  int32 task_group = 15;    //此分组 类似 成就任务中头像框分组赢金豆、游戏局数，用于多条任务或者成就数据更新
+}
+
+
+message GetTaskProgressRsp {
+  int32 err_code = 1;
+  string err_msg = 2;
+  repeated TaskItem task_items = 3; //任务
+}
+
+message GetTaskAwardReq {
+  string prog_id = 1; //任务进度id
+  int64 uid = 2;          //用户id
+}
+
+message GetTaskAwardRsp {
+  int32 err_code = 1;
+  string err_msg = 2;
+  repeated AwardItem awards = 3; //奖励内容
+}
+
+message UptTaskProgsNotiItem {
+  int64 uid = 1;          //用户id
+  string ProgId = 2;      //任务进度id
+  int32 TaskId = 3;      //任务id
+  int64 cond_num = 4;     //完成任务进度所需数量
+  int64 cur_num = 5;      //任务当前进度数量
+  int32 status = 6;       //任务状态
+}
+
+message UptTaskProgressByIndexReq {
+  int64 uid = 1;          //用户id
+  int32 id = 2;           //任务id
+  int32 inc = 3;          //增加数值
+}
+
+message UptTaskProgressByIndexRsp {
+  int32  err_code = 1;
+  string err_msg = 2;
+}
+
+message UptTaskProgressByGroupReq {
+  int64 uid = 1;          //用户id
+  int32 group = 2;        //任务组别
+  int32 inc = 3;          //增加数值
+}
+
+message UptTaskProgressByGroupRsp {
+  int32  err_code = 1;
+  string err_msg = 2;
+}
+
+message UptTaskProgsNot {
+  repeated UptTaskProgsNotiItem items = 1;//更新后的任务完成进度
+}
+
+message PlayerMsgNot {
+  int64 uid = 1;
+  string route = 2;
+  bytes body = 3;
+}
+
+message TaskAwardNot {
+  bool have_rewards = 1; // 有奖
+  int32 style = 2; // 样式 1:矩形 2：矩形带角标
+  string desc = 3; // 描述
+  int32 align = 4; // 对齐 0：默认居中 1：左对齐 2：右对齐
+}

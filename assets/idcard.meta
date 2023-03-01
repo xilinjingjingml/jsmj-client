@@ -1,0 +1,12 @@
+{
+  "ver": "1.1.2",
+  "uuid": "794a9607-da16-4dd6-94b0-55c5541207fc",
+  "isBundle": true,
+  "bundleName": "idcard",
+  "priority": 1,
+  "compressionType": {},
+  "optimizeHotUpdate": {},
+  "inlineSpriteFrames": {},
+  "isRemoteBundle": {},
+  "subMetas": {}
+}

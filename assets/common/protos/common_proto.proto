@@ -1,5 +1,5 @@
 syntax = "proto3";
-package common;
+// package common;
 
 message GameData {
   string room_id = 1;
@@ -7,3 +7,10 @@ message GameData {
   string server_id = 3;
   string game_id = 4;
 }
+
+message SysError {
+  string id = 1;
+  int32 code = 2;
+  string detail = 3;
+  string status = 4;
+};

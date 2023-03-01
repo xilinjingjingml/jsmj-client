@@ -24,12 +24,6 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 10
-      },
-      {
-        "__id__": 11
-      },
-      {
         "__id__": 12
       },
       {
@@ -102,9 +96,16 @@
       }
     ],
     "_active": true,
-    "_components": [],
+    "_components": [
+      {
+        "__id__": 9
+      },
+      {
+        "__id__": 10
+      }
+    ],
     "_prefab": {
-      "__id__": 9
+      "__id__": 11
     },
     "_opacity": 255,
     "_color": {
@@ -280,15 +281,15 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 140,
-      "g": 75,
-      "b": 48,
+      "r": 255,
+      "g": 228,
+      "b": 76,
       "a": 255
     },
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 719,
-      "height": 50.4
+      "height": 45.36
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -341,8 +342,8 @@
     "_dstBlendFactor": 771,
     "_string": "服务异常，请稍后再试",
     "_N$string": "服务异常，请稍后再试",
-    "_fontSize": 40,
-    "_lineHeight": 40,
+    "_fontSize": 36,
+    "_lineHeight": 36,
     "_enableWrapText": true,
     "_N$file": null,
     "_isSystemFontUsed": true,
@@ -367,6 +368,35 @@
     },
     "fileId": "a1lmE6a75N2Z2ggyJSx/UL",
     "sync": false
+  },
+  {
+    "__type__": "cc.Animation",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 2
+    },
+    "_enabled": true,
+    "_defaultClip": {
+      "__uuid__": "a2ef38f5-1aa4-482e-a2b4-6a12602c0bb5"
+    },
+    "_clips": [
+      {
+        "__uuid__": "a2ef38f5-1aa4-482e-a2b4-6a12602c0bb5"
+      }
+    ],
+    "playOnLoad": false,
+    "_id": ""
+  },
+  {
+    "__type__": "69756rUKipK7Lqz2RYN/WTR",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 2
+    },
+    "_enabled": true,
+    "_id": ""
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -404,35 +434,6 @@
     "_isAbsVerticalCenter": true,
     "_originalWidth": 720,
     "_originalHeight": 1280,
-    "_id": ""
-  },
-  {
-    "__type__": "cc.Animation",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "_defaultClip": {
-      "__uuid__": "a2ef38f5-1aa4-482e-a2b4-6a12602c0bb5"
-    },
-    "_clips": [
-      {
-        "__uuid__": "a2ef38f5-1aa4-482e-a2b4-6a12602c0bb5"
-      }
-    ],
-    "playOnLoad": false,
-    "_id": ""
-  },
-  {
-    "__type__": "69756rUKipK7Lqz2RYN/WTR",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
     "_id": ""
   },
   {

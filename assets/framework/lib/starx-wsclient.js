@@ -382,8 +382,8 @@
   };
 
   starx.disconnect = function (manual) {
-    if (socket) {
-      closeManual = !!manual
+    closeManual = !!manual
+    if (socket && socket.readyState == WebSocket.OPEN) {
       if (socket.disconnect) socket.disconnect();
       if (socket.close) socket.close();
       console.log('disconnect');
@@ -441,7 +441,7 @@
   };
 
   var send = function (packet) {
-    if (socket)
+    if (socket && socket.readyState == WebSocket.OPEN)
       socket.send(packet.buffer);
   };
 
@@ -515,7 +515,10 @@
   };
 
   var onKick = function (data) {
-    data = JSON.parse(Protocol.strdecode(data));
+    if (data)
+      data = JSON.parse(Protocol.strdecode(data));
+    console.log("==onKick==")
+    closeManual = true
     starx.emit('onKick', data);
   };
 

@@ -1,0 +1,61 @@
+
+syntax="proto3";
+package personal;
+
+service Personal {
+  //获取签到列表和相应进度
+  rpc GetPersonalProgress(GetPersonalProgressReq) returns (GetPersonalProgressRsp) {}
+  //获取任务奖励
+  rpc GetPersonalAward(GetPersonalAwardReq) returns (GetPersonalAwardRsp) {}
+}
+
+message GetPersonalProgressReq {
+  int64 uid = 1;          //用户id
+}
+
+message AwardItem {
+  int32 id = 1;      //道具id
+  int32 num = 2;      //道具最少数量
+}
+
+message DailyItem {
+  int32 day = 1;          //游戏id
+  int32 award_status = 2; // 领取状态
+  repeated AwardItem awards = 3; //奖励内容
+}
+
+message AccumulateItem {
+  int32 count = 1;          //游戏id
+  int32 award_status = 2; // 领取状态
+  repeated AwardItem awards = 3; //奖励内容
+}
+
+message UserItem {
+  int64 uid = 1; // 玩家uid
+  string daily = 2; // 每日签到记录
+  int64 daily_time = 3;          // 每日签到日期
+  string accumulate = 4;         // 累计签到记录
+  int64 accumulate_time = 5; // 累计签到日期
+}
+
+message GetPersonalProgressRsp {
+  int32 err_code = 1;
+  string err_msg = 2;
+  int64 daily_time = 3;          // 每日签到日期
+  int64 accumulate_time = 4; // 累计签到日期
+  repeated DailyItem daily_items = 5; // 每日配置
+  repeated AccumulateItem accumulate_items = 6; // 累计配置
+}
+
+message GetPersonalAwardReq {
+  int64 uid = 1;          //用户id
+  int32 personal_type = 2; // 1:每日签到 2:累计签到
+  int32 personal_day = 3; // 签到日 每日：1~7 累计：3、5、7
+  int32 award_type = 4; // 1:普通签到 2：视频签到
+}
+
+message GetPersonalAwardRsp {
+  int32 err_code = 1;
+  string err_msg = 2;
+  repeated AwardItem awards = 3; //奖励内容
+}

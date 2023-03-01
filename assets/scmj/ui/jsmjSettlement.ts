@@ -1,14 +1,13 @@
 import BaseUI from "../../framework/base/baseUI";
 import { izx } from "../../framework/izx";
-import Scmj from "../scmj";
 import { OperatorCode } from "../scmjConstants";
 import { SCMJ_EVENT } from "../scmjEvents";
 import { scmjUtil } from "../scmjUtil";
-import mjLayer from "./scmjLayer";
 import scmjMain from "./ScmjMain";
 import proto_mj = require("../protos/proto_mj")
 import Servers, { } from "../../common/servers";
 import Constants from "../../common/constants";
+import Scmj from "../scmj";
 
 const {ccclass, property} = cc._decorator;
 
@@ -37,7 +36,14 @@ export default class JsmjSettlement extends BaseUI {
         console.log("JsmjSettlement onLoad")
         this.initEvent()
         this.initButton()
+        this.initSettlement()
     }
+
+    initSettlement() {
+        izx.log("==initSettlement==")
+		let serverChairId = Scmj.getInstance()._scmj.serverChairId
+		this.chairId = serverChairId
+	}
 
     initEvent() {
         izx.on(SCMJ_EVENT.INIT_SELF_VIEW_SERVER_CHAIR_ID, this.init_self_view_chair_id, this)
@@ -47,13 +53,15 @@ export default class JsmjSettlement extends BaseUI {
     }
 
     initButton () {
-        izx.bindButtonClick("BtnReady", this.node, (sender, data) => {      
+        izx.bindButtonClick("BtnReady", this.node, (sender, data) => {  
+            Scmj.getInstance()._scmj._isShowGameResultScene = false    
             this.hideScoreScene()
             izx.dispatchEvent(SCMJ_EVENT.GAME_DESK_CLEAR, {})
             izx.dispatchEvent(SCMJ_EVENT.OPERATE_NOTI, {
                 leftCardsNum : 0
             })
             izx.emit(SCMJ_EVENT.CLICK_READY)
+            //izx.dispatchEvent(SCMJ_EVENT.READY_REQ, {isReady: true})
         })
     }
 
@@ -63,6 +71,10 @@ export default class JsmjSettlement extends BaseUI {
         this.node.getChildByName("settlement_play_2").active=false
         this.node.getChildByName("settlement_play_3").active=false
         this.node.getChildByName("BtnReady").active=false
+        this.node.getChildByName("liujuDragon").active=false
+        //cc.find("mask", this.node).active=false
+        Scmj.getInstance()._scmj._isShowGameResultScene = false
+        this.node.stopAllActions()
     }
 
     init_self_view_chair_id(server_chair_id) {
@@ -95,49 +107,20 @@ export default class JsmjSettlement extends BaseUI {
                         settlement.addChild(hbNode);
                         hbNode.runAction(cc.sequence(
                             cc.delayTime(0.08 * i),
-                            cc.bezierTo(1, [new cc.Vec2(hbAreaSend.x, hbAreaSend.y), cc.v2(0, window.innerHeight / 2), new cc.Vec2(hbAreaReveive.x, hbAreaReveive.y)]),
+                            cc.bezierTo(1, [new cc.Vec2(hbAreaSend.x, hbAreaSend.y), cc.v2(0, cc.view.getFrameSize().height / 2), new cc.Vec2(hbAreaReveive.x, hbAreaReveive.y)]),
                             cc.callFunc(function () {
                                 settlement.removeChild(hbNode)
                             }))
                         )
                     }
                 }
-                //this.getResult()
             }
         }
     }
 
-    getResult () {
-        cc.log("getResult")
-        const msg = this.settlementMsg
-        msg.result.forEach(element => {
-            let viewChairId = this.s2c(element.chairId) 
-            let dragonDisplay = this.node.getChildByName("settlement_play_" + viewChairId)
-            if(element.chairId == element.huChair) {
-                //龙骨动画资源
-                dragonDisplay.getChildByName("huPaiDragon").active=true
-                dragonDisplay.getChildByName("shuPaiDragon").active=false
-                
-                //字体
-                dragonDisplay.getChildByName("hongbao_num").getComponent(cc.Label).font = this.huFont
-            } else {
-                //龙骨动画资源
-                dragonDisplay.getChildByName("huPaiDragon").active=false
-                dragonDisplay.getChildByName("shuPaiDragon").active=true
-                //字体
-                dragonDisplay.getChildByName("hongbao_num").getComponent(cc.Label).font = this.shuFont
-            }
-            if (element.score > 0) {
-                dragonDisplay.getChildByName("hongbao_num").getComponent(cc.Label).string = "+" + element.score
-            } else {
-                dragonDisplay.getChildByName("hongbao_num").getComponent(cc.Label).string = "" + element.score
-            }
-            dragonDisplay.active=true
-        });
-        this.node.getChildByName("BtnReady").active=true
-    }
-    
     settlement(msg: proto_mj.GameResultNot) {
+        Scmj.getInstance()._scmj._isShowGameResultScene = true
+        //cc.find("mask", this.node).active=true
 
         let scores: proto_mj.OpScoreNot = proto_mj.OpScoreNot.create(null)
         let OpScore: proto_mj.OpScore = proto_mj.OpScore.create(null)
@@ -168,9 +151,6 @@ export default class JsmjSettlement extends BaseUI {
 
         msg.result.forEach(element => {
             // 大众麻将:0分暂时不显示动画，因为吃碰杠分在游戏中已经结算，此处只结算胡牌番，所有只有赢家和输家
-            if (element.score === 0) {
-                return
-            }
             let viewChairId = this.s2c(element.chairId) 
             let dragonDisplay = this.node.getChildByName("settlement_play_" + viewChairId)
             if(element.chairId == msg.huChair) {
@@ -201,7 +181,24 @@ export default class JsmjSettlement extends BaseUI {
             }
             dragonDisplay.active=true
         });
-        this.node.getChildByName("BtnReady").active=true
+
+        if (msg.huType == -1) {
+            this.node.getChildByName("liujuDragon").active=true
+        }
+        
+        let self = this
+        this.node.runAction(cc.sequence(
+            cc.delayTime(2),
+            cc.callFunc(function () {
+                self.node.getChildByName("BtnReady").active=true
+            }))
+        )
+
+        izx.dispatchEvent(Constants.EventName.AD_SPOT_Zhuan_Pan_Chou_Jiang_Req,{
+            uid : izx.user.uid
+        })
+
+        izx.dispatchEvent(SCMJ_EVENT.UPDATE_USER_TUOGUAN, {status: false})
     }
 
     onComplete (res) {
@@ -210,11 +207,13 @@ export default class JsmjSettlement extends BaseUI {
 
     s2c(index) {
         let maxPlyNum = 4
+        izx.logI("this.chairId==s2c",this.chairId)
         return (index - this.chairId + maxPlyNum) % maxPlyNum
     }
     
     c2s(index) {
         let maxPlyNum = 4
+        izx.logI("this.chairId==c2s",this.chairId)
         return (this.chairId + index + maxPlyNum) % maxPlyNum
     }
 }

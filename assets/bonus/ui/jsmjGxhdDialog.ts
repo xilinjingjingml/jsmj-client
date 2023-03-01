@@ -8,7 +8,6 @@
  */
 import BaseUI from "../../framework/base/baseUI";
 import { izx } from "../../framework/izx";
-import { SCMJ_EVENT } from "../../scmj/scmjEvents";
 import adOrder = require("../../common/protos/ad-order")
 import Constants, {} from "../../common/constants"
 
@@ -37,6 +36,10 @@ export default class jsmjGxhdDialog extends BaseUI {
                 }
             });   
         }
+    }
+
+    onClose () {
+        izx.dispatchEvent(Constants.EventName.Game_Hong_Bao_Dispatch)
     }
 
     initDragonbones () {

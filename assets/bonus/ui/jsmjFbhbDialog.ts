@@ -1,7 +1,6 @@
 import BaseUI from "../../framework/base/baseUI";
 import { izx } from "../../framework/izx";
 import adOrder = require("../../common/protos/ad-order")
-import { SCMJ_EVENT } from "../../scmj/scmjEvents";
 import Constants, {} from "../../common/constants"
 import { Types } from "../../framework/plugin/pluginTypes"
 
@@ -13,11 +12,7 @@ export default class jsmjFbhbDialog extends BaseUI {
     ackParams: adOrder.IAdOrderNot = {}
     adStatus: number = 0
     gameAdId: string = "104"
-
-    @property(cc.Prefab)
-    fbhb_2_ske:cc.Prefab = null
-    @property(cc.Prefab)
-    fbhb_3_ske:cc.Prefab = null
+    isNeedDispathch = true
 
     onLoad() {
         this.initEvent()
@@ -26,10 +21,14 @@ export default class jsmjFbhbDialog extends BaseUI {
 
     start() {
         izx.ad.showBanner()
+        izx.UnBlockUI()
     }
 
     onClose() {
         izx.ad.hideBanner()
+        if (this.isNeedDispathch) {
+            izx.dispatchEvent(Constants.EventName.Game_Hong_Bao_Dispatch)
+        }
     }
 
     onOpen() {
@@ -43,7 +42,7 @@ export default class jsmjFbhbDialog extends BaseUI {
     }
 
     initButton() {
-        izx.bindButtonClick("chb/fbhbDragon", this.node, () => {
+        izx.bindButtonClick("chb/lqBtn", this.node, () => {
             this.adOrderUpdateStatus()
         })
         izx.bindButtonClick("chb/fblqBtn", this.node, () => {
@@ -77,39 +76,6 @@ export default class jsmjFbhbDialog extends BaseUI {
         }, 500)
     }
 
-    /**
-     * 拆红包
-     */
-    chaihb() {
-        cc.log("chaihb")
-        let chbDragonNode = cc.find("chb/fbhbDragon", this.node)
-        chbDragonNode.removeAllChildren()
-        let chaihongbao_2 = cc.instantiate(this.fbhb_2_ske)
-        chbDragonNode.addChild(chaihongbao_2)
-        chaihongbao_2.getComponent(dragonBones.ArmatureDisplay).on(dragonBones.EventObject.COMPLETE, (event)=>{
-
-            chbDragonNode.removeAllChildren()
-            let chaihongbao_3 = cc.instantiate(this.fbhb_3_ske)
-            chbDragonNode.addChild(chaihongbao_3)
-
-            izx.bindButtonClick("chb/fbhbDragon", this.node, () => {
-            })
-
-            cc.find("chb/moneyArea/moneyNum", this.node).active = true
-            cc.find("chb/fblqBtn", this.node).active = true
-            //cc.find("chb/ptlq", this.node).active = true
-       
-            this.ackParams.award = this.ackParams.award || []    
-            this.ackParams.award.forEach(element => {
-                if (element.index == 0) {
-                    cc.find("chb/moneyArea/moneyNum", this.node).getComponent(cc.Label).string = izx.getMoneyformat(Number(element.num)) + "元"
-                    return
-                }
-            });
-        },this)
-        
-    }
-
     initParams (msg) {
         this.ackParams = msg
     }
@@ -118,7 +84,7 @@ export default class jsmjFbhbDialog extends BaseUI {
      * 看广告 免费拿回奖励
     */
     adOrderUpdateStatus() {
-        cc.log("chb ads")
+        izx.log("chb ads")
         // 接受看广告
         if (this.ackParams.errCode == 0) {
             izx.dispatchEvent(Constants.EventName.AD_ORDER_UPDATE_STATUS,  {
@@ -128,7 +94,7 @@ export default class jsmjFbhbDialog extends BaseUI {
                 state: adOrder.AdOrderState.Accept
             })
         }else {
-            izx.pushDialog("tips","prefabs/tipsDialog", null, {"initParam":{tips:this.ackParams.errMsg,callback:null}}) 
+            izx.pushDialog("tips","prefabs/tipsDialog", null, {mask:true, maskClose:true,"initParam":{tips:this.ackParams.errMsg,callback:null}}) 
         }
     }
 
@@ -152,7 +118,7 @@ export default class jsmjFbhbDialog extends BaseUI {
             }
         }else {
             //提示
-            izx.pushDialog("tips","prefabs/tipsDialog", null, {"initParam":{tips:msg.errMsg,callback:null}})
+            izx.pushDialog("tips","prefabs/tipsDialog", null, {mask:true, maskClose:true,"initParam":{tips:msg.errMsg,callback:null}})
         }
     }
 
@@ -171,7 +137,7 @@ export default class jsmjFbhbDialog extends BaseUI {
     }
 
     getAdOrderAward() {
-        cc.log("sqmgx ads award")
+        izx.log("sqmgx ads award")
         // 领取广告奖励
         izx.dispatchEvent(Constants.EventName.AD_ORDER_AWARD,  {
             uid : izx.user.uid,
@@ -181,15 +147,16 @@ export default class jsmjFbhbDialog extends BaseUI {
     }
 
     getAdOrderAwardAck(msg: adOrder.IGetAdOrderAwardAck) {
-        cc.log("getAdOrderAwardAck",msg)
+        izx.log("getAdOrderAwardAck",msg)
         if (msg.service !== this.ackParams.service || msg.orderId !== this.ackParams.orderId) {
             return
         }
         if (msg.errCode == 0) {
-            izx.pushDialog("bonus","prefabs/gxhdDialog", null, {"initParam":msg})
+            this.isNeedDispathch = false
+            izx.pushDialog("bonus","prefabs/gxhdDialog", null, {mask:true, maskClose:false,"initParam":msg})
             this.pop()
         }else {
-            izx.pushDialog("tips","prefabs/tipsDialog", null, {"initParam":{tips:msg.errMsg,callback:null}})
+            izx.pushDialog("tips","prefabs/tipsDialog", null, {mask:true, maskClose:true,"initParam":{tips:msg.errMsg,callback:null}})
         }
         this.pop()
     }

@@ -1,5 +1,6 @@
 import BaseUi from "../../framework/base/baseUI";
 import {izx} from "../../framework/izx"
+import { SHOP_EVENT } from "../shop_events";
 const {ccclass, property} = cc._decorator;
 
 @ccclass
@@ -21,6 +22,13 @@ export default class ShopConfirm extends BaseUi {
         izx.bindButtonClick("Bg/ConfirmButton", this.node, () =>{
             //调用支付插件
             cc.log("ConfirmButton", this.initParam)
+            
+            izx.audioMgr.playBtn()
+            izx.dispatchEvent(SHOP_EVENT.EXCHANGE_BOX_REQ, {
+                uid: izx.user.uid,
+                index: this.initParam.boxid,
+            })
+
             this.pop()
         })
 

@@ -4,29 +4,39 @@
  * @Autor: liuhongbin
  * @Date: 2020-11-02 10:40:56
  * @LastEditors: liuhongbin
- * @LastEditTime: 2021-01-11 14:59:02
+ * @LastEditTime: 2021-02-01 09:30:04
  */
 import { izx } from "../framework/izx";
 import Constants from "../common/constants";
+import CommonMode from "./mode/commonMode";
 
 const GAME_BUNDLE_NAME = "common"
 
-const HTTP_URL = {
-    [izx.OFFICIAL_ENV]: "http://jsmj.mcbeam.cc/",
+export const HTTP_URL = {
+    [izx.OFFICIAL_ENV]: "http://jsmj.mcbeam.pro/",
     [izx.MIRROR_ENV]: "",
-    [izx.TEST_ENV]: "http://192.168.20.123:8080/",
+    [izx.TEST_ENV]: "https://jsmj.mcbeam.cc/",
 }
 
-const SOCKET_URL = {
-    [izx.OFFICIAL_ENV]: "jsmj.mcbeam.cc/websocket",
+export const AUTH_URL = {
+    [izx.OFFICIAL_ENV]: "https://mcbeam.mcbeam.pro/",
     [izx.MIRROR_ENV]: "",
-    [izx.TEST_ENV]: "192.168.20.123:3250",
+    [izx.TEST_ENV]: "https://mcbeam.mcbeam.cc/"
+  }
+
+export const SOCKET_URL = {
+    [izx.OFFICIAL_ENV]: "jsmj.mcbeam.pro/websocket",
+    [izx.MIRROR_ENV]: "",
+    [izx.TEST_ENV]: "jsmj.mcbeam.cc/websocket",
 }
+
+
 
 export namespace App {
-
+    let _common: CommonMode = new CommonMode()
     export enum tips {
-        GAME_INIT = "初始化",
+        GAME_INIT = "正在获取服务器信息",
+        GAME_ONLINE_PARAM_FAILED = "获取服务器信息失败",
         GAME_ENV = "初始化环境",
         GAME_INIT_RES = "初始化资源",
         GAME_ACCOUNT = "初始化账号信息",
@@ -62,12 +72,17 @@ export namespace App {
 
         izx.httpUrl = izx.urlParams["hs"] || HTTP_URL[izx.curEnv]
         izx.socketUrl = izx.urlParams["ws"] || SOCKET_URL[izx.curEnv]
+        izx.authUrl = izx.urlParams["as"] || AUTH_URL[izx.curEnv]
     
         izx.preloadBundle.push("scmj")
+        izx.preloadBundle.push("lobby")
+        izx.preloadBundle.push("vip")
+        izx.preloadBundle.push("unires")
     }
 
     export function start() {
         init()
+        _common.load()
     }
 
     export function gameStart() {

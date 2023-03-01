@@ -4,15 +4,14 @@
  * @Autor: wangxinfeng
  * @Date: 2020-11-2 
  * @LastEditors: liuhongbin
- * @LastEditTime: 2021-01-15 17:19:02
+ * @LastEditTime: 2021-01-27 15:13:47
  */
 import BaseUi from "../../framework/base/baseUI";
 import { izx } from "../../framework/izx";
 import { SCMJ_EVENT } from "../scmjEvents";
 import Constants from "../../common/constants";
 import { scmjUtil } from "../scmjUtil";
-import { AdAreaId, GameModule, OperatorCode } from "../scmjConstants";
-import { proto_mj } from "../protos/proto_mj";
+import { AdAreaId, GameModule, OperatorCode } from "../scmjConstants"
 import { JsmjAudioUtil } from "../JsmjAudioUtil";
 import Servers, { } from "../../common/servers";
 import Scmj from "../scmj"
@@ -36,6 +35,8 @@ export default class scmjMain extends BaseUi {
 
     chairId = 0
 
+    hongbaoCacheArr = []
+
     onLoad() {
         izx.on(SCMJ_EVENT.ENTER_ACK, this.enterAck, this)
         izx.on(SCMJ_EVENT.ENTER_NOTI, this.enterNoti, this)
@@ -45,17 +46,21 @@ export default class scmjMain extends BaseUi {
         izx.on(SCMJ_EVENT.BEGIN_GAME_NOTI, this.beginGameNot, this)
         izx.on(SCMJ_EVENT.SET_DEALER_NOTI, this.bankerNoti, this)
         izx.on(SCMJ_EVENT.OPERATE_NOTI, this.mjCardNumNoti, this)
-        izx.on(Constants.EventName.ROOM_EXIT_REQ, this.exitRoomReq, this)
         izx.on(Constants.EventName.ROOM_EXIT_GAME, this.exitGame, this)
+        izx.on(Constants.EventName.ROOM_EXIT_REQ, this.exitRoom, this)
 
         izx.on(Constants.EventName.AD_ORDER_NOTI, this.adOrderNoti, this)
         izx.on(Constants.EventName.AD_SPOT_HAI_DI_LAO_YUE, this.haidilaoyueHandler, this)
         izx.on(Constants.EventName.AD_SPOT_Xin_Shou_Hao_Li_Ack, this.xinshouhaoliHandler, this)
         izx.on(Constants.EventName.AD_SPOT_Deng_Lu_Jiang_Li_Get_Daily_First_Login_Ack, this.firstLoginHandler, this)
         izx.on(Constants.EventName.AD_SPOT_Deng_Lu_Jiang_Li_Ack, this.denglujiangliHandler, this)
-        izx.on(SCMJ_EVENT.Get_Chai_Hong_Bao_Ack, this.chaihongackHandler, this)
+        izx.on(Constants.EventName.Get_Chai_Hong_Bao_Ack, this.chaihongackHandler, this)
 
         izx.on("ITEM_DATA_FEED", this.updateItem, this)
+        izx.on(Constants.EventName.AD_SPOT_Zhuan_Pan_Chou_Jiang_Ack, this.zhuanpanChoujiangAck, this)
+
+        izx.on(SCMJ_EVENT.AUTO_NOTI, this.autoNoti, this)
+        izx.on(SCMJ_EVENT.GAME_RESULT_NOTI, this.closeMyTuoguan, this)
     }
     onOpen() {
         console.log("ScmjMain onOpen")
@@ -67,6 +72,7 @@ export default class scmjMain extends BaseUi {
     onClose() {
         console.log("ScmjMain onClose")
         super.onClose()
+        izx.offByTag(this)
     }
 
     init() {
@@ -76,9 +82,15 @@ export default class scmjMain extends BaseUi {
 
         izx.on(SCMJ_EVENT.CLICK_READY, this.onClickReady, this)
         
+        // 取消托管
+        izx.bindButtonClick("CenterArea/tuoguan/tuoguanArea/BtnCancelTuoG", this.node, (sender, data) => {
+            cc.find("CenterArea/tuoguan/tuoguanArea",  this.node).active = false
+            // 发送取消托管的请求
+            izx.dispatchEvent(SCMJ_EVENT.AUTO_REQ, {autoFlag: 0, autoType:1})
+        })
 
         izx.bindButtonClick("CenterArea/BtnReady", this.node, (sender, data) => {
-            // izx.dispatchEvent(SCMJ_EVENT.READY_REQ, {isReady: true})
+            //izx.dispatchEvent(SCMJ_EVENT.READY_REQ, {isReady: true})
             izx.emit(SCMJ_EVENT.CLICK_READY)
         })
 
@@ -91,36 +103,43 @@ export default class scmjMain extends BaseUi {
 
         })
 
-        izx.bindButtonClick("TopArea/BtnExit", this.node, (sender, data) => {
-            izx.pushDialog("tips", "prefabs/tipsDialog")
+        izx.bindButtonClick("TopArea/bg/BtnExit", this.node, (sender, data) => {
+            izx.pushDialog("tips","prefabs/tipsDialog",null, {mask:true, maskClose:true,
+                "initParam":{
+                    tips:"确定退出房间吗", 
+                    callback:()=>{izx.dispatchEvent(Constants.EventName.ROOM_EXIT_REQ, {needReq:true})}
+                }
+            })
         })
 
-        izx.bindButtonClick("BottomArea/BtnArea/tixian/tixianBtn", this.node, () => {
-            izx.pushDialog("cashout", "prefabs/cashDialog")
+        izx.bindButtonClick("BottomArea/SelfHead/BgGold", this.node, () => {
+            izx.pushDialog("cashout", "prefabs/cashDialog", null,{mask:true, maskClose:true})
         })
 
-        izx.bindButtonClick("BottomArea/BtnArea/qiandao/qiandaoBtn", this.node, () => {
+        izx.bindButtonClick("BottomArea/BtnArea/qiandaoBtn", this.node, () => {
             izx.dispatchEvent(Constants.EventName.AD_SPOT_Deng_Lu_Jiang_Li_Req, {
                 uid: izx.user.uid
             })
         })
 
         izx.bindButtonClick("BottomArea/BtnArea/zhuanpanBtn", this.node, () => {
-            izx.pushDialog("zhuanpan", "prefabs/zhuanpanDialog", () => {
-
+            izx.dispatchEvent(Constants.EventName.AD_SPOT_Zhuan_Pan_Chou_Jiang_Req,{
+                uid : izx.user.uid
             })
         })
 
         izx.bindButtonClick("TopArea/HbTaskArea/hbTaskBtn", this.node, () => {
-            //izx.pushDialog("bonus", "prefabs/hongbaoScrollView")
+            izx.pushDialog("bonus", "prefabs/hongbaoScrollView")
         })
+
+        
 
         this.initMapNodePaths()
         izx.dispatchEvent(SCMJ_EVENT.INIT_GAME_START)
-        izx.dispatchEvent(Constants.EventName.AD_SPOT_Xin_Shou_Hao_Li_Req, {
-            uid: izx.user.uid
-        })
-        izx.dispatchEvent(SCMJ_EVENT.Get_Chai_Hong_Bao_Req)
+        // izx.dispatchEvent(Constants.EventName.AD_SPOT_Xin_Shou_Hao_Li_Req, {
+        //     uid: izx.user.uid
+        // })
+        izx.dispatchEvent(Constants.EventName.Get_Chai_Hong_Bao_Req)
 
         this.selfGold.string = izx.getMoneyformat(izx.item.getItemNum(0))
     }
@@ -130,6 +149,7 @@ export default class scmjMain extends BaseUi {
             return
         }
         if (Servers.getInstance()._room.InLobby()) {
+            Scmj.getInstance()._scmj.needAutoReady = true
             izx.dispatchEvent(Constants.EventName.ROOM_READY_TO_GAME, { gameId: "dzmj", ruleId: "dzmj.redpack.xs" })
         } else if (Servers.getInstance()._room.InTable()) {
             izx.dispatchEvent(SCMJ_EVENT.READY_REQ, { isReady: true })
@@ -145,16 +165,19 @@ export default class scmjMain extends BaseUi {
         plyDatas.forEach(item => {
             if (item.data.uid === izx.user.uid) {
                 this.chairId = item.chairId
+                if (item.ready === 1) {
+                    izx.dispatchEvent(SCMJ_EVENT.READY_RSP, { errCode: 0 })
+                }
             }
-
             this.addPlayer(item)
         })
         // izx.dispatchEvent(SCMJ_EVENT.COMPLETE_REQ)
     }
 
-    exitRoomReq() {
+    exitRoom() {
         //this.pop()
     }
+
     exitGame () {
         this.mapPlayers[1].clearView()
         this.mapPlayers[2].clearView()
@@ -166,6 +189,13 @@ export default class scmjMain extends BaseUi {
             cc.find("CenterArea/BtnReady", this.node).active = false
             cc.find("CenterArea/BtnChangeReady", this.node).active = false
         }else {
+            if (event.errCode == -2001) {
+                Servers.getInstance()._room.ReSetInTable()
+                Scmj.getInstance()._scmj.needAutoReady = true
+                izx.dispatchEvent(Constants.EventName.ROOM_READY_TO_GAME, { gameId: "dzmj", ruleId: "dzmj.redpack.xs" })
+                return
+            }
+
             cc.find("CenterArea/BtnReady", this.node).active = true
             //cc.find("CenterArea/BtnChangeReady", this.node).active = true
             izx.confirmBox({
@@ -195,7 +225,7 @@ export default class scmjMain extends BaseUi {
         let serverChairId = events.serverChairId
         let mapPlayerData = events.mapPlayerData
 
-        cc.log("mapPlayers", mapPlayerData)
+        izx.log("mapPlayers", mapPlayerData)
 
         this.chairId = serverChairId
 
@@ -216,7 +246,7 @@ export default class scmjMain extends BaseUi {
                 this.addPlayer(temp)
             } else {
                 temp["chairId"] = serverChairId
-                temp["ready"] = false
+                temp["ready"] = 0
                 temp["data"] = {}
                 this.addPlayer(temp)
             }
@@ -245,9 +275,9 @@ export default class scmjMain extends BaseUi {
             this.mapPlayers[localChairId] = userHead.getComponent("scmjHead")
             scmjUtil.addIntoPath("HeadArea" + viewChairId, this.mapNodePaths, this.node, userHead)
         }
+        data.viewChairId = this.s2c(data.chairId)
         this.mapPlayers[localChairId].init(data)
     }
-
 
     enterAck(ack) {
         izx.log("==enterAck==", ack)
@@ -344,7 +374,7 @@ export default class scmjMain extends BaseUi {
     }
     xinshouhaoliHandler(msg) {
         if (msg.errCode == 0) {
-            izx.pushDialog("bonus", "prefabs/xinshouhaoliDialog", null, { initParam: msg })
+            izx.pushDialog("bonus", "prefabs/xinshouhaoliDialog", null, {mask:true, maskClose:false, initParam: msg })
         } else {
             izx.dispatchEvent(Constants.EventName.AD_SPOT_Deng_Lu_Jiang_Li_Get_Daily_First_Login_Req, {
                 uid: izx.user.uid
@@ -366,37 +396,125 @@ export default class scmjMain extends BaseUi {
         }
     }
     denglujiangliHandler(msg) {
-        izx.pushDialog("qiandao", "prefabs/qiandaoDialog", null, { initParam: msg })
+        izx.pushDialog("qiandao", "prefabs/qiandaoDialog", null, { initParam: msg, mask:true, maskClose:true })
     }
     haidilaoyueHandler(msg) {
-        izx.pushDialog("scmj", "prefabs/haidilaoyueDialog", null, { initParam: msg })
+        izx.dispatchEvent(Constants.EventName.Game_Hong_Bao_Received,{
+            AdAreaId:AdAreaId.JIE_SUAN_WIN_HAI_DI_LAO_YUE,
+            boundleName:"scmj",
+            boundlePath:"prefabs/haidilaoyueDialog",
+            callBack:null,
+            initArgs:{ mask:true, maskClose:false,initParam: msg }
+        })
+        //izx.pushDialog("scmj", "prefabs/haidilaoyueDialog", null, { initParam: msg })
     }
     adOrderNoti(msg) {
         switch (msg.areaId) {
             case AdAreaId.JIE_SUAN_WIN_HAI_DI_LAO_YUE:
-                izx.pushDialog("scmj", "prefabs/haidilaoyueDialog", null, { initParam: msg })
+                izx.dispatchEvent(Constants.EventName.Game_Hong_Bao_Received,{
+                    AdAreaId:AdAreaId.JIE_SUAN_WIN_HAI_DI_LAO_YUE,
+                    boundleName:"scmj",
+                    boundlePath:"prefabs/haidilaoyueDialog",
+                    callBack:null,
+                    initArgs:{ mask:true, maskClose:false,initParam: msg }
+                })
+                //izx.pushDialog("scmj", "prefabs/haidilaoyueDialog", null, { initParam: msg })
                 break;
             case AdAreaId.JIE_SUAN_WIN_YING_QIAN_FAN_BEI:
-                izx.pushDialog("bonus", "prefabs/fbhbDialog", null, { initParam: msg })
+                izx.dispatchEvent(Constants.EventName.Game_Hong_Bao_Received,{
+                    AdAreaId:AdAreaId.JIE_SUAN_WIN_YING_QIAN_FAN_BEI,
+                    boundleName:"bonus",
+                    boundlePath:"prefabs/fbhbDialog",
+                    callBack:null,
+                    initArgs:{ mask:true, maskClose:false,initParam: msg }
+                })
+                //izx.pushDialog("bonus", "prefabs/fbhbDialog", null, { initParam: msg })
                 break;
             case AdAreaId.JIE_SUAN_LOSE_BEN_JU_MIAN_SHU:
-                izx.pushDialog("bonus", "prefabs/sqmgxDialog", null, { initParam: msg })
+                izx.dispatchEvent(Constants.EventName.Game_Hong_Bao_Received,{
+                    AdAreaId:AdAreaId.JIE_SUAN_LOSE_BEN_JU_MIAN_SHU,
+                    boundleName:"bonus",
+                    boundlePath:"prefabs/sqmgxDialog",
+                    callBack:null,
+                    initArgs:{ mask:true, maskClose:false,initParam: msg }
+                })
+                //izx.pushDialog("bonus", "prefabs/sqmgxDialog", null, { initParam: msg })
                 break;
             case AdAreaId.JIE_SUAN_LOSE_PO_CHAN_BU_ZHU:
-                izx.pushDialog("bonus", "prefabs/pcbzDialog", null, { initParam: msg })
+                izx.dispatchEvent(Constants.EventName.Game_Hong_Bao_Received,{
+                    AdAreaId:AdAreaId.JIE_SUAN_LOSE_PO_CHAN_BU_ZHU,
+                    boundleName:"bonus",
+                    boundlePath:"prefabs/pcbzDialog",
+                    callBack:null,
+                    initArgs:{ mask:true, maskClose:false,initParam: msg }
+                })
+                //izx.pushDialog("bonus", "prefabs/pcbzDialog", null, { initParam: msg })
                 break;
 
             //幸运红包
             case AdAreaId.GAME_COUNT_MORE_3:
-                izx.pushDialog("bonus", "prefabs/gxfcDialog", null, { initParam: msg })
+                izx.dispatchEvent(Constants.EventName.Game_Hong_Bao_Received,{
+                    AdAreaId:AdAreaId.GAME_COUNT_MORE_3,
+                    boundleName:"bonus",
+                    boundlePath:"prefabs/gxfcDialog",
+                    callBack:null,
+                    initArgs:{ mask:true, maskClose:false,initParam: msg }
+                })
+                //izx.pushDialog("bonus", "prefabs/gxfcDialog", null, { initParam: msg })
                 break;
             //拆红包
             case AdAreaId.GAME_COUNT_MORE_5:
-                izx.pushDialog("bonus", "prefabs/djdlDialog", null, { initParam: msg })
+                izx.dispatchEvent(Constants.EventName.Game_Hong_Bao_Received,{
+                    AdAreaId:AdAreaId.GAME_COUNT_MORE_5,
+                    boundleName:"bonus",
+                    boundlePath:"prefabs/djdlDialog",
+                    callBack:null,
+                    initArgs:{ mask:true, maskClose:false,initParam: msg }
+                })
+                //izx.pushDialog("bonus", "prefabs/djdlDialog", null, { initParam: msg })
                 break;
             default:
                 break;
         }
+    }
+
+    zhuanpanChoujiangAck (msg) {
+        //提示
+        if (msg.errMsg === "局数还未完成") {
+            msg.errMsg = msg.errMsg + " ,还差 "+ msg.remainCount+" 局"
+        }
+        if (msg.errCode === 0) {
+            izx.dispatchEvent(Constants.EventName.Game_Hong_Bao_Received,{
+                AdAreaId:AdAreaId.EXTEN_ZHUAN_PAN,
+                boundleName:"zhuanpan",
+                boundlePath:"prefabs/zhuanpanDialog",
+                callBack:null,
+                initArgs:{ mask:true, maskClose:false,initParam: msg }
+            })
+        }else {
+            if (Scmj.getInstance()._scmj._isShowGameResultScene || Scmj.getInstance()._scmj._isShowGameResultHongbao) {
+                izx.log("_isShowGameResultHongbao:true",msg.remainCount)
+            }else {
+                izx.pushDialog("tips","prefabs/smallTipsDialog", null, {"initParam":{tips:msg.errMsg,callback:null}})
+            }
+        }
+    }
+
+    // 托管广播通知
+    autoNoti(msg) {
+        if(msg.chairID === this.chairId) {
+            if (msg.autoFlag === 1 && msg.autoType !== -1) {
+                cc.find("CenterArea/tuoguan/tuoguanArea",  this.node).active = true
+            } else {
+                cc.find("CenterArea/tuoguan/tuoguanArea",  this.node).active = false
+            }
+        } else {
+            izx.dispatchEvent(SCMJ_EVENT.TUO_GUAN_DISPATCH, msg)
+        }
+    }
+
+    closeMyTuoguan() {
+        cc.find("CenterArea/tuoguan/tuoguanArea",  this.node).active = false
     }
 
 }

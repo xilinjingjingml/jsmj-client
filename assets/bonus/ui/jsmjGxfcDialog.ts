@@ -12,22 +12,24 @@ export default class jsmjGxfcDialog extends BaseUI {
     //3局游戏-幸运红包
     ackParams: adOrder.IAdOrderNot = {}
     gameAdId: string = "114"
-
-    @property(cc.Prefab)
-    gongxifacai_donghua2_ske: cc.Prefab = null;
+    isNeedDispathch = true
 
     onLoad() {
         this.initEvent()
         this.initButton()
-        this.initDragonbones()
+        //this.initDragonbones()
     }
 
     start() {
         izx.ad.showBanner()
+        izx.UnBlockUI()
     }
 
     onClose() {
         izx.ad.hideBanner()
+        if (this.isNeedDispathch) {
+            izx.dispatchEvent(Constants.EventName.Game_Hong_Bao_Dispatch)
+        } 
     }
 
     onOpen() {
@@ -35,13 +37,13 @@ export default class jsmjGxfcDialog extends BaseUI {
     }
 
     initDragonbones () {
-        let gxfcNode = cc.find("gxfc/gxfcDragon", this.node)
-        gxfcNode.getChildByName("gongxifacai_donghua1_ske").getComponent(dragonBones.ArmatureDisplay).on(dragonBones.EventObject.COMPLETE, (event)=>{
-            gxfcNode.removeAllChildren()
-            let gongxifacai_donghua2 = cc.instantiate(this.gongxifacai_donghua2_ske)
-            gxfcNode.addChild(gongxifacai_donghua2)
+        // let gxfcNode = cc.find("gxfc/gxfcDragon", this.node)
+        // gxfcNode.getChildByName("gongxifacai_donghua1_ske").getComponent(dragonBones.ArmatureDisplay).on(dragonBones.EventObject.COMPLETE, (event)=>{
+        //     gxfcNode.removeAllChildren()
+        //     let gongxifacai_donghua2 = cc.instantiate(this.gongxifacai_donghua2_ske)
+        //     gxfcNode.addChild(gongxifacai_donghua2)
             
-        },this)
+        // },this)
     }
 
     initButton() {
@@ -84,7 +86,7 @@ export default class jsmjGxfcDialog extends BaseUI {
                 state: adOrder.AdOrderState.Accept
             })
         }else {
-            izx.pushDialog("tips","prefabs/tipsDialog", null, {"initParam":{tips:this.ackParams.errMsg,callback:null}}) 
+            izx.pushDialog("tips","prefabs/tipsDialog", null, {mask:true, maskClose:true,"initParam":{tips:this.ackParams.errMsg,callback:null}}) 
         }
     }
     updateAdOrderStatusAck(msg: adOrder.UpdateAdOrderStatusAck) {
@@ -107,7 +109,7 @@ export default class jsmjGxfcDialog extends BaseUI {
             }
         }else {
             //提示
-            izx.pushDialog("tips","prefabs/tipsDialog", null, {"initParam":{tips:msg.errMsg,callback:null}})
+            izx.pushDialog("tips","prefabs/tipsDialog", null, {mask:true, maskClose:true,"initParam":{tips:msg.errMsg,callback:null}})
         }
     }
 
@@ -132,14 +134,15 @@ export default class jsmjGxfcDialog extends BaseUI {
     }
 
     getAdOrderAwardAck(msg: adOrder.IGetAdOrderAwardAck) {
-        cc.log("getAdOrderAwardAck",msg)
+        izx.log("getAdOrderAwardAck",msg)
         if (msg.service !== this.ackParams.service || msg.orderId !== this.ackParams.orderId) {
             return
         }
         if (msg.errCode == 0) {
-            izx.pushDialog("bonus","prefabs/gxhdDialog", null, {"initParam":msg})
+            this.isNeedDispathch = false
+            izx.pushDialog("bonus","prefabs/gxhdDialog", null, {mask:true, maskClose:false,"initParam":msg})
         }else {
-            izx.pushDialog("tips","prefabs/tipsDialog", null, {"initParam":{tips:msg.errMsg,callback:null}})
+            izx.pushDialog("tips","prefabs/tipsDialog", null, {mask:true, maskClose:true,"initParam":{tips:msg.errMsg,callback:null}})
         }
         this.pop()
     }

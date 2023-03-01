@@ -17,10 +17,13 @@ const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class UserHead extends BaseUi {
+
     // 用户id
     uid: number = 0;
     // 座位 0-3
     chairId: number = -1;
+    // 座位 0-3
+    viewChairId: number = -1;
     // vip等级
     vipLevel: number = 0;
     // 准备状态
@@ -63,6 +66,9 @@ export default class UserHead extends BaseUi {
     // 默认头像
     @property(cc.SpriteFrame)
     sptDefaultHead: cc.SpriteFrame = null;
+
+    @property(cc.Sprite)
+    sptTuoguan: cc.Sprite = null;
     
     onOpen() {
 
@@ -80,8 +86,16 @@ export default class UserHead extends BaseUi {
         izx.on(SCMJ_EVENT.READY_NOTI, this.updateReady, this)
         izx.on(SCMJ_EVENT.BEGIN_GAME_NOTI, this.onStartGameNoti, this)
         izx.on(SCMJ_EVENT.SET_DEALER_NOTI_BANKER, this.onBankerNoti, this)
+        izx.on(SCMJ_EVENT.SET_DEALER_NOTI_BANKER_CHAIR, this.onBankerNotiChair, this)
+
         izx.on(SCMJ_EVENT.UPDATE_USER_GOLD, this.onUpdateGold, this)
+        izx.on(SCMJ_EVENT.UPDATE_USER_GOLD_CHAIR, this.onUpdateGoldByChair, this)
+        izx.on(SCMJ_EVENT.TUO_GUAN_DISPATCH, this.onUpdateTuoguan, this)
+
+        izx.on(SCMJ_EVENT.UPDATE_USER_TUOGUAN, this.closeTuoguan, this)
+        izx.on(SCMJ_EVENT.READY_RSP, this.readyAck, this)
     }
+
     onPlayerEnter(msg: gamebase.IEnterRoomNot) {
         if (msg.uid == this.uid) {
 
@@ -92,6 +106,11 @@ export default class UserHead extends BaseUi {
             this.sptHead.spriteFrame = this.sptDefaultHead
             this.sptBanker.node.active = false
             this.lblGold.string = ""
+
+            this.sptTuoguan.node.active = false
+            this.sptLeftReady.node.active = false
+            this.sptRightReady.node.active = false
+
             this.reset()
         }
     }
@@ -99,23 +118,40 @@ export default class UserHead extends BaseUi {
         this.sptHead.spriteFrame = this.sptDefaultHead
         this.sptBanker.node.active = false
         this.lblGold.string = ""
+        this.sptTuoguan.node.active = false
+        this.sptLeftReady.node.active = false
+        this.sptRightReady.node.active = false
 
         this.reset()
     }
     // 更新准备按钮显示隐藏
     updateReady(noti) {
         console.log("UserHead updateReady noti = ", noti)
-        if (!noti || !noti.isReady) return
+        if (!noti) return
         if (noti.uid != this.uid) return
 
         if (noti.isReady) {
-            if (this.chairId == 1 || this.chairId == 2) {
+            if (this.viewChairId === 1 || this.viewChairId === 2) {
                 this.sptLeftReady.node.active = true
             } else {
                 this.sptRightReady.node.active = true
             }
         } else {
             this.sptLeftReady.node.active = false
+            this.sptRightReady.node.active = false
+        }
+    }
+
+    readyAck(event) {
+        if (event.errCode === 0 ) {
+            if (this.viewChairId === 0) {
+                if ( !event.isComplete) {
+                    this.sptRightReady.node.active = true
+                } else {
+                    this.sptRightReady.node.active = false
+                }
+            }
+        } else {
             this.sptRightReady.node.active = false
         }
     }
@@ -132,13 +168,49 @@ export default class UserHead extends BaseUi {
             this.sptBanker.node.active = true
         }
     }
+
+    onBankerNotiChair (noti) {
+        if (noti.chairId === this.chairId) {
+            this.sptBanker.node.active = true
+        }
+    }
     // 更新金豆
     onUpdateGold(noti) {
-        if (!noti || !noti.gold || !noti.uid) return
+        if (!noti || !noti.gold) return
         if (noti.uid == this.uid) {
+            this.gold = noti.gold
             this.lblGold.string = izx.getMoneyformat(noti.gold)
         }
     }
+
+    // 更新金豆椅子号
+    onUpdateGoldByChair(noti) {
+        if (!noti || !noti.gold ) return
+        if (noti.chairId == this.chairId) {
+            this.gold += noti.gold
+            if (this.gold <= 0) {
+                this.lblGold.string = izx.getMoneyformat(0)
+            } else {
+                this.lblGold.string = izx.getMoneyformat(this.gold)
+            }
+        }
+    }
+
+    onUpdateTuoguan(noti) {
+        if (noti.chairID === this.chairId) {
+            if (noti.autoFlag === 1 && noti.autoType !== -1 ) {
+                this.sptTuoguan.node.active = true
+            } else {
+                this.sptTuoguan.node.active = false
+            }
+        }
+    }
+
+    closeTuoguan(msg) {
+        this.sptTuoguan.node.active = msg.status
+        this.sptBanker.node.active = false
+    }
+
     // 重置参数
     reset() {
         this.chairId = -1
@@ -157,9 +229,13 @@ export default class UserHead extends BaseUi {
 
         this.reset()
 
-        if (params.chairId) {
+        if (params.chairId >= 0) {
             this.chairId = params.chairId
         }
+        if (params.viewChairId >= 0) {
+            this.viewChairId = params.viewChairId
+        }
+
         if (params.data.uid) {
             this.uid = params.data.uid
         }
@@ -170,15 +246,26 @@ export default class UserHead extends BaseUi {
         // if (params.data.nickname) {
         //   this.nickname = params.data.nickname
         // }
-        if (params.ready) {
+        if (params.ready >= 0) {
             this.ready = params.ready
+            if (this.ready == 1) {
+                if (this.viewChairId === 1 || this.viewChairId === 2) {
+                    this.sptLeftReady.node.active = true
+                } else {
+                    this.sptRightReady.node.active = true
+                }
+            } else {
+                this.sptLeftReady.node.active = false
+                this.sptRightReady.node.active = false
+            }
         }
         if (params.vipLevel) {
             this.vipLevel = params.vipLevel
         }
 
         if (params.data.uid) {
-            this.sptHead.spriteFrame = this.headImgArr[params.chairId]
+            const headId = params.data.uid % 4
+            this.sptHead.spriteFrame = this.headImgArr[headId]
         }
 
     }

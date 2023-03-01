@@ -12,6 +12,8 @@ service Ad {
 	rpc OrderAward(GetAdOrderAwardReq) returns(GetAdOrderAwardAck){}
 	// 更新广告订单状态
 	rpc UpdateOrderStatus(UpdateAdOrderStatusReq) returns(UpdateAdOrderStatusAck){}
+
+	
 }
 
 message AwardItem {

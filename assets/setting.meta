@@ -2,10 +2,10 @@
   "ver": "1.1.2",
   "uuid": "dac76682-4bfe-4b86-9648-3b6d4932c80d",
   "isBundle": true,
-  "bundleName": "",
+  "bundleName": "setting",
   "priority": 1,
   "compressionType": {
-    "wechatgame": "subpackage"
+    "wechatgame": "default"
   },
   "optimizeHotUpdate": {
     "wechatgame": false
@@ -14,7 +14,7 @@
     "wechatgame": false
   },
   "isRemoteBundle": {
-    "wechatgame": false
+    "wechatgame": true
   },
   "subMetas": {}
 }

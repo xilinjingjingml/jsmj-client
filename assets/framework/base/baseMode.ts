@@ -3,6 +3,7 @@ import { izx } from "../izx"
 
 export default class BaseMode {
     autoRegHander() {
+        EventMgr.offByTag(this)
         let prototype = Reflect.getPrototypeOf(this)
         for (const key of Object.keys(prototype)) {
             if (-1 !== key.indexOf("Handler") && typeof prototype[key] === "function") {

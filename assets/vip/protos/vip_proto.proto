@@ -1,0 +1,96 @@
+syntax="proto3";
+
+package vip;
+
+service Vip {
+  //获取VIP配置信息
+  rpc GetVipConfig(GetVipConfigReq) returns (GetVipConfigRsp) {}
+  //获取送VIP配置信息
+  rpc GetSendVipConfig(GetSendVipConfigReq) returns (GetSendVipConfigRsp) {}
+  //获取用户VIP信息
+  rpc GetVipUserLevel(GetVipUserLevelReq) returns (GetVipUserLevelRsp) {}
+  //获取用户VIP奖励
+  rpc GetVipAwards(GetVipAwardsReq) returns (GetVipAwardsRsp) {}
+}
+
+message StateCode {
+  int32 id = 1;
+  string msg = 2;
+}
+
+message GetVipConfigReq {
+  int64 level = 1;        //等级 0:获取所有等级信息，>0:获取相应等级信息
+}
+
+message GetSendVipConfigReq {
+}
+
+message AwardItem {
+  int32 prop_id = 1;   //道具id
+  int64 min_num = 2; //道具最少数量
+  int64 max_num = 3; //道具最多数量
+  int64 effect_time = 4; //道具有效时间
+  int32 type = 5; //vip升级类型
+  string icon = 6; //icon地址
+  string tip = 7; //提示语
+}
+
+message VipConfigItem {
+  int64 level = 1;        //vip等级
+  int64 exp = 2;          //最低经验值
+  repeated AwardItem awards_once = 3; //一次性奖励内容
+  repeated AwardItem awards_daily = 4;//每日奖励内容
+  repeated string privilege_desc = 5;  //特权描述
+}
+
+message GetVipConfigRsp {
+  StateCode code = 1;     //返回码
+  repeated VipConfigItem vip_configs = 2; //vip配置
+}
+
+message GetSendVipConfigRsp {
+  StateCode code = 1;     //返回码
+  repeated AwardItem awards_list = 2; //每次奖励内容
+}
+
+message GetVipUserLevelReq {
+  int64 uid = 1;          //用户id
+}
+
+message AwardsLog {
+  int64 level = 1;        //vip等级
+  int32 status = 2;       //领取状态 1:未领取 2:已领取
+}
+
+message VipUserLevel {
+  int64 uid = 1;          //用户id
+  repeated AwardsLog awards_once_logs = 2;//vip等级首次领取奖励日志
+  repeated AwardsLog awards_daily_logs = 3;//vip等级每日领取奖励日志
+  int64 daily_date = 4;//每日领取日期，当天日期为已领过，非当天日期未领过
+}
+
+message GetVipUserLevelRsp {
+  StateCode code = 1;     //返回码
+  VipUserLevel info = 2;  //用户vip等级信息
+}
+
+message GetVipAwardsReq {
+  int64 uid = 1;          //用户id
+  int64 level = 2;        //当前vip等级
+}
+
+message GetVipAwardsRsp {
+  StateCode code = 1;     //返回码
+  repeated AwardItem awards = 2; //奖励内容
+}
+
+message VipHeadFrameNot {
+  map<string, string> params = 1; // 参数
+}
+
+message VipAwardNot {
+  bool have_rewards = 1; // 有奖
+  int32 style = 2; // 样式 1:矩形 2：矩形带角标
+  string desc = 3; // 描述
+  int32 align = 4; // 对齐 0：默认居中 1：左对齐 2：右对齐
+}

@@ -76,4 +76,32 @@ export namespace DataMgr {
         }
         EventMgr.on(eventName, func, target)
     }
+
+    export function getServerList(type) {
+        let onlineParam = getData("onlineParam")
+        if (!onlineParam) {
+          return {}
+        }
+        let list = onlineParam.game[type]
+        if (!list) {
+          return {}
+        }
+        return list
+      }
+  
+      export function getBestServer(list, money) {
+        if (!list) {
+          return null
+        }
+        let server = null
+        for(let key in list) {
+          let value = list[key]
+          if (typeof value === "object") {
+            if (money > value.gold_limit.min && (server == null || server.order < value.order)) {
+              server = value
+            }
+          }
+        }
+        return server
+      }
 }

@@ -8,7 +8,8 @@ import Ad from "../common/ad"
 // bundleName
 const GAME_BUNDLE_NAME = "gameInit"
 
-const GET_ONLINE_PRAMA = "https://mcbeam.mcbeam.cc/mcbeam-version-srv/config/get?key=jsmj"
+const GET_ONLINE_PRAMA = "api/mcbeam-version-api/config/get?key=jsmj"
+
 
 export default class GameInit {
 
@@ -42,6 +43,7 @@ export default class GameInit {
         Servers.getInstance()
 
         // this._initScene()
+        
         // this._onGetOnlineParam()
         this._getOnlineParam()
     }
@@ -62,7 +64,12 @@ export default class GameInit {
     }
 
     private _loadComplete() {
-        izx.dispatchEvent(Constants.EventName.ROOM_ENTER_GAME, {})
+        //izx.dispatchEvent(Constants.EventName.ROOM_ENTER_GAME, {})
+        izx.dispatchEvent(Constants.EventName.LOBBY_SHOW_MAIN, {})
+        let gameData = izx.getData("ReconnectGame")
+        if (gameData) {
+            izx.dispatchEvent(Constants.EventName.ROOM_ENTER_GAME, {})
+        }
     }
 
     private _initScene() {
@@ -81,15 +88,20 @@ export default class GameInit {
     }
 
     private _getOnlineParam() {
-        izx.log("getOnlineParam:" + izx.httpUrl)
+        izx.log("getOnlineParam:" + izx.authUrl)
         izx.dispatchEvent(Constants.EventName.GAME_UPDATE_PROGRESS, { type: LoadingMsgType.GetOnlineParam, abs: 0, info: App.tips.GAME_INIT })
         // 获取在线参数
         let self = this
-        let url = GET_ONLINE_PRAMA
-        url += ("." + izx.packetName.replace(/\./g, "_"))
+        let url = izx.authUrl + GET_ONLINE_PRAMA
+        //url += ("." + izx.packetName.replace(/\./g, "_"))
         izx.log("getOnlineParam:" + url)
-        izx.httpGet(url, {}, (res) => {
-            let response = JSON.parse(res.value)
+        izx.httpGet(url, {}, (res, evt) => {
+            if (res === null) {
+                izx.emit(Constants.EventName.GAME_UPDATE_PROGRESS, { type: LoadingMsgType.GetOnlineParam, abs: 0, error: App.tips.GAME_ONLINE_PARAM_FAILED, callback: self._getOnlineParam.bind(self) })
+                return
+            }
+            izx.log("getOnlineParam Data:", res)
+            let response = res
             izx.setData("onlineParam", response)
             self._onGetOnlineParam(response)
         })
@@ -171,12 +183,16 @@ export default class GameInit {
         }
     }
 
-    private _onLogin(isSuccess) {
+    private _onLogin(isSuccess, msg, callback) {
         izx.log("==_onLogin==", isSuccess)
         if (isSuccess) {
             izx.dispatchEvent(Constants.EventName.GAME_UPDATE_PROGRESS, { type: LoadingMsgType.Login, abs: 100, info: App.tips.GAME_INIT_FINISH })
         } else {
-            izx.dispatchEvent(Constants.EventName.GAME_UPDATE_PROGRESS, { type: LoadingMsgType.Login, abs: 90, error: App.tips.GAME_LOGIN_FAILED })
+            izx.dispatchEvent(Constants.EventName.GAME_UPDATE_PROGRESS, { type: LoadingMsgType.Login, abs: 90, error: App.tips.GAME_LOGIN_FAILED, callback: ()=>{
+                if (typeof (callback) === "function") {
+                    callback()
+                }
+            } })
         }
     }
 

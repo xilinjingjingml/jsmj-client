@@ -134,8 +134,13 @@ export default class BaseUI extends cc.Component {
                 }
             }
         } else if (typeof dialog === "string") {
+            let list = dialog.split("_")
+            let lastName = ""
+            if (list.length > 0) {
+                lastName = list[list.length - 1]
+            }
             for (let n = this._dialog.length, i = n - 1; i >= 0; i--) {
-                if (this._dialog[i].name === dialog) {
+                if (this._dialog[i].name === dialog || this._dialog[i].name === dialog+"<"+lastName+">") {
                     let ds = this._dialog.splice(i, 1)
                     ds && ds.length == 1 && ds[0].node.destroy()
                     // TODO: 如果存在多个名字相同的Dialog?

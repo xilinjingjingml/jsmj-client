@@ -4,7 +4,7 @@
  * @Autor: liuhongbin
  * @Date: 2020-11-13 13:42:51
  * @LastEditors: liuhongbin
- * @LastEditTime: 2021-01-12 17:00:50
+ * @LastEditTime: 2021-01-27 15:12:15
  */
 import BaseMode from "../../framework/base/baseMode"
 import { izx } from "../../framework/izx"
@@ -27,17 +27,74 @@ export default class ScmjMode extends BaseMode {
 	//完整数据包
 	completeData = null
 
+	//显示红包弹框
+	_isShowGameResultHongbao = false
+	hongbaoCacheArr = []
+
+	_isShowGameResultScene = false
+
+	// 是否自动准备
+	needAutoReady: boolean = false
+
 	constructor() {
 		super()
-		izx.setProto("jsmj", proto_mj)
-		izx.setProto("mahjong_base", mahjong_base)
-		izx.setProto("ad", adOrder)
-		izx.setProto("mjAd", mjAd)
-		izx.on(SCMJ_EVENT.INIT_GAME_START, this.onGameOpen, this)
-		izx.on(SCMJ_EVENT.Get_Chai_Hong_Bao_Req, this.GetChaiHongBaoReq, this)
-		izx.on(Constants.EventName.ROOM_EXIT_NOTI, this.onPlayerExit, this)
-
 		this.autoRegHander()
+		this.load()
+	}
+
+	//生产
+	onHongBaoReceived (msg) {
+		izx.log("onHongBaoReceived", this.hongbaoCacheArr.length, this._isShowGameResultHongbao)
+		let isFind = false
+		for (let index = this.hongbaoCacheArr.length - 1; index > 0 ; index--) {
+			const element = this.hongbaoCacheArr[index];
+			if (element.AdAreaId == 111) {
+				isFind = true
+				izx.log("onHongBaoReceived","@111")
+				return
+			}
+		}
+		this.hongbaoCacheArr.push(msg)
+		if (this._isShowGameResultHongbao === false) {
+			if (this.hongbaoCacheArr.length > 0) {
+				let hongbaoItem = this.hongbaoCacheArr[0]
+				if (hongbaoItem) {
+					izx.log("izx.StartBlockUI")
+					//izx.StartBlockUI({timeout:300})
+					
+					cc.tween(this).delay(3).call(() => {
+						izx.BlockUI({timeout:3})
+						izx.pushDialog(hongbaoItem.boundleName, hongbaoItem.boundlePath, hongbaoItem.callBack, hongbaoItem.initArgs)
+					}).start()					
+				}
+			}
+			this._isShowGameResultHongbao = true
+		}
+	}
+
+	//消费
+	onHongBaoDispatch (msg) {
+		izx.log("onHongBaoDispatch", this.hongbaoCacheArr.length)
+		izx.UnBlockUI()
+		if (this.hongbaoCacheArr.length > 0) {
+			let hongbaoItem = this.hongbaoCacheArr[0]
+			if (hongbaoItem) {
+				this.hongbaoCacheArr.splice(0,1)
+			}
+			hongbaoItem = this.hongbaoCacheArr[0]
+			if (hongbaoItem) {
+				izx.BlockUI({timeout:3})
+				izx.pushDialog(hongbaoItem.boundleName, hongbaoItem.boundlePath, hongbaoItem.callBack, hongbaoItem.initArgs)
+			} else {
+				this._isShowGameResultHongbao = false
+			}
+		} else {
+			this._isShowGameResultHongbao = false
+		}
+		if (this._isShowGameResultHongbao == false) {
+			izx.log("izx.StopBlockUI")
+			//izx.StopBlockUI()
+		}
 	}
 
 	onPlayerExit(msg) {
@@ -50,13 +107,27 @@ export default class ScmjMode extends BaseMode {
 	}
 
 	load() {
+		this.autoRegHander()
+		izx.setProto("jsmj", proto_mj)
+		izx.setProto("mahjong_base", mahjong_base)
+		izx.setProto("ad", adOrder)
+		izx.setProto("mjAd", mjAd)
+		
 		izx.on(SCMJ_EVENT.INIT_GAME_START, this.onGameOpen, this)
+		
+		izx.on(Constants.EventName.ROOM_EXIT_NOTI, this.onPlayerExit, this)
+		izx.on(Constants.EventName.Get_Chai_Hong_Bao_Req, this.GetChaiHongBaoReq, this)
+		izx.on(Constants.EventName.Game_Hong_Bao_Received, this.onHongBaoReceived, this)
+		izx.on(Constants.EventName.Game_Hong_Bao_Dispatch, this.onHongBaoDispatch, this)
 	}
 
 	unLoad() {
-		izx.offByTag(this)
 		izx.unsetProto("jsmj")
 		izx.unsetProto("mahjong_base")
+		// izx.unsetProto("ad")
+		// izx.unsetProto("mjAd")
+
+		izx.offByTag(this)
 	}
 
 	GetChaiHongBaoReq(msg) {
@@ -67,7 +138,7 @@ export default class ScmjMode extends BaseMode {
 	GetChaiHongBaoAckHandler(ack) {
 		ack = ack.packet
 		izx.log(ack)
-		izx.dispatchEvent(SCMJ_EVENT.Get_Chai_Hong_Bao_Ack, ack)
+		izx.dispatchEvent(Constants.EventName.Get_Chai_Hong_Bao_Ack, ack)
 	}
 	EnterAckHandler(ack) {
 		ack = ack.packet
@@ -82,14 +153,16 @@ export default class ScmjMode extends BaseMode {
 					return
 				}
 			});
-			cc.log("==EnterAckHandler isFind==", isFind)
+			izx.log("==EnterAckHandler isFind==", isFind)
 			ack.items.forEach(item => {
 				this.mapPlayerData.push(item)
 			});
 			izx.dispatchEvent(SCMJ_EVENT.INIT_SELF_VIEW_SERVER_CHAIR_ID, this.serverChairId)
 			izx.dispatchEvent(SCMJ_EVENT.ENTER_ACK, ack)
 
-			izx.dispatchEvent(SCMJ_EVENT.READY_REQ, { isReady: true })
+			if (this.needAutoReady) {
+				izx.dispatchEvent(SCMJ_EVENT.READY_REQ, { isReady: true })
+			}
 		} else {
 
 		}
@@ -127,11 +200,11 @@ export default class ScmjMode extends BaseMode {
 
 	ReadyRspHandler(rsp) {
 		rsp = rsp.packet
-		cc.log(rsp)
+		izx.log(rsp)
 		izx.dispatchEvent(SCMJ_EVENT.READY_RSP, rsp)
 	}
 
-	ReadyNotiHandler(noti) {
+	ReadyNotHandler(noti) {
 		izx.log(noti)
 		noti = noti.packet
 		izx.dispatchEvent(SCMJ_EVENT.READY_NOTI, noti)
@@ -218,5 +291,19 @@ export default class ScmjMode extends BaseMode {
 		msg = msg.packet
 		izx.log(msg)
 		izx.dispatchEvent(SCMJ_EVENT.UPDATE_USER_GOLD, { uid: msg.uid, gold: msg.num })
+	}
+
+	AutoReq(msg) {
+		izx.log(msg)
+		izx.notify(GameModule.GAME_ID + ".Dzmj.Auto", "AutoReq", {
+			autoFlag:msg.autoFlag,
+			autoType:msg.autoType
+		})
+	}
+
+	AutoNotHandler(msg) {
+		msg = msg.packet
+		izx.log(msg)
+		izx.dispatchEvent(SCMJ_EVENT.AUTO_NOTI, msg)
 	}
 }

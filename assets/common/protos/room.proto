@@ -1,6 +1,6 @@
 syntax = "proto3";
 import "../../common/protos/common_proto.proto";
-package servermanager;
+//package servermanager;
 
 message RoomInfo {
   string room_id = 1;
@@ -21,7 +21,7 @@ message StartJoinRoomReq {
 message StartJoinRoomRsp {
   int32 err_code = 1;
   string err_msg = 2;
-  common.GameData game_data = 3;
+  GameData game_data = 3;
 }
 
 // 通知入桌消息

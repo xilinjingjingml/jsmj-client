@@ -3,6 +3,7 @@ import { izx } from "../../framework/izx";
 import adOrder = require("../../common/protos/ad-order")
 import Constants, {} from "../../common/constants"
 import { Types } from "../../framework/plugin/pluginTypes"
+import { SCMJ_EVENT } from "../../scmj/scmjEvents";
 
 const {ccclass, property} = cc._decorator;
 
@@ -12,22 +13,24 @@ export default class jsmjDjdlDialog extends BaseUI {
     //5局游戏-拆红包
     ackParams: adOrder.IAdOrderNot = {}
     gameAdId: string = "112"
-
-    @property(cc.Prefab)
-    dajidali_donghua2_ske: cc.Prefab = null;
+    isNeedDispathch = true
 
     onLoad() {
         this.initEvent()
         this.initButton()
-        this.initDragonBones()   
+        //this.initDragonBones()   
     }
 
     start() {
         izx.ad.showBanner()
+        izx.UnBlockUI()
     }
 
     onClose() {
         izx.ad.hideBanner()
+        if (this.isNeedDispathch) {
+            izx.dispatchEvent(Constants.EventName.Game_Hong_Bao_Dispatch)
+        }
     }
 
     onOpen() {
@@ -35,12 +38,12 @@ export default class jsmjDjdlDialog extends BaseUI {
     }
 
     initDragonBones () {
-        let gxfcNode = cc.find("djdl/djdlDragon", this.node)
-        gxfcNode.getChildByName("dajidali_donghua1_ske").getComponent(dragonBones.ArmatureDisplay).on(dragonBones.EventObject.COMPLETE, (event)=>{
-            gxfcNode.removeAllChildren()
-            let dajidali_donghua2 = cc.instantiate(this.dajidali_donghua2_ske)
-            gxfcNode.addChild(dajidali_donghua2)
-        },this)
+        // let gxfcNode = cc.find("djdl/djdlDragon", this.node)
+        // gxfcNode.getChildByName("dajidali_donghua1_ske").getComponent(dragonBones.ArmatureDisplay).on(dragonBones.EventObject.COMPLETE, (event)=>{
+        //     gxfcNode.removeAllChildren()
+        //     let dajidali_donghua2 = cc.instantiate(this.dajidali_donghua2_ske)
+        //     gxfcNode.addChild(dajidali_donghua2)
+        // },this)
     }
 
     initButton() {
@@ -83,7 +86,7 @@ export default class jsmjDjdlDialog extends BaseUI {
                 state: adOrder.AdOrderState.Accept
             })
         }else {
-            izx.pushDialog("tips","prefabs/tipsDialog", null, {"initParam":{tips:this.ackParams.errMsg,callback:null}}) 
+            izx.pushDialog("tips","prefabs/tipsDialog", null, {mask:true, maskClose:true,"initParam":{tips:this.ackParams.errMsg,callback:null}}) 
         }
     }
     updateAdOrderStatusAck(msg: adOrder.UpdateAdOrderStatusAck) {
@@ -106,7 +109,7 @@ export default class jsmjDjdlDialog extends BaseUI {
             }
         }else {
             //提示
-            izx.pushDialog("tips","prefabs/tipsDialog", null, {"initParam":{tips:msg.errMsg,callback:null}})
+            izx.pushDialog("tips","prefabs/tipsDialog", null, {mask:true, maskClose:true,"initParam":{tips:msg.errMsg,callback:null}})
         }
     }
 
@@ -131,14 +134,15 @@ export default class jsmjDjdlDialog extends BaseUI {
     }
 
     getAdOrderAwardAck(msg: adOrder.IGetAdOrderAwardAck) {
-        cc.log("getAdOrderAwardAck",msg)
+        izx.log("getAdOrderAwardAck",msg)
         if (msg.service !== this.ackParams.service || msg.orderId !== this.ackParams.orderId) {
             return
         }
         if (msg.errCode == 0) {
-            izx.pushDialog("bonus","prefabs/gxhdDialog", null, {"initParam":msg})
+            this.isNeedDispathch = false
+            izx.pushDialog("bonus","prefabs/gxhdDialog", null, {mask:true, maskClose:false,"initParam":msg})
         }else {
-            izx.pushDialog("tips","prefabs/tipsDialog", null, {"initParam":{tips:msg.errMsg,callback:null}})
+            izx.pushDialog("tips","prefabs/tipsDialog", null, {mask:true, maskClose:true,"initParam":{tips:msg.errMsg,callback:null}})
         }
         this.pop()
     }

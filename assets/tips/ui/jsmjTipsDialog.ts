@@ -10,7 +10,6 @@ const {ccclass, property} = cc._decorator;
 @ccclass
 export default class jsmjTipsDialog extends BaseUI {
 
-
     @property(cc.Label)
     tips:cc.Label=null
 

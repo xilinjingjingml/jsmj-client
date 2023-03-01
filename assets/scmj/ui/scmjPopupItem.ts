@@ -31,10 +31,6 @@ export default class PopupItem extends cc.Component {
     popup_item_tingcard: cc.Node = null
 
     start () {
-        izx.on(SCMJ_EVENT.OPERATE_MENU_ChiGang, this.init, this)
-        izx.on(SCMJ_EVENT.OPERATE_MENU_Ting, this.init, this)
-        izx.on(SCMJ_EVENT.OPERATE_NOTI, this.finish, this)
-
         this.popup_item_chigang = cc.find("ContentCards/popup_item_chigang", this.node)
         this.popup_item_tingcard = cc.find("ContentCards/popup_item_tingcard", this.node)
 
@@ -43,6 +39,10 @@ export default class PopupItem extends cc.Component {
             izx.dispatchEvent(SCMJ_EVENT.OPERATE_MENU_HIDE)
         })
         this.node.active = false
+
+        izx.on(SCMJ_EVENT.OPERATE_MENU_ChiGang, this.init, this)
+        izx.on(SCMJ_EVENT.OPERATE_MENU_Ting, this.init, this)
+        izx.on(SCMJ_EVENT.OPERATE_NOTI, this.finish, this)
     }
 
     init(event: ScmjType.OperateChoose) {
@@ -87,7 +87,10 @@ export default class PopupItem extends cc.Component {
         }  
     }
 
-    finish() {
+    finish(event) {
+        if (event.chairId == null || this.node == null) {
+            return
+        }
         this.node.active = false
         this.popup_item_chigang.removeAllChildren()
         this.popup_item_tingcard.removeAllChildren()

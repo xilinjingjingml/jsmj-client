@@ -21,7 +21,7 @@ export default class jsmjSmallTipsDialog extends BaseUI {
 
         setTimeout(() => {
             this.pop()
-        }, 3000);
+        }, 2000);
     }
 }
    

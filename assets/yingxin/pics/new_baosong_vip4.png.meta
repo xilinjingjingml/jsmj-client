@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.5",
+  "uuid": "10ea4d41-258a-413d-8fc9-b25f5af79112",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 128,
+  "height": 33,
+  "platformSettings": {},
+  "subMetas": {
+    "new_baosong_vip4": {
+      "ver": "1.0.4",
+      "uuid": "07177b92-2b33-4421-b282-f6b8ce34f5dc",
+      "rawTextureUuid": "10ea4d41-258a-413d-8fc9-b25f5af79112",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 128,
+      "height": 33,
+      "rawWidth": 128,
+      "rawHeight": 33,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

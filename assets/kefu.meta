@@ -1,0 +1,20 @@
+{
+  "ver": "1.1.2",
+  "uuid": "de740301-fa74-4bb8-ae9b-fb16e30f9f49",
+  "isBundle": true,
+  "bundleName": "kefu",
+  "priority": 1,
+  "compressionType": {
+    "wechatgame": "default"
+  },
+  "optimizeHotUpdate": {
+    "wechatgame": false
+  },
+  "inlineSpriteFrames": {
+    "wechatgame": false
+  },
+  "isRemoteBundle": {
+    "wechatgame": true
+  },
+  "subMetas": {}
+}

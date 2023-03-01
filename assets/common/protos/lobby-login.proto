@@ -1,6 +1,6 @@
 syntax = "proto3";
-import "../../common/protos/common.proto";
-package lobby_login;
+import "../../common/protos/common_proto.proto";
+//package lobby_login;
 
 message LoginReq {
   string guid = 1;
@@ -17,7 +17,7 @@ message LoginRsp {
   int32 level = 5;
   int64 money = 6;
   int32 vip = 7;
-  common.GameData game_data = 8;
+  GameData game_data = 8;
   repeated Item items = 15;
 }
 

@@ -1,22 +1,22 @@
 export namespace LogMgr {
     // 普通输出
     export function log(...args) {
-        cc.log("%c%s:" + cc.js.formatStr.apply(cc, getMsgs(args)), getDateString(), stack(2));
+        console.log("%c%s:" + cc.js.formatStr.apply(cc, getMsgs(args)), getDateString(), stack(2));
         printObjs(args)
     }
  
     export function info(...args) {
-        cc.log("%c%s%s:" + cc.js.formatStr.apply(cc, getMsgs(args)), "color:#00CD00;", getDateString(), stack(2));
+        console.log("%c%s%s:" + cc.js.formatStr.apply(cc, getMsgs(args)), "color:#00CD00;", getDateString(), stack(2));
         printObjs(args)
     }
  
     export function warn(...args) {
-        cc.log("%c%s%s:" + cc.js.formatStr.apply(cc, getMsgs(args)), "color:#ee7700;", getDateString(), stack(2));
+        console.log("%c%s%s:" + cc.js.formatStr.apply(cc, getMsgs(args)), "color:#ee7700;", getDateString(), stack(2));
         printObjs(args)
     }
  
     export function error(...args) {
-        cc.log("%c%s%s:" + cc.js.formatStr.apply(cc, getMsgs(args)), "color:red", getDateString(), stack(2));
+        console.log("%c%s%s:" + cc.js.formatStr.apply(cc, getMsgs(args)), "color:red", getDateString(), stack(2));
         printObjs(args)
     }
 
@@ -25,7 +25,7 @@ export namespace LogMgr {
     }
  
     function printObjs(args) {
-        args.filter(item => typeof item === "object").map(item => cc.log(item))
+        args.filter(item => typeof item === "object").map(item => console.log(item))
     }
  
     function getDateString() {
@@ -50,7 +50,7 @@ export namespace LogMgr {
         let lines = e.stack.split('\n');
         lines.shift();
         lines.forEach((line) => {
-            cc.log('line:', line);
+            console.log('line:', line);
         });
     }
  

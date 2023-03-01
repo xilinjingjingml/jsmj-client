@@ -1,6 +1,6 @@
 {
-    "PacketName": "com.mircogame.majang.jsmj",
-    "Mid": "1",
+    "PacketName": "jsmj.wechatgame",
+    "Mid": "10001",
     "plugins": [
         {
             "name": "SessionGuest",

@@ -1,0 +1,12 @@
+{
+  "ver": "1.1.2",
+  "uuid": "64d952f6-37f8-49d1-89c7-133c656407c4",
+  "isBundle": true,
+  "bundleName": "gonggao",
+  "priority": 1,
+  "compressionType": {},
+  "optimizeHotUpdate": {},
+  "inlineSpriteFrames": {},
+  "isRemoteBundle": {},
+  "subMetas": {}
+}

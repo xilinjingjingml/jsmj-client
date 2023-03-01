@@ -1,0 +1,104 @@
+syntax="proto3";
+option go_package = "proto;activity";
+
+//package activity;
+
+service Activity {
+  //获取活动列表和相应进度
+  rpc GetActivityProgress(GetActivityProgressReq) returns (GetActivityProgressRsp) {}
+  // 更新广告状态
+  rpc UptBcsAdState(UptBcsAdStateReq) returns (UptBcsAdStateRsp) {}
+  //获取活动奖励
+  rpc GetActivityAward(GetActivityAwardReq) returns (GetActivityAwardRsp) {}
+}
+
+message GetActivityProgressReq {
+  int32 type = 1;         //类型 0:获取全部配置 1:获取一本万利配置 2:获取送百万金
+  int64 uid = 2;          //用户id
+}
+
+message AwardItem {
+  int32 prop_id = 1;      //道具id
+  int64 min_num = 2;      //道具最少数量
+  int64 max_num = 3;      //道具最多数量
+  int64 effect_time = 4;  //道具有效时间
+  int64 prop_index = 5; //当前道具索引
+  string tip = 6; // tip
+}
+
+message ActivityItem {
+  int64 uid = 1;          //用户id
+  string prog_id = 2;     //活动进度id
+  int32 activity_id = 3;     //活动id
+  int32 type = 4;    //活动类型 1:一本万利 2:送百万金 3:拜财神
+  string title = 5;       //称号
+  string desc = 6;        //描述
+  int64 cur_num = 7;      //活动当前进度数量
+  int64 cond_num = 8;     //完成活动进度所需数量
+  repeated AwardItem awards = 9; //奖励内容
+  int32 status = 10;      //活动状态 1:未完成 2:可领取 3:已领取
+}
+
+message GetActivityProgressRsp {
+  int32 err_code = 1;
+  string err_msg = 2;
+  repeated ActivityItem activity_items = 3; //活动
+}
+
+message GetActivityAwardReq {
+  string prog_ids = 1; //活动进度id
+  int64 uid = 2;          //用户id
+  int32 type = 3; // 类型
+  int32 double = 4; // 双倍
+}
+
+message GetActivityAwardRsp {
+  int32 err_code = 1;
+  string err_msg = 2;
+  repeated AwardItem awards = 3; //奖励内容
+}
+
+message UptBcsAdStateReq {
+  int64 uid = 1;
+  int32 state = 2;
+}
+
+message UptBcsAdStateRsp {
+  int32 err_code = 1;
+  string err_msg = 2;
+  string service = 3;
+  string orderId = 4;
+}
+
+message ActivityHeadFrameNot {
+  map<string, string> params = 1; // 参数
+}
+
+message ActivityAwardNot {
+  bool have_rewards = 1; // 有奖
+  int32 style = 2; // 样式 1:矩形 2：矩形带角标
+  string desc = 3; // 描述
+  int32 align = 4; // 对齐 0：默认居中 1：左对齐 2：右对齐
+}
+
+// 等级
+message LevelExp {
+  // 更新前等级
+  int32 prev_level = 1;
+  // 更新后等级
+  int32 cur_level = 2;
+  // 本次增加经验
+  int32 inc_exp = 3;
+  // 更新前等级所需经验值
+  int32 prev_level_exp = 4;
+  // 更新前等级所差经验值
+  int32 prev_left_exp = 5;
+  // 当前等级所需经验
+  int32 level_exp = 6;
+  // 当前等级所差的经验
+  int32 left_exp = 7;
+  // 升级获得的奖励
+  int32 money = 8;
+}
+
+

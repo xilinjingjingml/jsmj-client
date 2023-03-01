@@ -515,7 +515,7 @@ export namespace PluginMgr {
                         type: adsType
                     }),
                     adsInfo: adInfo
-                }), 3)
+                }), 0.1)
             }
         }
     }

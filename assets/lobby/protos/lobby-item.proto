@@ -1,0 +1,125 @@
+syntax="proto3";
+
+package item;
+
+service Item {
+  // 更新道具
+  rpc UpdateItem(UpdateItemReq) returns (UpdateItemRsp) {}
+  // 获取玩家信息
+  rpc GetPlayerInfo(GetPlayerInfoReq) returns (GetPlayerInfoRsp) {}
+  // 更新头像
+  rpc UpdateHead(UpdateHeadReq) returns (UpdateHeadRsp) {}
+  // 更新头像框
+  rpc UpdateHeadFrame(UpdateHeadFrameReq) returns (UpdateHeadFrameRsp) {}
+  //  添加获取道具接口
+  rpc GetItemNum(GetItemNumReq) returns (GetItemNumRsp) {}
+}
+
+// ----------------------------
+message ItemOpt {
+  int32 id = 1;
+  int64 num = 2;
+  int64 expire_at = 3;
+}
+
+message ItemUpdate {
+  int32 id = 1;
+  //  变更值
+  int64 change = 2;
+  //  当前数量
+  int64 num = 3;
+  //  过期时间
+  int64 expire_at = 4;
+}
+// ----------------------------
+// 更新道具
+message UpdateItemReq {
+  // 玩家ID
+  int64 uid = 1;
+  // 操作原因
+  string reason = 2;
+  // 附加参数
+  string param = 3;
+  // 客户端参数
+  string cli_param = 4;
+  // 更新列表
+  repeated ItemOpt update = 10;
+}
+
+message UpdateItemRsp {
+  int32 err_code = 1;
+  string err_msg = 2;
+}
+
+// 道具变更通知
+message UpdateMjzzItemNot {
+  // 客户端参数
+  string cli_param = 1;
+
+  // 更新列表
+  repeated ItemUpdate update = 10;
+}
+
+// ----------------------------
+// 获取玩家信息
+message GetPlayerInfoReq {
+  string uid_list = 1;
+}
+
+message PlayerInfo {
+  int64 uid = 1;
+  repeated ItemOpt items = 2;
+}
+
+message GetPlayerInfoRsp {
+  int32 err_code = 1;
+  string err_msg = 2;
+  repeated PlayerInfo info_list = 3;
+}
+
+message PlayerMsgNot {
+  int64 uid = 1;
+  string route = 2;
+  bytes body = 3;
+}
+
+// 更新头像
+message UpdateHeadReq {
+  // 玩家ID
+  int64 uid = 1;
+  // 头像索引
+  int64 index = 2;
+}
+message UpdateHeadRsp {
+  int32 err_code = 1;
+  string err_msg = 2;
+}
+
+// 更新头像框
+message UpdateHeadFrameReq {
+  // 玩家ID
+  int64 uid = 1;
+  // 头像索引
+  int64 index = 2;
+}
+message UpdateHeadFrameRsp {
+  int32 err_code = 1;
+  string err_msg = 2;
+}
+
+message GetItemNumReq {
+  int64 uid = 1;
+  // 道具ID列表
+  string item_list = 2;
+}
+
+message GetItemNumRsp {
+  int32 err_code = 1;
+  string err_msg = 2;
+  // 道具ID 和数量
+  map<int32, int64> items = 3;
+}
+
+message ItemVipLevelNot {
+  map<string, string> params = 1; // 参数
+}

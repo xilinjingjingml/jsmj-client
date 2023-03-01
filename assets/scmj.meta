@@ -4,17 +4,9 @@
   "isBundle": true,
   "bundleName": "scmj",
   "priority": 1,
-  "compressionType": {
-    "wechatgame": "subpackage"
-  },
-  "optimizeHotUpdate": {
-    "wechatgame": false
-  },
-  "inlineSpriteFrames": {
-    "wechatgame": false
-  },
-  "isRemoteBundle": {
-    "wechatgame": false
-  },
+  "compressionType": {},
+  "optimizeHotUpdate": {},
+  "inlineSpriteFrames": {},
+  "isRemoteBundle": {},
   "subMetas": {}
 }

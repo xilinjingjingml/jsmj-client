@@ -1,0 +1,12 @@
+{
+  "ver": "1.1.2",
+  "uuid": "0a99b944-4592-4ba2-933a-bfc2cdaee67a",
+  "isBundle": true,
+  "bundleName": "phone",
+  "priority": 1,
+  "compressionType": {},
+  "optimizeHotUpdate": {},
+  "inlineSpriteFrames": {},
+  "isRemoteBundle": {},
+  "subMetas": {}
+}

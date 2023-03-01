@@ -4,7 +4,7 @@
  * @Autor: liuhongbin
  * @Date: 2020-11-02 10:40:56
  * @LastEditors: liuhongbin
- * @LastEditTime: 2021-01-11 18:47:26
+ * @LastEditTime: 2021-01-26 13:11:50
  */
 import BaseUi from "../../framework/base/baseUI";
 import { izx } from "../../framework/izx";
@@ -19,6 +19,7 @@ interface LoadingMsg {
     type: LoadingMsgType
     inc: number // 取值为0-100, 增量
     abs: number // 取值为0-100，最终值
+    callback: Function  // 重试的回调
 }
 
 interface LoadingTypeProcess {
@@ -36,8 +37,6 @@ export default class LoadingScene extends BaseUi {
     // 记录每种LoadingType的进度
     _progressData: Array<number> = []
     _progressDtMax: number
-
-    _errorMsg: Array<LoadingMsg> = []
 
     onLoad() {
         izx.on(Constants.EventName.GAME_UPDATE_PROGRESS, this.updateProgress, this)
@@ -104,43 +103,29 @@ export default class LoadingScene extends BaseUi {
         total /= (LoadingMsgType.TotalType * 100)
 
         if (typeof(msg.error) == "string" && msg.error.length > 0) {
-            let exist = false
-            for (let i of this._errorMsg) {
-                if (i.type == msg.type) {
-                    exist = true
-                    break
-                }
-            }
-            if (!exist) {
-                this._errorMsg.push(msg)
-            }
-            
-            let strs: Array<string> = []
-            this._errorMsg.forEach((msg)=>strs.push(msg.error))
-            this._msg.string = strs.join("|")
             izx.confirmBox({
                 msg: msg.error,
+                title: "提示",
                 btnText: "重试",
                 callback: ()=>{
-                    izx.emit(Constants.EventName.ACCOUNT_CHECK_ACCOUNT)
+                    if (typeof (msg.callback) === "function") {
+                        msg.callback()
+                        return
+                    } else {
+                        // izx.emit(Constants.EventName.ACCOUNT_CHECK_ACCOUNT)
+                    }
                 }
             })
+            // cc.find("dragon", this.node).active = false
         } else if (typeof(msg.info) == "string" && msg.info.length > 0) {
-            let str = msg.info
-            if (this._errorMsg.length == 0) {
-                // let strs: Array<string> = []
-                // this._errorMsg.forEach((msg) => strs.push(msg.error))
-
-                // str = str + "|" + strs.join("|")
-                this._msg.string = str
-            }
+            this._msg.string = msg.info
         }
         
-        cc.log("==progress==", total)
+        izx.log("==progress==", total)
         this._progress.progress = total
         
         if (total == 1) {
-            cc.log("==load complete==")
+            izx.log("==load complete==")
             izx.emit(Constants.EventName.GAME_LOAD_COMPLETE)
         }
     }

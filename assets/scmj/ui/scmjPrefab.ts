@@ -249,24 +249,31 @@ export default class MjPrefab extends cc.Component {
       this.node.on(cc.Node.EventType.TOUCH_START, this.onTouchStartMj, this)
       this.node.on(cc.Node.EventType.TOUCH_END, this.onTouchEndMj, this)
       this.node.on(cc.Node.EventType.TOUCH_MOVE, this.onMoveMj, this)
+      this.node.on(cc.Node.EventType.TOUCH_CANCEL, this.onCancelMj, this)
     }
-    
   }
   
   onTouchStartMj(event) {
-    cc.log("onTouchStartMj(event)")
+    izx.log("onTouchStartMj(event)")
     izx.dispatchEvent(SCMJ_EVENT.MJ_TOUCH_BEGIN,event)
   }
 
   onTouchEndMj(event) {
-    cc.log("onTouchEndMj(event)")
+    izx.log("onTouchEndMj(event)")
     izx.dispatchEvent(SCMJ_EVENT.MJ_TOUCH_END,event)
   }
 
   onMoveMj(event) {
-    cc.log("onMoveMj(event)")
+    izx.log("onMoveMj(event)")
     izx.dispatchEvent(SCMJ_EVENT.MJ_TOUCH_MOVE,event)
   }
+
+  onCancelMj(event) {
+    izx.log("onCancelMj(event)")
+    izx.dispatchEvent(SCMJ_EVENT.MJ_TOUCH_CANCEL,event)
+  }
+
+  
 
   start () {
 

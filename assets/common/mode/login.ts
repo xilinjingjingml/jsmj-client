@@ -4,7 +4,7 @@
  * @Autor: liuhongbin
  * @Date: 2020-11-02 10:40:56
  * @LastEditors: liuhongbin
- * @LastEditTime: 2021-01-20 14:22:32
+ * @LastEditTime: 2021-01-26 14:11:48
  */
 import { izx } from "../../framework/izx";
 
@@ -12,6 +12,7 @@ import proto = require("../../common/protos/lobby-login")
 import Constants from "../../common/constants";
 import BaseMode from "../../framework/base/baseMode";
 import Servers from "../servers";
+import { AD_EVENT } from "../../ad/adEvents";
 
 export default class Login extends BaseMode {
     constructor() {
@@ -20,10 +21,10 @@ export default class Login extends BaseMode {
 
         izx.setProto("login", proto)
     }
-
-
     
     login() {
+        izx.off("SysError", this.onSysError, this)
+        izx.on("SysError", this.onSysError, this)
         izx.login(izx.socketUrl)
     }
 
@@ -39,15 +40,25 @@ export default class Login extends BaseMode {
             pn: izx.packetName,
         })
     }
+
+    onSysError(msg) {
+        izx.log("==Login Sys Error==", msg)
+        izx.off("SysError", this.onSysError, this)
+        let self = this
+        izx.dispatchEvent(Constants.EventName.ACCOUNT_ON_LOGIN, false, msg, ()=>{
+            self.login()
+        })
+    }
     
     LoginRspHandler(msg) {
         msg  = msg.packet
+        izx.log("==LoginRsp==", msg)
+        izx.off("SysError", this.onSysError, this)
 
         // 登录失败
         if (msg.errCode && msg.errCode !== 0) {
             // 广播错误
             izx.dispatchEvent(Constants.EventName.COMMON_DIALOG, { msg: msg.errCode})
-            izx.emit("")
             // 重新从Auth开始登录, 登录之前先手动关闭socket
             izx.close()
             setTimeout(()=>{
@@ -78,5 +89,7 @@ export default class Login extends BaseMode {
         }
 
         izx.dispatchEvent(Constants.EventName.ACCOUNT_ON_LOGIN, true)
+        izx.dispatchEvent(AD_EVENT.GET_AD_SPOT_REQ, {uid: msg.uid})
+
     }
 }

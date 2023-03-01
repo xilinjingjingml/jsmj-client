@@ -9,10 +9,15 @@
   ],
   "excluded-modules": [
     "Collider",
+    "Geom Utils",
+    "Intersection",
     "MotionStreak",
+    "Native Socket",
     "Physics",
     "StudioComponent",
     "TiledMap",
+    "VideoPlayer",
+    "WebView",
     "3D",
     "3D Primitive",
     "3D Physics/cannon.js",
@@ -23,8 +28,8 @@
   "preview-port": 7456,
   "design-resolution-width": 720,
   "design-resolution-height": 1280,
-  "fit-width": false,
-  "fit-height": true,
+  "fit-width": true,
+  "fit-height": false,
   "use-project-simulator-setting": false,
   "simulator-orientation": false,
   "use-customize-simulator": true,
@@ -43,5 +48,6 @@
       "enable": false
     }
   },
-  "last-module-event-record-time": 1610626111330
+  "last-module-event-record-time": 1607998715327,
+  "assets-sort-type": "name"
 }

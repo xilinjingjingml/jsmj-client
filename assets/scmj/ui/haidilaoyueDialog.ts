@@ -13,6 +13,7 @@ export default class haidilaoyueDialog extends BaseUI {
     ackParams: adOrder.AdOrderNot
     adStatus = 0
     gameAdId: string = "108"
+    isNeedDispathch = true
 
     @property(cc.Label)
     titleLabel: cc.Label = null
@@ -25,10 +26,14 @@ export default class haidilaoyueDialog extends BaseUI {
 
     start () {
         izx.ad.showBanner()
+        izx.UnBlockUI()
     }
 
     onClose() {
         izx.ad.hideBanner()
+        if (this.isNeedDispathch) {
+            izx.dispatchEvent(Constants.EventName.Game_Hong_Bao_Dispatch)
+        }
     }
 
     onOpen() {
@@ -43,13 +48,13 @@ export default class haidilaoyueDialog extends BaseUI {
         izx.on(Constants.EventName.AD_ORDER_CURRENT_AD_CALLBACK_INFO, this.updateAdInfo, this)
     }
     initButton() {
-        izx.bindButtonClick("content/LookBtn", this.node, () => {
+        izx.bindButtonClick("bg/content/LookBtn", this.node, () => {
             
         })
-        izx.bindButtonClick("content/GetBtn", this.node, () => {
+        izx.bindButtonClick("bg/content/GetBtn", this.node, () => {
             this.adOrderUpdateStatus()
         })
-        izx.bindButtonClick("content/CloseBtn", this.node, () => {
+        izx.bindButtonClick("bg/content/CloseBtn", this.node, () => {
             izx.dispatchEvent(Constants.EventName.AD_ORDER_UNREGEDIT_CURRENT_AD_INFO,  {
             })
             izx.popDialog(this)
@@ -71,9 +76,9 @@ export default class haidilaoyueDialog extends BaseUI {
             if (element.key == "cards") {
                 let vaule = element.value
                 let mapMj = JSON.parse(vaule)
-                cc.log("initParams mapMj==", mapMj)
+                izx.log("initParams mapMj==", mapMj)
                 mapMj.forEach((element1,index) => {
-                    let node = cc.find("content/node"+(index+1), this.node)
+                    let node = cc.find("bg/content/node"+(index+1), this.node)
                     if (node) {
                         // 发财显示特效
                         cc.find("db_dibu", node).active = (element1 == 42)
@@ -112,7 +117,7 @@ export default class haidilaoyueDialog extends BaseUI {
     }
 
     adOrderUpdateStatus() {
-        cc.log("chb ads")
+        izx.log("chb ads")
         // 接受看广告
         izx.dispatchEvent(Constants.EventName.AD_ORDER_UPDATE_STATUS,  {
             uid : izx.user.uid,
@@ -139,12 +144,12 @@ export default class haidilaoyueDialog extends BaseUI {
                 orderId: this.ackParams.orderId,
             })
         }else {
-            izx.pushDialog("tips","prefabs/tipsDialog", null, {"initParam":{tips:msg.errMsg,callback:null}})
+            izx.pushDialog("tips","prefabs/tipsDialog", null, {mask:true, maskClose:true,"initParam":{tips:msg.errMsg,callback:null}})
         }
     }
 
     getAdOrderAward () {
-        cc.log("getAdOrderAward")
+        izx.log("getAdOrderAward")
         // 领取广告奖励
         if (this.ackParams.errCode == 0) {
             izx.dispatchEvent(Constants.EventName.AD_ORDER_AWARD,  {
@@ -153,21 +158,22 @@ export default class haidilaoyueDialog extends BaseUI {
                 orderId : this.ackParams.orderId,
             })
         }else {
-            izx.pushDialog("tips","prefabs/tipsDialog", null, {"initParam":{tips:this.ackParams.errMsg,callback:null}})
+            izx.pushDialog("tips","prefabs/tipsDialog", null, {mask:true, maskClose:true,"initParam":{tips:this.ackParams.errMsg,callback:null}})
         }
     }
 
     getAdOrderAwardAck(msg: adOrder.IGetAdOrderAwardAck) {
-        cc.log("getAdOrderAwardAck",msg)
+        izx.log("getAdOrderAwardAck",msg)
         if (msg.service !== this.ackParams.service || msg.orderId !== this.ackParams.orderId) {
             return
         }
         if (msg.errCode == 0) {
-            izx.pushDialog("bonus","prefabs/gxhdDialog", null, {initParam:{
+            this.isNeedDispathch = false
+            izx.pushDialog("bonus","prefabs/gxhdDialog", null, {mask:true, maskClose:false,initParam:{
                 award:msg.award
             }})
         }else {
-            izx.pushDialog("tips","prefabs/tipsDialog", null, {initParam:{
+            izx.pushDialog("tips","prefabs/tipsDialog", null, {mask:true, maskClose:true,initParam:{
                 tips:msg.errMsg,
                 callback:()=>{
 
@@ -177,6 +183,7 @@ export default class haidilaoyueDialog extends BaseUI {
             }})
         }
         this.adStatus = 0
+
         this.pop()
     }
 }

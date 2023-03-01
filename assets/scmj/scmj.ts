@@ -12,18 +12,19 @@ import ScmjMode from "./mode/scmjMode"
 import { SCMJ_EVENT } from "./scmjEvents"
 import { scmjUtil } from "./scmjUtil";
 import Servers from "../common/servers"
+import { JsmjAudioUtil } from "./JsmjAudioUtil";
 
 const GAME_BUNDLE_NAME = "scmj"
 
 export default class Scmj {
     private static _instance: Scmj
     static getInstance(): Scmj {
-      if (!Scmj._instance) {
-        Scmj._instance = new Scmj()
-        Scmj._instance._init()
-      }
+        if (!Scmj._instance) {
+            Scmj._instance = new Scmj()
+            Scmj._instance._init()
+        }
 
-      return Scmj._instance
+        return Scmj._instance
     }
 
     _scmj: ScmjMode = new ScmjMode()
@@ -32,12 +33,23 @@ export default class Scmj {
     private _init() {
         // izx.preloadBundle.push(GAME_BUNDLE_NAME)
 
+        izx.on(Constants.EventName.BACKGROUND, () => {
+            
+        })
+        izx.on(Constants.EventName.FOREGROUND, () => {
+            this._scmj.needAutoReady = false
+            if (this._onGame) {
+                izx.emit(SCMJ_EVENT.COMPLETE_REQ)
+            }
+        })
         // izx.on(Constants.EventName.ROOM_JOIN_NOTIFY, this.enterGame, this)
         izx.on(Constants.EventName.ROOM_ENTER_GAME, this.enterGame, this)
         izx.on(Constants.EventName.ROOM_EXIT_GAME, this.exitGame, this)
         izx.on(SCMJ_EVENT.READY_REQ, this._scmj.ReadyReq, this)
         izx.on(SCMJ_EVENT.OPERATE_ACK, this._scmj.OperateAck, this)
         izx.on(SCMJ_EVENT.COMPLETE_REQ, this._scmj.CompleteReq, this)
+
+        izx.on(SCMJ_EVENT.AUTO_REQ, this._scmj.AutoReq, this)
     }
 
     private enterGame(msg) {
@@ -55,15 +67,17 @@ export default class Scmj {
             } else {
                 izx.log("==Already In Game==", msg)
             }
-        }        
+        }
     }
 
-    private exitGame(msg:{backToLobby:boolean}) {
+    private exitGame(msg: { backToLobby: boolean }) {
         if (msg.backToLobby) {
             if (this._onGame) {
                 this._scmj.unLoad()
                 this._onGame = false
-                izx.closeScene("ScmjMain")
+                izx.closeScene(GAME_BUNDLE_NAME+"_prefabs_ScmjMain")
+                izx.dispatchEvent(Constants.EventName.LOBBY_SHOW_MAIN, {})
+                JsmjAudioUtil.stopBackground()
             }
         }
     }
@@ -71,9 +85,9 @@ export default class Scmj {
     private loadGame() {
         this._scmj.load()
         scmjUtil.preLoadPic(() => {
-          izx.pushScene(GAME_BUNDLE_NAME, "prefabs/ScmjMain", (res) => {
-          
-          })
+            izx.pushScene(GAME_BUNDLE_NAME, "prefabs/ScmjMain", (res) => {
+                izx.dispatchEvent(Constants.EventName.LOBBY_CLOSE_MAIN)
+            })
         })
     }
 }

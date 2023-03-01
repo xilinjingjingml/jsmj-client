@@ -1,0 +1,52 @@
+syntax="proto3";
+package shop;
+
+service Shop {
+  //获取配置信息
+  rpc GetConfig(GetConfigReq) returns (GetConfigRsp) {}
+  //兑换宝箱
+  rpc ExchangeBox(ExchangeBoxReq) returns (ExchangeBoxRsp) {}
+}
+
+message StateCode {
+  int32 id = 1;
+  string msg = 2;
+}
+
+message GetConfigReq {
+  int64 uid = 1;
+}
+
+message Box {
+  int32 id = 1;   //道具id
+  int64 num = 2; //道具数量
+}
+
+message BoxItem {
+  int32 index = 1; // 宝箱索引
+  Box need_item = 2; //兑换需要类型数量
+  Box get_item = 3;//兑换所得类型数量
+  string icon = 4; //宝箱icon
+}
+
+message Award {
+  int32 prop_id = 1;   //道具id
+  int64 min_num = 2; //最少道具数量
+  int64 max_num = 3; //最多道具数量
+  int64 effect_time = 4; //有效时间
+}
+
+message GetConfigRsp {
+  StateCode code = 1;     //返回码
+  repeated BoxItem box_list = 2; //兑换列表
+}
+
+message ExchangeBoxReq {
+  int64 uid = 1; // 用户id
+  int32 index = 2; // 宝箱索引
+}
+
+message ExchangeBoxRsp {
+  StateCode code = 1;     //返回码
+  Box get_item = 2; //每次奖励内容
+}

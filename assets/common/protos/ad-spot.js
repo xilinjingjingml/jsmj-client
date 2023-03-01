@@ -19,7 +19,7 @@ var $root = $protobuf.roots.adSpot || ($protobuf.roots.adSpot = {});
  * @property {number} Complete=3 Complete value
  * @property {number} Expired=4 Expired value
  */
-$root.AdOrderState = (function () {
+$root.AdOrderState = (function() {
     var valuesById = {}, values = Object.create(valuesById);
     values[valuesById[0] = "Init"] = 0;
     values[valuesById[1] = "Reject"] = 1;
@@ -29,7 +29,7 @@ $root.AdOrderState = (function () {
     return values;
 })();
 
-$root.Pair = (function () {
+$root.Pair = (function() {
 
     /**
      * Properties of a Pair.
@@ -132,15 +132,15 @@ $root.Pair = (function () {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
-                case 1:
-                    message.key = reader.string();
-                    break;
-                case 2:
-                    message.value = reader.string();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+            case 1:
+                message.key = reader.string();
+                break;
+            case 2:
+                message.value = reader.string();
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
             }
         }
         return message;
@@ -239,7 +239,7 @@ $root.Pair = (function () {
     return Pair;
 })();
 
-$root.Award = (function () {
+$root.Award = (function() {
 
     /**
      * Properties of an Award.
@@ -280,7 +280,7 @@ $root.Award = (function () {
      * @memberof Award
      * @instance
      */
-    Award.prototype.num = $util.Long ? $util.Long.fromBits(0, 0, false) : 0;
+    Award.prototype.num = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
     /**
      * Award param.
@@ -355,20 +355,20 @@ $root.Award = (function () {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
-                case 1:
-                    message.index = reader.int32();
-                    break;
-                case 2:
-                    message.num = reader.int64();
-                    break;
-                case 3:
-                    if (!(message.param && message.param.length))
-                        message.param = [];
-                    message.param.push($root.Pair.decode(reader, reader.uint32()));
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+            case 1:
+                message.index = reader.int32();
+                break;
+            case 2:
+                message.num = reader.int64();
+                break;
+            case 3:
+                if (!(message.param && message.param.length))
+                    message.param = [];
+                message.param.push($root.Pair.decode(reader, reader.uint32()));
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
             }
         }
         return message;
@@ -507,7 +507,7 @@ $root.Award = (function () {
     return Award;
 })();
 
-$root.Ad = (function () {
+$root.Ad = (function() {
 
     /**
      * Constructs a new Ad service.
@@ -641,7 +641,7 @@ $root.Ad = (function () {
     return Ad;
 })();
 
-$root.AwardItem = (function () {
+$root.AwardItem = (function() {
 
     /**
      * Properties of an AwardItem.
@@ -757,20 +757,20 @@ $root.AwardItem = (function () {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
-                case 1:
-                    message.id = reader.int32();
-                    break;
-                case 2:
-                    message.sequence = reader.int32();
-                    break;
-                case 3:
-                    if (!(message.award && message.award.length))
-                        message.award = [];
-                    message.award.push($root.Award.decode(reader, reader.uint32()));
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+            case 1:
+                message.id = reader.int32();
+                break;
+            case 2:
+                message.sequence = reader.int32();
+                break;
+            case 3:
+                if (!(message.award && message.award.length))
+                    message.award = [];
+                message.award.push($root.Award.decode(reader, reader.uint32()));
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
             }
         }
         return message;
@@ -895,7 +895,7 @@ $root.AwardItem = (function () {
     return AwardItem;
 })();
 
-$root.AdTimes = (function () {
+$root.AdTimes = (function() {
 
     /**
      * Properties of an AdTimes.
@@ -934,7 +934,7 @@ $root.AdTimes = (function () {
      * @memberof AdTimes
      * @instance
      */
-    AdTimes.prototype.adTimes = $util.Long ? $util.Long.fromBits(0, 0, false) : 0;
+    AdTimes.prototype.adTimes = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
     /**
      * Creates a new AdTimes instance using the specified properties.
@@ -998,15 +998,15 @@ $root.AdTimes = (function () {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
-                case 1:
-                    message.adArea = reader.int32();
-                    break;
-                case 2:
-                    message.adTimes = reader.int64();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+            case 1:
+                message.adArea = reader.int32();
+                break;
+            case 2:
+                message.adTimes = reader.int64();
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
             }
         }
         return message;
@@ -1119,7 +1119,7 @@ $root.AdTimes = (function () {
     return AdTimes;
 })();
 
-$root.AdInfo = (function () {
+$root.AdInfo = (function() {
 
     /**
      * Properties of an AdInfo.
@@ -1255,24 +1255,24 @@ $root.AdInfo = (function () {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
-                case 1:
-                    message.service = reader.string();
-                    break;
-                case 2:
-                    message.adArea = reader.int32();
-                    break;
-                case 3:
-                    message.adType = reader.int32();
-                    break;
-                case 4:
-                    message.awardId = reader.int32();
-                    break;
-                case 5:
-                    message.award = $root.AwardItem.decode(reader, reader.uint32());
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+            case 1:
+                message.service = reader.string();
+                break;
+            case 2:
+                message.adArea = reader.int32();
+                break;
+            case 3:
+                message.adType = reader.int32();
+                break;
+            case 4:
+                message.awardId = reader.int32();
+                break;
+            case 5:
+                message.award = $root.AwardItem.decode(reader, reader.uint32());
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
             }
         }
         return message;
@@ -1400,7 +1400,7 @@ $root.AdInfo = (function () {
     return AdInfo;
 })();
 
-$root.AdInfoBundle = (function () {
+$root.AdInfoBundle = (function() {
 
     /**
      * Properties of an AdInfoBundle.
@@ -1505,17 +1505,17 @@ $root.AdInfoBundle = (function () {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
-                case 1:
-                    message.info = $root.AdInfo.decode(reader, reader.uint32());
-                    break;
-                case 2:
-                    if (!(message.params && message.params.length))
-                        message.params = [];
-                    message.params.push($root.Pair.decode(reader, reader.uint32()));
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+            case 1:
+                message.info = $root.AdInfo.decode(reader, reader.uint32());
+                break;
+            case 2:
+                if (!(message.params && message.params.length))
+                    message.params = [];
+                message.params.push($root.Pair.decode(reader, reader.uint32()));
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
             }
         }
         return message;
@@ -1636,7 +1636,7 @@ $root.AdInfoBundle = (function () {
     return AdInfoBundle;
 })();
 
-$root.AdOrderReq = (function () {
+$root.AdOrderReq = (function() {
 
     /**
      * Properties of an AdOrderReq.
@@ -1667,7 +1667,7 @@ $root.AdOrderReq = (function () {
      * @memberof AdOrderReq
      * @instance
      */
-    AdOrderReq.prototype.uid = $util.Long ? $util.Long.fromBits(0, 0, false) : 0;
+    AdOrderReq.prototype.uid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
     /**
      * AdOrderReq areaId.
@@ -1739,15 +1739,15 @@ $root.AdOrderReq = (function () {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
-                case 1:
-                    message.uid = reader.int64();
-                    break;
-                case 2:
-                    message.areaId = reader.int32();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+            case 1:
+                message.uid = reader.int64();
+                break;
+            case 2:
+                message.areaId = reader.int32();
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
             }
         }
         return message;
@@ -1860,7 +1860,7 @@ $root.AdOrderReq = (function () {
     return AdOrderReq;
 })();
 
-$root.AdOrderNot = (function () {
+$root.AdOrderNot = (function() {
 
     /**
      * Properties of an AdOrderNot.
@@ -2022,34 +2022,34 @@ $root.AdOrderNot = (function () {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
-                case 1:
-                    message.errCode = reader.int32();
-                    break;
-                case 2:
-                    message.errMsg = reader.string();
-                    break;
-                case 3:
-                    message.service = reader.string();
-                    break;
-                case 4:
-                    message.orderId = reader.string();
-                    break;
-                case 5:
-                    message.areaId = reader.int32();
-                    break;
-                case 9:
-                    if (!(message.award && message.award.length))
-                        message.award = [];
-                    message.award.push($root.Award.decode(reader, reader.uint32()));
-                    break;
-                case 10:
-                    if (!(message.params && message.params.length))
-                        message.params = [];
-                    message.params.push($root.Pair.decode(reader, reader.uint32()));
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+            case 1:
+                message.errCode = reader.int32();
+                break;
+            case 2:
+                message.errMsg = reader.string();
+                break;
+            case 3:
+                message.service = reader.string();
+                break;
+            case 4:
+                message.orderId = reader.string();
+                break;
+            case 5:
+                message.areaId = reader.int32();
+                break;
+            case 9:
+                if (!(message.award && message.award.length))
+                    message.award = [];
+                message.award.push($root.Award.decode(reader, reader.uint32()));
+                break;
+            case 10:
+                if (!(message.params && message.params.length))
+                    message.params = [];
+                message.params.push($root.Pair.decode(reader, reader.uint32()));
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
             }
         }
         return message;
@@ -2224,7 +2224,7 @@ $root.AdOrderNot = (function () {
     return AdOrderNot;
 })();
 
-$root.UpdateAdOrderStatusReq = (function () {
+$root.UpdateAdOrderStatusReq = (function() {
 
     /**
      * Properties of an UpdateAdOrderStatusReq.
@@ -2257,7 +2257,7 @@ $root.UpdateAdOrderStatusReq = (function () {
      * @memberof UpdateAdOrderStatusReq
      * @instance
      */
-    UpdateAdOrderStatusReq.prototype.uid = $util.Long ? $util.Long.fromBits(0, 0, false) : 0;
+    UpdateAdOrderStatusReq.prototype.uid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
     /**
      * UpdateAdOrderStatusReq service.
@@ -2349,21 +2349,21 @@ $root.UpdateAdOrderStatusReq = (function () {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
-                case 1:
-                    message.uid = reader.int64();
-                    break;
-                case 2:
-                    message.service = reader.string();
-                    break;
-                case 3:
-                    message.orderId = reader.string();
-                    break;
-                case 4:
-                    message.state = reader.int32();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+            case 1:
+                message.uid = reader.int64();
+                break;
+            case 2:
+                message.service = reader.string();
+                break;
+            case 3:
+                message.orderId = reader.string();
+                break;
+            case 4:
+                message.state = reader.int32();
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
             }
         }
         return message;
@@ -2407,14 +2407,14 @@ $root.UpdateAdOrderStatusReq = (function () {
                 return "orderId: string expected";
         if (message.state != null && message.hasOwnProperty("state"))
             switch (message.state) {
-                default:
-                    return "state: enum value expected";
-                case 0:
-                case 1:
-                case 2:
-                case 3:
-                case 4:
-                    break;
+            default:
+                return "state: enum value expected";
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+                break;
             }
         return null;
     };
@@ -2445,26 +2445,26 @@ $root.UpdateAdOrderStatusReq = (function () {
         if (object.orderId != null)
             message.orderId = String(object.orderId);
         switch (object.state) {
-            case "Init":
-            case 0:
-                message.state = 0;
-                break;
-            case "Reject":
-            case 1:
-                message.state = 1;
-                break;
-            case "Accept":
-            case 2:
-                message.state = 2;
-                break;
-            case "Complete":
-            case 3:
-                message.state = 3;
-                break;
-            case "Expired":
-            case 4:
-                message.state = 4;
-                break;
+        case "Init":
+        case 0:
+            message.state = 0;
+            break;
+        case "Reject":
+        case 1:
+            message.state = 1;
+            break;
+        case "Accept":
+        case 2:
+            message.state = 2;
+            break;
+        case "Complete":
+        case 3:
+            message.state = 3;
+            break;
+        case "Expired":
+        case 4:
+            message.state = 4;
+            break;
         }
         return message;
     };
@@ -2520,7 +2520,7 @@ $root.UpdateAdOrderStatusReq = (function () {
     return UpdateAdOrderStatusReq;
 })();
 
-$root.UpdateAdOrderStatusAck = (function () {
+$root.UpdateAdOrderStatusAck = (function() {
 
     /**
      * Properties of an UpdateAdOrderStatusAck.
@@ -2656,24 +2656,24 @@ $root.UpdateAdOrderStatusAck = (function () {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
-                case 1:
-                    message.errCode = reader.int32();
-                    break;
-                case 2:
-                    message.errMsg = reader.string();
-                    break;
-                case 3:
-                    message.service = reader.string();
-                    break;
-                case 4:
-                    message.orderId = reader.string();
-                    break;
-                case 5:
-                    message.state = reader.int32();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+            case 1:
+                message.errCode = reader.int32();
+                break;
+            case 2:
+                message.errMsg = reader.string();
+                break;
+            case 3:
+                message.service = reader.string();
+                break;
+            case 4:
+                message.orderId = reader.string();
+                break;
+            case 5:
+                message.state = reader.int32();
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
             }
         }
         return message;
@@ -2720,14 +2720,14 @@ $root.UpdateAdOrderStatusAck = (function () {
                 return "orderId: string expected";
         if (message.state != null && message.hasOwnProperty("state"))
             switch (message.state) {
-                default:
-                    return "state: enum value expected";
-                case 0:
-                case 1:
-                case 2:
-                case 3:
-                case 4:
-                    break;
+            default:
+                return "state: enum value expected";
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+                break;
             }
         return null;
     };
@@ -2753,26 +2753,26 @@ $root.UpdateAdOrderStatusAck = (function () {
         if (object.orderId != null)
             message.orderId = String(object.orderId);
         switch (object.state) {
-            case "Init":
-            case 0:
-                message.state = 0;
-                break;
-            case "Reject":
-            case 1:
-                message.state = 1;
-                break;
-            case "Accept":
-            case 2:
-                message.state = 2;
-                break;
-            case "Complete":
-            case 3:
-                message.state = 3;
-                break;
-            case "Expired":
-            case 4:
-                message.state = 4;
-                break;
+        case "Init":
+        case 0:
+            message.state = 0;
+            break;
+        case "Reject":
+        case 1:
+            message.state = 1;
+            break;
+        case "Accept":
+        case 2:
+            message.state = 2;
+            break;
+        case "Complete":
+        case 3:
+            message.state = 3;
+            break;
+        case "Expired":
+        case 4:
+            message.state = 4;
+            break;
         }
         return message;
     };
@@ -2824,7 +2824,7 @@ $root.UpdateAdOrderStatusAck = (function () {
     return UpdateAdOrderStatusAck;
 })();
 
-$root.GetAdOrderAwardReq = (function () {
+$root.GetAdOrderAwardReq = (function() {
 
     /**
      * Properties of a GetAdOrderAwardReq.
@@ -2856,7 +2856,7 @@ $root.GetAdOrderAwardReq = (function () {
      * @memberof GetAdOrderAwardReq
      * @instance
      */
-    GetAdOrderAwardReq.prototype.uid = $util.Long ? $util.Long.fromBits(0, 0, false) : 0;
+    GetAdOrderAwardReq.prototype.uid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
     /**
      * GetAdOrderAwardReq service.
@@ -2938,18 +2938,18 @@ $root.GetAdOrderAwardReq = (function () {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
-                case 1:
-                    message.uid = reader.int64();
-                    break;
-                case 2:
-                    message.service = reader.string();
-                    break;
-                case 3:
-                    message.orderId = reader.string();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+            case 1:
+                message.uid = reader.int64();
+                break;
+            case 2:
+                message.service = reader.string();
+                break;
+            case 3:
+                message.orderId = reader.string();
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
             }
         }
         return message;
@@ -3070,7 +3070,7 @@ $root.GetAdOrderAwardReq = (function () {
     return GetAdOrderAwardReq;
 })();
 
-$root.GetAdOrderAwardAck = (function () {
+$root.GetAdOrderAwardAck = (function() {
 
     /**
      * Properties of a GetAdOrderAwardAck.
@@ -3221,31 +3221,31 @@ $root.GetAdOrderAwardAck = (function () {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
-                case 1:
-                    message.errCode = reader.int32();
-                    break;
-                case 2:
-                    message.errMsg = reader.string();
-                    break;
-                case 3:
-                    message.service = reader.string();
-                    break;
-                case 4:
-                    message.orderId = reader.string();
-                    break;
-                case 5:
-                    if (!(message.award && message.award.length))
-                        message.award = [];
-                    message.award.push($root.Award.decode(reader, reader.uint32()));
-                    break;
-                case 6:
-                    if (!(message.params && message.params.length))
-                        message.params = [];
-                    message.params.push($root.Pair.decode(reader, reader.uint32()));
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+            case 1:
+                message.errCode = reader.int32();
+                break;
+            case 2:
+                message.errMsg = reader.string();
+                break;
+            case 3:
+                message.service = reader.string();
+                break;
+            case 4:
+                message.orderId = reader.string();
+                break;
+            case 5:
+                if (!(message.award && message.award.length))
+                    message.award = [];
+                message.award.push($root.Award.decode(reader, reader.uint32()));
+                break;
+            case 6:
+                if (!(message.params && message.params.length))
+                    message.params = [];
+                message.params.push($root.Pair.decode(reader, reader.uint32()));
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
             }
         }
         return message;
@@ -3412,7 +3412,7 @@ $root.GetAdOrderAwardAck = (function () {
     return GetAdOrderAwardAck;
 })();
 
-$root.AdSpot = (function () {
+$root.AdSpot = (function() {
 
     /**
      * Constructs a new AdSpot service.
@@ -3543,10 +3543,43 @@ $root.AdSpot = (function () {
      * @variation 2
      */
 
+    /**
+     * Callback as used by {@link AdSpot#getAdSpots}.
+     * @memberof AdSpot
+     * @typedef GetAdSpotsCallback
+     * @type {function}
+     * @param {Error|null} error Error, if any
+     * @param {GetAdSpotsAck} [response] GetAdSpotsAck
+     */
+
+    /**
+     * Calls GetAdSpots.
+     * @function getAdSpots
+     * @memberof AdSpot
+     * @instance
+     * @param {IGetAdSpotsReq} request GetAdSpotsReq message or plain object
+     * @param {AdSpot.GetAdSpotsCallback} callback Node-style callback called with the error, if any, and GetAdSpotsAck
+     * @returns {undefined}
+     * @variation 1
+     */
+    Object.defineProperty(AdSpot.prototype.getAdSpots = function getAdSpots(request, callback) {
+        return this.rpcCall(getAdSpots, $root.GetAdSpotsReq, $root.GetAdSpotsAck, request, callback);
+    }, "name", { value: "GetAdSpots" });
+
+    /**
+     * Calls GetAdSpots.
+     * @function getAdSpots
+     * @memberof AdSpot
+     * @instance
+     * @param {IGetAdSpotsReq} request GetAdSpotsReq message or plain object
+     * @returns {Promise<GetAdSpotsAck>} Promise
+     * @variation 2
+     */
+
     return AdSpot;
 })();
 
-$root.Empty = (function () {
+$root.Empty = (function() {
 
     /**
      * Properties of an Empty.
@@ -3627,9 +3660,9 @@ $root.Empty = (function () {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+            default:
+                reader.skipType(tag & 7);
+                break;
             }
         }
         return message;
@@ -3706,7 +3739,7 @@ $root.Empty = (function () {
     return Empty;
 })();
 
-$root.ZhuanPanItem = (function () {
+$root.ZhuanPanItem = (function() {
 
     /**
      * Properties of a ZhuanPanItem.
@@ -3811,17 +3844,17 @@ $root.ZhuanPanItem = (function () {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
-                case 1:
-                    if (!(message.award && message.award.length))
-                        message.award = [];
-                    message.award.push($root.Award.decode(reader, reader.uint32()));
-                    break;
-                case 2:
-                    message.desc = reader.string();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+            case 1:
+                if (!(message.award && message.award.length))
+                    message.award = [];
+                message.award.push($root.Award.decode(reader, reader.uint32()));
+                break;
+            case 2:
+                message.desc = reader.string();
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
             }
         }
         return message;
@@ -3937,7 +3970,7 @@ $root.ZhuanPanItem = (function () {
     return ZhuanPanItem;
 })();
 
-$root.GetZhuanPanChouJiangReq = (function () {
+$root.GetZhuanPanChouJiangReq = (function() {
 
     /**
      * Properties of a GetZhuanPanChouJiangReq.
@@ -3967,7 +4000,7 @@ $root.GetZhuanPanChouJiangReq = (function () {
      * @memberof GetZhuanPanChouJiangReq
      * @instance
      */
-    GetZhuanPanChouJiangReq.prototype.uid = $util.Long ? $util.Long.fromBits(0, 0, false) : 0;
+    GetZhuanPanChouJiangReq.prototype.uid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
     /**
      * Creates a new GetZhuanPanChouJiangReq instance using the specified properties.
@@ -4029,12 +4062,12 @@ $root.GetZhuanPanChouJiangReq = (function () {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
-                case 1:
-                    message.uid = reader.int64();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+            case 1:
+                message.uid = reader.int64();
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
             }
         }
         return message;
@@ -4138,7 +4171,7 @@ $root.GetZhuanPanChouJiangReq = (function () {
     return GetZhuanPanChouJiangReq;
 })();
 
-$root.GetZhuanPanChouJiangAck = (function () {
+$root.GetZhuanPanChouJiangAck = (function() {
 
     /**
      * Properties of a GetZhuanPanChouJiangAck.
@@ -4287,29 +4320,29 @@ $root.GetZhuanPanChouJiangAck = (function () {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
-                case 1:
-                    message.errCode = reader.int32();
-                    break;
-                case 2:
-                    message.errMsg = reader.string();
-                    break;
-                case 3:
-                    message.hitIndex = reader.int32();
-                    break;
-                case 4:
-                    message.remainCount = reader.int32();
-                    break;
-                case 5:
-                    if (!(message.AllItems && message.AllItems.length))
-                        message.AllItems = [];
-                    message.AllItems.push($root.ZhuanPanItem.decode(reader, reader.uint32()));
-                    break;
-                case 6:
-                    message.adOrder = $root.AdOrderNot.decode(reader, reader.uint32());
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+            case 1:
+                message.errCode = reader.int32();
+                break;
+            case 2:
+                message.errMsg = reader.string();
+                break;
+            case 3:
+                message.hitIndex = reader.int32();
+                break;
+            case 4:
+                message.remainCount = reader.int32();
+                break;
+            case 5:
+                if (!(message.AllItems && message.AllItems.length))
+                    message.AllItems = [];
+                message.AllItems.push($root.ZhuanPanItem.decode(reader, reader.uint32()));
+                break;
+            case 6:
+                message.adOrder = $root.AdOrderNot.decode(reader, reader.uint32());
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
             }
         }
         return message;
@@ -4463,7 +4496,7 @@ $root.GetZhuanPanChouJiangAck = (function () {
     return GetZhuanPanChouJiangAck;
 })();
 
-$root.GetZhuanPanChouJiangAwardReq = (function () {
+$root.GetZhuanPanChouJiangAwardReq = (function() {
 
     /**
      * Properties of a GetZhuanPanChouJiangAwardReq.
@@ -4495,7 +4528,7 @@ $root.GetZhuanPanChouJiangAwardReq = (function () {
      * @memberof GetZhuanPanChouJiangAwardReq
      * @instance
      */
-    GetZhuanPanChouJiangAwardReq.prototype.uid = $util.Long ? $util.Long.fromBits(0, 0, false) : 0;
+    GetZhuanPanChouJiangAwardReq.prototype.uid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
     /**
      * GetZhuanPanChouJiangAwardReq service.
@@ -4577,18 +4610,18 @@ $root.GetZhuanPanChouJiangAwardReq = (function () {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
-                case 1:
-                    message.uid = reader.int64();
-                    break;
-                case 3:
-                    message.service = reader.string();
-                    break;
-                case 4:
-                    message.orderId = reader.string();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+            case 1:
+                message.uid = reader.int64();
+                break;
+            case 3:
+                message.service = reader.string();
+                break;
+            case 4:
+                message.orderId = reader.string();
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
             }
         }
         return message;
@@ -4709,7 +4742,7 @@ $root.GetZhuanPanChouJiangAwardReq = (function () {
     return GetZhuanPanChouJiangAwardReq;
 })();
 
-$root.GetZhuanPanChouJiangAwardAck = (function () {
+$root.GetZhuanPanChouJiangAwardAck = (function() {
 
     /**
      * Properties of a GetZhuanPanChouJiangAwardAck.
@@ -4812,15 +4845,15 @@ $root.GetZhuanPanChouJiangAwardAck = (function () {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
-                case 1:
-                    message.errCode = reader.int32();
-                    break;
-                case 2:
-                    message.errMsg = reader.string();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+            case 1:
+                message.errCode = reader.int32();
+                break;
+            case 2:
+                message.errMsg = reader.string();
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
             }
         }
         return message;
@@ -4919,7 +4952,7 @@ $root.GetZhuanPanChouJiangAwardAck = (function () {
     return GetZhuanPanChouJiangAwardAck;
 })();
 
-$root.GetXinShouHaoLiReq = (function () {
+$root.GetXinShouHaoLiReq = (function() {
 
     /**
      * Properties of a GetXinShouHaoLiReq.
@@ -4949,7 +4982,7 @@ $root.GetXinShouHaoLiReq = (function () {
      * @memberof GetXinShouHaoLiReq
      * @instance
      */
-    GetXinShouHaoLiReq.prototype.uid = $util.Long ? $util.Long.fromBits(0, 0, false) : 0;
+    GetXinShouHaoLiReq.prototype.uid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
     /**
      * Creates a new GetXinShouHaoLiReq instance using the specified properties.
@@ -5011,12 +5044,12 @@ $root.GetXinShouHaoLiReq = (function () {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
-                case 1:
-                    message.uid = reader.int64();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+            case 1:
+                message.uid = reader.int64();
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
             }
         }
         return message;
@@ -5120,7 +5153,7 @@ $root.GetXinShouHaoLiReq = (function () {
     return GetXinShouHaoLiReq;
 })();
 
-$root.GetXinShouHaoLiAck = (function () {
+$root.GetXinShouHaoLiAck = (function() {
 
     /**
      * Properties of a GetXinShouHaoLiAck.
@@ -5234,18 +5267,18 @@ $root.GetXinShouHaoLiAck = (function () {
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
-                case 1:
-                    message.errCode = reader.int32();
-                    break;
-                case 2:
-                    message.errMsg = reader.string();
-                    break;
-                case 4:
-                    message.adOrder = $root.AdOrderNot.decode(reader, reader.uint32());
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
+            case 1:
+                message.errCode = reader.int32();
+                break;
+            case 2:
+                message.errMsg = reader.string();
+                break;
+            case 4:
+                message.adOrder = $root.AdOrderNot.decode(reader, reader.uint32());
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
             }
         }
         return message;
@@ -5355,6 +5388,1289 @@ $root.GetXinShouHaoLiAck = (function () {
     };
 
     return GetXinShouHaoLiAck;
+})();
+
+$root.AwardConfig = (function() {
+
+    /**
+     * Properties of an AwardConfig.
+     * @exports IAwardConfig
+     * @interface IAwardConfig
+     * @property {number|null} [index] AwardConfig index
+     * @property {number|null} [minNum] AwardConfig minNum
+     * @property {number|null} [maxNum] AwardConfig maxNum
+     */
+
+    /**
+     * Constructs a new AwardConfig.
+     * @exports AwardConfig
+     * @classdesc Represents an AwardConfig.
+     * @implements IAwardConfig
+     * @constructor
+     * @param {IAwardConfig=} [properties] Properties to set
+     */
+    function AwardConfig(properties) {
+        if (properties)
+            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                if (properties[keys[i]] != null)
+                    this[keys[i]] = properties[keys[i]];
+    }
+
+    /**
+     * AwardConfig index.
+     * @member {number} index
+     * @memberof AwardConfig
+     * @instance
+     */
+    AwardConfig.prototype.index = 0;
+
+    /**
+     * AwardConfig minNum.
+     * @member {number} minNum
+     * @memberof AwardConfig
+     * @instance
+     */
+    AwardConfig.prototype.minNum = 0;
+
+    /**
+     * AwardConfig maxNum.
+     * @member {number} maxNum
+     * @memberof AwardConfig
+     * @instance
+     */
+    AwardConfig.prototype.maxNum = 0;
+
+    /**
+     * Creates a new AwardConfig instance using the specified properties.
+     * @function create
+     * @memberof AwardConfig
+     * @static
+     * @param {IAwardConfig=} [properties] Properties to set
+     * @returns {AwardConfig} AwardConfig instance
+     */
+    AwardConfig.create = function create(properties) {
+        return new AwardConfig(properties);
+    };
+
+    /**
+     * Encodes the specified AwardConfig message. Does not implicitly {@link AwardConfig.verify|verify} messages.
+     * @function encode
+     * @memberof AwardConfig
+     * @static
+     * @param {IAwardConfig} message AwardConfig message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    AwardConfig.encode = function encode(message, writer) {
+        if (!writer)
+            writer = $Writer.create();
+        if (message.index != null && message.hasOwnProperty("index"))
+            writer.uint32(/* id 1, wireType 0 =*/8).int32(message.index);
+        if (message.minNum != null && message.hasOwnProperty("minNum"))
+            writer.uint32(/* id 2, wireType 0 =*/16).int32(message.minNum);
+        if (message.maxNum != null && message.hasOwnProperty("maxNum"))
+            writer.uint32(/* id 3, wireType 0 =*/24).int32(message.maxNum);
+        return writer;
+    };
+
+    /**
+     * Encodes the specified AwardConfig message, length delimited. Does not implicitly {@link AwardConfig.verify|verify} messages.
+     * @function encodeDelimited
+     * @memberof AwardConfig
+     * @static
+     * @param {IAwardConfig} message AwardConfig message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    AwardConfig.encodeDelimited = function encodeDelimited(message, writer) {
+        return this.encode(message, writer).ldelim();
+    };
+
+    /**
+     * Decodes an AwardConfig message from the specified reader or buffer.
+     * @function decode
+     * @memberof AwardConfig
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @param {number} [length] Message length if known beforehand
+     * @returns {AwardConfig} AwardConfig
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    AwardConfig.decode = function decode(reader, length) {
+        if (!(reader instanceof $Reader))
+            reader = $Reader.create(reader);
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.AwardConfig();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+            case 1:
+                message.index = reader.int32();
+                break;
+            case 2:
+                message.minNum = reader.int32();
+                break;
+            case 3:
+                message.maxNum = reader.int32();
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
+            }
+        }
+        return message;
+    };
+
+    /**
+     * Decodes an AwardConfig message from the specified reader or buffer, length delimited.
+     * @function decodeDelimited
+     * @memberof AwardConfig
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @returns {AwardConfig} AwardConfig
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    AwardConfig.decodeDelimited = function decodeDelimited(reader) {
+        if (!(reader instanceof $Reader))
+            reader = new $Reader(reader);
+        return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Verifies an AwardConfig message.
+     * @function verify
+     * @memberof AwardConfig
+     * @static
+     * @param {Object.<string,*>} message Plain object to verify
+     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+     */
+    AwardConfig.verify = function verify(message) {
+        if (typeof message !== "object" || message === null)
+            return "object expected";
+        if (message.index != null && message.hasOwnProperty("index"))
+            if (!$util.isInteger(message.index))
+                return "index: integer expected";
+        if (message.minNum != null && message.hasOwnProperty("minNum"))
+            if (!$util.isInteger(message.minNum))
+                return "minNum: integer expected";
+        if (message.maxNum != null && message.hasOwnProperty("maxNum"))
+            if (!$util.isInteger(message.maxNum))
+                return "maxNum: integer expected";
+        return null;
+    };
+
+    /**
+     * Creates an AwardConfig message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof AwardConfig
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {AwardConfig} AwardConfig
+     */
+    AwardConfig.fromObject = function fromObject(object) {
+        if (object instanceof $root.AwardConfig)
+            return object;
+        var message = new $root.AwardConfig();
+        if (object.index != null)
+            message.index = object.index | 0;
+        if (object.minNum != null)
+            message.minNum = object.minNum | 0;
+        if (object.maxNum != null)
+            message.maxNum = object.maxNum | 0;
+        return message;
+    };
+
+    /**
+     * Creates a plain object from an AwardConfig message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof AwardConfig
+     * @static
+     * @param {AwardConfig} message AwardConfig
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    AwardConfig.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults) {
+            object.index = 0;
+            object.minNum = 0;
+            object.maxNum = 0;
+        }
+        if (message.index != null && message.hasOwnProperty("index"))
+            object.index = message.index;
+        if (message.minNum != null && message.hasOwnProperty("minNum"))
+            object.minNum = message.minNum;
+        if (message.maxNum != null && message.hasOwnProperty("maxNum"))
+            object.maxNum = message.maxNum;
+        return object;
+    };
+
+    /**
+     * Converts this AwardConfig to JSON.
+     * @function toJSON
+     * @memberof AwardConfig
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    AwardConfig.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    return AwardConfig;
+})();
+
+$root.IdItem = (function() {
+
+    /**
+     * Properties of an IdItem.
+     * @exports IIdItem
+     * @interface IIdItem
+     * @property {number|null} [channel] IdItem channel
+     * @property {string|null} [id] IdItem id
+     * @property {number|null} [percentage] IdItem percentage
+     */
+
+    /**
+     * Constructs a new IdItem.
+     * @exports IdItem
+     * @classdesc Represents an IdItem.
+     * @implements IIdItem
+     * @constructor
+     * @param {IIdItem=} [properties] Properties to set
+     */
+    function IdItem(properties) {
+        if (properties)
+            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                if (properties[keys[i]] != null)
+                    this[keys[i]] = properties[keys[i]];
+    }
+
+    /**
+     * IdItem channel.
+     * @member {number} channel
+     * @memberof IdItem
+     * @instance
+     */
+    IdItem.prototype.channel = 0;
+
+    /**
+     * IdItem id.
+     * @member {string} id
+     * @memberof IdItem
+     * @instance
+     */
+    IdItem.prototype.id = "";
+
+    /**
+     * IdItem percentage.
+     * @member {number} percentage
+     * @memberof IdItem
+     * @instance
+     */
+    IdItem.prototype.percentage = 0;
+
+    /**
+     * Creates a new IdItem instance using the specified properties.
+     * @function create
+     * @memberof IdItem
+     * @static
+     * @param {IIdItem=} [properties] Properties to set
+     * @returns {IdItem} IdItem instance
+     */
+    IdItem.create = function create(properties) {
+        return new IdItem(properties);
+    };
+
+    /**
+     * Encodes the specified IdItem message. Does not implicitly {@link IdItem.verify|verify} messages.
+     * @function encode
+     * @memberof IdItem
+     * @static
+     * @param {IIdItem} message IdItem message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    IdItem.encode = function encode(message, writer) {
+        if (!writer)
+            writer = $Writer.create();
+        if (message.channel != null && message.hasOwnProperty("channel"))
+            writer.uint32(/* id 1, wireType 0 =*/8).int32(message.channel);
+        if (message.id != null && message.hasOwnProperty("id"))
+            writer.uint32(/* id 2, wireType 2 =*/18).string(message.id);
+        if (message.percentage != null && message.hasOwnProperty("percentage"))
+            writer.uint32(/* id 3, wireType 0 =*/24).int32(message.percentage);
+        return writer;
+    };
+
+    /**
+     * Encodes the specified IdItem message, length delimited. Does not implicitly {@link IdItem.verify|verify} messages.
+     * @function encodeDelimited
+     * @memberof IdItem
+     * @static
+     * @param {IIdItem} message IdItem message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    IdItem.encodeDelimited = function encodeDelimited(message, writer) {
+        return this.encode(message, writer).ldelim();
+    };
+
+    /**
+     * Decodes an IdItem message from the specified reader or buffer.
+     * @function decode
+     * @memberof IdItem
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @param {number} [length] Message length if known beforehand
+     * @returns {IdItem} IdItem
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    IdItem.decode = function decode(reader, length) {
+        if (!(reader instanceof $Reader))
+            reader = $Reader.create(reader);
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.IdItem();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+            case 1:
+                message.channel = reader.int32();
+                break;
+            case 2:
+                message.id = reader.string();
+                break;
+            case 3:
+                message.percentage = reader.int32();
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
+            }
+        }
+        return message;
+    };
+
+    /**
+     * Decodes an IdItem message from the specified reader or buffer, length delimited.
+     * @function decodeDelimited
+     * @memberof IdItem
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @returns {IdItem} IdItem
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    IdItem.decodeDelimited = function decodeDelimited(reader) {
+        if (!(reader instanceof $Reader))
+            reader = new $Reader(reader);
+        return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Verifies an IdItem message.
+     * @function verify
+     * @memberof IdItem
+     * @static
+     * @param {Object.<string,*>} message Plain object to verify
+     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+     */
+    IdItem.verify = function verify(message) {
+        if (typeof message !== "object" || message === null)
+            return "object expected";
+        if (message.channel != null && message.hasOwnProperty("channel"))
+            if (!$util.isInteger(message.channel))
+                return "channel: integer expected";
+        if (message.id != null && message.hasOwnProperty("id"))
+            if (!$util.isString(message.id))
+                return "id: string expected";
+        if (message.percentage != null && message.hasOwnProperty("percentage"))
+            if (!$util.isInteger(message.percentage))
+                return "percentage: integer expected";
+        return null;
+    };
+
+    /**
+     * Creates an IdItem message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof IdItem
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {IdItem} IdItem
+     */
+    IdItem.fromObject = function fromObject(object) {
+        if (object instanceof $root.IdItem)
+            return object;
+        var message = new $root.IdItem();
+        if (object.channel != null)
+            message.channel = object.channel | 0;
+        if (object.id != null)
+            message.id = String(object.id);
+        if (object.percentage != null)
+            message.percentage = object.percentage | 0;
+        return message;
+    };
+
+    /**
+     * Creates a plain object from an IdItem message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof IdItem
+     * @static
+     * @param {IdItem} message IdItem
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    IdItem.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults) {
+            object.channel = 0;
+            object.id = "";
+            object.percentage = 0;
+        }
+        if (message.channel != null && message.hasOwnProperty("channel"))
+            object.channel = message.channel;
+        if (message.id != null && message.hasOwnProperty("id"))
+            object.id = message.id;
+        if (message.percentage != null && message.hasOwnProperty("percentage"))
+            object.percentage = message.percentage;
+        return object;
+    };
+
+    /**
+     * Converts this IdItem to JSON.
+     * @function toJSON
+     * @memberof IdItem
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    IdItem.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    return IdItem;
+})();
+
+$root.Record = (function() {
+
+    /**
+     * Properties of a Record.
+     * @exports IRecord
+     * @interface IRecord
+     * @property {number|null} [area] Record area
+     * @property {number|null} [type] Record type
+     * @property {number|null} [curNum] Record curNum
+     * @property {number|null} [maxNum] Record maxNum
+     * @property {Array.<IAwardConfig>|null} [awards] Record awards
+     * @property {string|null} [desc] Record desc
+     * @property {Array.<IIdItem>|null} [ids] Record ids
+     */
+
+    /**
+     * Constructs a new Record.
+     * @exports Record
+     * @classdesc Represents a Record.
+     * @implements IRecord
+     * @constructor
+     * @param {IRecord=} [properties] Properties to set
+     */
+    function Record(properties) {
+        this.awards = [];
+        this.ids = [];
+        if (properties)
+            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                if (properties[keys[i]] != null)
+                    this[keys[i]] = properties[keys[i]];
+    }
+
+    /**
+     * Record area.
+     * @member {number} area
+     * @memberof Record
+     * @instance
+     */
+    Record.prototype.area = 0;
+
+    /**
+     * Record type.
+     * @member {number} type
+     * @memberof Record
+     * @instance
+     */
+    Record.prototype.type = 0;
+
+    /**
+     * Record curNum.
+     * @member {number} curNum
+     * @memberof Record
+     * @instance
+     */
+    Record.prototype.curNum = 0;
+
+    /**
+     * Record maxNum.
+     * @member {number} maxNum
+     * @memberof Record
+     * @instance
+     */
+    Record.prototype.maxNum = 0;
+
+    /**
+     * Record awards.
+     * @member {Array.<IAwardConfig>} awards
+     * @memberof Record
+     * @instance
+     */
+    Record.prototype.awards = $util.emptyArray;
+
+    /**
+     * Record desc.
+     * @member {string} desc
+     * @memberof Record
+     * @instance
+     */
+    Record.prototype.desc = "";
+
+    /**
+     * Record ids.
+     * @member {Array.<IIdItem>} ids
+     * @memberof Record
+     * @instance
+     */
+    Record.prototype.ids = $util.emptyArray;
+
+    /**
+     * Creates a new Record instance using the specified properties.
+     * @function create
+     * @memberof Record
+     * @static
+     * @param {IRecord=} [properties] Properties to set
+     * @returns {Record} Record instance
+     */
+    Record.create = function create(properties) {
+        return new Record(properties);
+    };
+
+    /**
+     * Encodes the specified Record message. Does not implicitly {@link Record.verify|verify} messages.
+     * @function encode
+     * @memberof Record
+     * @static
+     * @param {IRecord} message Record message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    Record.encode = function encode(message, writer) {
+        if (!writer)
+            writer = $Writer.create();
+        if (message.area != null && message.hasOwnProperty("area"))
+            writer.uint32(/* id 1, wireType 0 =*/8).int32(message.area);
+        if (message.type != null && message.hasOwnProperty("type"))
+            writer.uint32(/* id 2, wireType 0 =*/16).int32(message.type);
+        if (message.curNum != null && message.hasOwnProperty("curNum"))
+            writer.uint32(/* id 3, wireType 0 =*/24).int32(message.curNum);
+        if (message.maxNum != null && message.hasOwnProperty("maxNum"))
+            writer.uint32(/* id 4, wireType 0 =*/32).int32(message.maxNum);
+        if (message.awards != null && message.awards.length)
+            for (var i = 0; i < message.awards.length; ++i)
+                $root.AwardConfig.encode(message.awards[i], writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
+        if (message.desc != null && message.hasOwnProperty("desc"))
+            writer.uint32(/* id 6, wireType 2 =*/50).string(message.desc);
+        if (message.ids != null && message.ids.length)
+            for (var i = 0; i < message.ids.length; ++i)
+                $root.IdItem.encode(message.ids[i], writer.uint32(/* id 7, wireType 2 =*/58).fork()).ldelim();
+        return writer;
+    };
+
+    /**
+     * Encodes the specified Record message, length delimited. Does not implicitly {@link Record.verify|verify} messages.
+     * @function encodeDelimited
+     * @memberof Record
+     * @static
+     * @param {IRecord} message Record message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    Record.encodeDelimited = function encodeDelimited(message, writer) {
+        return this.encode(message, writer).ldelim();
+    };
+
+    /**
+     * Decodes a Record message from the specified reader or buffer.
+     * @function decode
+     * @memberof Record
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @param {number} [length] Message length if known beforehand
+     * @returns {Record} Record
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    Record.decode = function decode(reader, length) {
+        if (!(reader instanceof $Reader))
+            reader = $Reader.create(reader);
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.Record();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+            case 1:
+                message.area = reader.int32();
+                break;
+            case 2:
+                message.type = reader.int32();
+                break;
+            case 3:
+                message.curNum = reader.int32();
+                break;
+            case 4:
+                message.maxNum = reader.int32();
+                break;
+            case 5:
+                if (!(message.awards && message.awards.length))
+                    message.awards = [];
+                message.awards.push($root.AwardConfig.decode(reader, reader.uint32()));
+                break;
+            case 6:
+                message.desc = reader.string();
+                break;
+            case 7:
+                if (!(message.ids && message.ids.length))
+                    message.ids = [];
+                message.ids.push($root.IdItem.decode(reader, reader.uint32()));
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
+            }
+        }
+        return message;
+    };
+
+    /**
+     * Decodes a Record message from the specified reader or buffer, length delimited.
+     * @function decodeDelimited
+     * @memberof Record
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @returns {Record} Record
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    Record.decodeDelimited = function decodeDelimited(reader) {
+        if (!(reader instanceof $Reader))
+            reader = new $Reader(reader);
+        return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Verifies a Record message.
+     * @function verify
+     * @memberof Record
+     * @static
+     * @param {Object.<string,*>} message Plain object to verify
+     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+     */
+    Record.verify = function verify(message) {
+        if (typeof message !== "object" || message === null)
+            return "object expected";
+        if (message.area != null && message.hasOwnProperty("area"))
+            if (!$util.isInteger(message.area))
+                return "area: integer expected";
+        if (message.type != null && message.hasOwnProperty("type"))
+            if (!$util.isInteger(message.type))
+                return "type: integer expected";
+        if (message.curNum != null && message.hasOwnProperty("curNum"))
+            if (!$util.isInteger(message.curNum))
+                return "curNum: integer expected";
+        if (message.maxNum != null && message.hasOwnProperty("maxNum"))
+            if (!$util.isInteger(message.maxNum))
+                return "maxNum: integer expected";
+        if (message.awards != null && message.hasOwnProperty("awards")) {
+            if (!Array.isArray(message.awards))
+                return "awards: array expected";
+            for (var i = 0; i < message.awards.length; ++i) {
+                var error = $root.AwardConfig.verify(message.awards[i]);
+                if (error)
+                    return "awards." + error;
+            }
+        }
+        if (message.desc != null && message.hasOwnProperty("desc"))
+            if (!$util.isString(message.desc))
+                return "desc: string expected";
+        if (message.ids != null && message.hasOwnProperty("ids")) {
+            if (!Array.isArray(message.ids))
+                return "ids: array expected";
+            for (var i = 0; i < message.ids.length; ++i) {
+                var error = $root.IdItem.verify(message.ids[i]);
+                if (error)
+                    return "ids." + error;
+            }
+        }
+        return null;
+    };
+
+    /**
+     * Creates a Record message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof Record
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {Record} Record
+     */
+    Record.fromObject = function fromObject(object) {
+        if (object instanceof $root.Record)
+            return object;
+        var message = new $root.Record();
+        if (object.area != null)
+            message.area = object.area | 0;
+        if (object.type != null)
+            message.type = object.type | 0;
+        if (object.curNum != null)
+            message.curNum = object.curNum | 0;
+        if (object.maxNum != null)
+            message.maxNum = object.maxNum | 0;
+        if (object.awards) {
+            if (!Array.isArray(object.awards))
+                throw TypeError(".Record.awards: array expected");
+            message.awards = [];
+            for (var i = 0; i < object.awards.length; ++i) {
+                if (typeof object.awards[i] !== "object")
+                    throw TypeError(".Record.awards: object expected");
+                message.awards[i] = $root.AwardConfig.fromObject(object.awards[i]);
+            }
+        }
+        if (object.desc != null)
+            message.desc = String(object.desc);
+        if (object.ids) {
+            if (!Array.isArray(object.ids))
+                throw TypeError(".Record.ids: array expected");
+            message.ids = [];
+            for (var i = 0; i < object.ids.length; ++i) {
+                if (typeof object.ids[i] !== "object")
+                    throw TypeError(".Record.ids: object expected");
+                message.ids[i] = $root.IdItem.fromObject(object.ids[i]);
+            }
+        }
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a Record message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof Record
+     * @static
+     * @param {Record} message Record
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    Record.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.arrays || options.defaults) {
+            object.awards = [];
+            object.ids = [];
+        }
+        if (options.defaults) {
+            object.area = 0;
+            object.type = 0;
+            object.curNum = 0;
+            object.maxNum = 0;
+            object.desc = "";
+        }
+        if (message.area != null && message.hasOwnProperty("area"))
+            object.area = message.area;
+        if (message.type != null && message.hasOwnProperty("type"))
+            object.type = message.type;
+        if (message.curNum != null && message.hasOwnProperty("curNum"))
+            object.curNum = message.curNum;
+        if (message.maxNum != null && message.hasOwnProperty("maxNum"))
+            object.maxNum = message.maxNum;
+        if (message.awards && message.awards.length) {
+            object.awards = [];
+            for (var j = 0; j < message.awards.length; ++j)
+                object.awards[j] = $root.AwardConfig.toObject(message.awards[j], options);
+        }
+        if (message.desc != null && message.hasOwnProperty("desc"))
+            object.desc = message.desc;
+        if (message.ids && message.ids.length) {
+            object.ids = [];
+            for (var j = 0; j < message.ids.length; ++j)
+                object.ids[j] = $root.IdItem.toObject(message.ids[j], options);
+        }
+        return object;
+    };
+
+    /**
+     * Converts this Record to JSON.
+     * @function toJSON
+     * @memberof Record
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    Record.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    return Record;
+})();
+
+$root.GetAdSpotsReq = (function() {
+
+    /**
+     * Properties of a GetAdSpotsReq.
+     * @exports IGetAdSpotsReq
+     * @interface IGetAdSpotsReq
+     * @property {number|Long|null} [uid] GetAdSpotsReq uid
+     */
+
+    /**
+     * Constructs a new GetAdSpotsReq.
+     * @exports GetAdSpotsReq
+     * @classdesc Represents a GetAdSpotsReq.
+     * @implements IGetAdSpotsReq
+     * @constructor
+     * @param {IGetAdSpotsReq=} [properties] Properties to set
+     */
+    function GetAdSpotsReq(properties) {
+        if (properties)
+            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                if (properties[keys[i]] != null)
+                    this[keys[i]] = properties[keys[i]];
+    }
+
+    /**
+     * GetAdSpotsReq uid.
+     * @member {number|Long} uid
+     * @memberof GetAdSpotsReq
+     * @instance
+     */
+    GetAdSpotsReq.prototype.uid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+    /**
+     * Creates a new GetAdSpotsReq instance using the specified properties.
+     * @function create
+     * @memberof GetAdSpotsReq
+     * @static
+     * @param {IGetAdSpotsReq=} [properties] Properties to set
+     * @returns {GetAdSpotsReq} GetAdSpotsReq instance
+     */
+    GetAdSpotsReq.create = function create(properties) {
+        return new GetAdSpotsReq(properties);
+    };
+
+    /**
+     * Encodes the specified GetAdSpotsReq message. Does not implicitly {@link GetAdSpotsReq.verify|verify} messages.
+     * @function encode
+     * @memberof GetAdSpotsReq
+     * @static
+     * @param {IGetAdSpotsReq} message GetAdSpotsReq message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    GetAdSpotsReq.encode = function encode(message, writer) {
+        if (!writer)
+            writer = $Writer.create();
+        if (message.uid != null && message.hasOwnProperty("uid"))
+            writer.uint32(/* id 1, wireType 0 =*/8).int64(message.uid);
+        return writer;
+    };
+
+    /**
+     * Encodes the specified GetAdSpotsReq message, length delimited. Does not implicitly {@link GetAdSpotsReq.verify|verify} messages.
+     * @function encodeDelimited
+     * @memberof GetAdSpotsReq
+     * @static
+     * @param {IGetAdSpotsReq} message GetAdSpotsReq message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    GetAdSpotsReq.encodeDelimited = function encodeDelimited(message, writer) {
+        return this.encode(message, writer).ldelim();
+    };
+
+    /**
+     * Decodes a GetAdSpotsReq message from the specified reader or buffer.
+     * @function decode
+     * @memberof GetAdSpotsReq
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @param {number} [length] Message length if known beforehand
+     * @returns {GetAdSpotsReq} GetAdSpotsReq
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    GetAdSpotsReq.decode = function decode(reader, length) {
+        if (!(reader instanceof $Reader))
+            reader = $Reader.create(reader);
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.GetAdSpotsReq();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+            case 1:
+                message.uid = reader.int64();
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
+            }
+        }
+        return message;
+    };
+
+    /**
+     * Decodes a GetAdSpotsReq message from the specified reader or buffer, length delimited.
+     * @function decodeDelimited
+     * @memberof GetAdSpotsReq
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @returns {GetAdSpotsReq} GetAdSpotsReq
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    GetAdSpotsReq.decodeDelimited = function decodeDelimited(reader) {
+        if (!(reader instanceof $Reader))
+            reader = new $Reader(reader);
+        return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Verifies a GetAdSpotsReq message.
+     * @function verify
+     * @memberof GetAdSpotsReq
+     * @static
+     * @param {Object.<string,*>} message Plain object to verify
+     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+     */
+    GetAdSpotsReq.verify = function verify(message) {
+        if (typeof message !== "object" || message === null)
+            return "object expected";
+        if (message.uid != null && message.hasOwnProperty("uid"))
+            if (!$util.isInteger(message.uid) && !(message.uid && $util.isInteger(message.uid.low) && $util.isInteger(message.uid.high)))
+                return "uid: integer|Long expected";
+        return null;
+    };
+
+    /**
+     * Creates a GetAdSpotsReq message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof GetAdSpotsReq
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {GetAdSpotsReq} GetAdSpotsReq
+     */
+    GetAdSpotsReq.fromObject = function fromObject(object) {
+        if (object instanceof $root.GetAdSpotsReq)
+            return object;
+        var message = new $root.GetAdSpotsReq();
+        if (object.uid != null)
+            if ($util.Long)
+                (message.uid = $util.Long.fromValue(object.uid)).unsigned = false;
+            else if (typeof object.uid === "string")
+                message.uid = parseInt(object.uid, 10);
+            else if (typeof object.uid === "number")
+                message.uid = object.uid;
+            else if (typeof object.uid === "object")
+                message.uid = new $util.LongBits(object.uid.low >>> 0, object.uid.high >>> 0).toNumber();
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a GetAdSpotsReq message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof GetAdSpotsReq
+     * @static
+     * @param {GetAdSpotsReq} message GetAdSpotsReq
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    GetAdSpotsReq.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults)
+            if ($util.Long) {
+                var long = new $util.Long(0, 0, false);
+                object.uid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+            } else
+                object.uid = options.longs === String ? "0" : 0;
+        if (message.uid != null && message.hasOwnProperty("uid"))
+            if (typeof message.uid === "number")
+                object.uid = options.longs === String ? String(message.uid) : message.uid;
+            else
+                object.uid = options.longs === String ? $util.Long.prototype.toString.call(message.uid) : options.longs === Number ? new $util.LongBits(message.uid.low >>> 0, message.uid.high >>> 0).toNumber() : message.uid;
+        return object;
+    };
+
+    /**
+     * Converts this GetAdSpotsReq to JSON.
+     * @function toJSON
+     * @memberof GetAdSpotsReq
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    GetAdSpotsReq.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    return GetAdSpotsReq;
+})();
+
+$root.GetAdSpotsAck = (function() {
+
+    /**
+     * Properties of a GetAdSpotsAck.
+     * @exports IGetAdSpotsAck
+     * @interface IGetAdSpotsAck
+     * @property {number|null} [errCode] GetAdSpotsAck errCode
+     * @property {string|null} [errMsg] GetAdSpotsAck errMsg
+     * @property {Array.<IRecord>|null} [records] GetAdSpotsAck records
+     */
+
+    /**
+     * Constructs a new GetAdSpotsAck.
+     * @exports GetAdSpotsAck
+     * @classdesc Represents a GetAdSpotsAck.
+     * @implements IGetAdSpotsAck
+     * @constructor
+     * @param {IGetAdSpotsAck=} [properties] Properties to set
+     */
+    function GetAdSpotsAck(properties) {
+        this.records = [];
+        if (properties)
+            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                if (properties[keys[i]] != null)
+                    this[keys[i]] = properties[keys[i]];
+    }
+
+    /**
+     * GetAdSpotsAck errCode.
+     * @member {number} errCode
+     * @memberof GetAdSpotsAck
+     * @instance
+     */
+    GetAdSpotsAck.prototype.errCode = 0;
+
+    /**
+     * GetAdSpotsAck errMsg.
+     * @member {string} errMsg
+     * @memberof GetAdSpotsAck
+     * @instance
+     */
+    GetAdSpotsAck.prototype.errMsg = "";
+
+    /**
+     * GetAdSpotsAck records.
+     * @member {Array.<IRecord>} records
+     * @memberof GetAdSpotsAck
+     * @instance
+     */
+    GetAdSpotsAck.prototype.records = $util.emptyArray;
+
+    /**
+     * Creates a new GetAdSpotsAck instance using the specified properties.
+     * @function create
+     * @memberof GetAdSpotsAck
+     * @static
+     * @param {IGetAdSpotsAck=} [properties] Properties to set
+     * @returns {GetAdSpotsAck} GetAdSpotsAck instance
+     */
+    GetAdSpotsAck.create = function create(properties) {
+        return new GetAdSpotsAck(properties);
+    };
+
+    /**
+     * Encodes the specified GetAdSpotsAck message. Does not implicitly {@link GetAdSpotsAck.verify|verify} messages.
+     * @function encode
+     * @memberof GetAdSpotsAck
+     * @static
+     * @param {IGetAdSpotsAck} message GetAdSpotsAck message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    GetAdSpotsAck.encode = function encode(message, writer) {
+        if (!writer)
+            writer = $Writer.create();
+        if (message.errCode != null && message.hasOwnProperty("errCode"))
+            writer.uint32(/* id 1, wireType 0 =*/8).int32(message.errCode);
+        if (message.errMsg != null && message.hasOwnProperty("errMsg"))
+            writer.uint32(/* id 2, wireType 2 =*/18).string(message.errMsg);
+        if (message.records != null && message.records.length)
+            for (var i = 0; i < message.records.length; ++i)
+                $root.Record.encode(message.records[i], writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+        return writer;
+    };
+
+    /**
+     * Encodes the specified GetAdSpotsAck message, length delimited. Does not implicitly {@link GetAdSpotsAck.verify|verify} messages.
+     * @function encodeDelimited
+     * @memberof GetAdSpotsAck
+     * @static
+     * @param {IGetAdSpotsAck} message GetAdSpotsAck message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    GetAdSpotsAck.encodeDelimited = function encodeDelimited(message, writer) {
+        return this.encode(message, writer).ldelim();
+    };
+
+    /**
+     * Decodes a GetAdSpotsAck message from the specified reader or buffer.
+     * @function decode
+     * @memberof GetAdSpotsAck
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @param {number} [length] Message length if known beforehand
+     * @returns {GetAdSpotsAck} GetAdSpotsAck
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    GetAdSpotsAck.decode = function decode(reader, length) {
+        if (!(reader instanceof $Reader))
+            reader = $Reader.create(reader);
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.GetAdSpotsAck();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+            case 1:
+                message.errCode = reader.int32();
+                break;
+            case 2:
+                message.errMsg = reader.string();
+                break;
+            case 3:
+                if (!(message.records && message.records.length))
+                    message.records = [];
+                message.records.push($root.Record.decode(reader, reader.uint32()));
+                break;
+            default:
+                reader.skipType(tag & 7);
+                break;
+            }
+        }
+        return message;
+    };
+
+    /**
+     * Decodes a GetAdSpotsAck message from the specified reader or buffer, length delimited.
+     * @function decodeDelimited
+     * @memberof GetAdSpotsAck
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @returns {GetAdSpotsAck} GetAdSpotsAck
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    GetAdSpotsAck.decodeDelimited = function decodeDelimited(reader) {
+        if (!(reader instanceof $Reader))
+            reader = new $Reader(reader);
+        return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Verifies a GetAdSpotsAck message.
+     * @function verify
+     * @memberof GetAdSpotsAck
+     * @static
+     * @param {Object.<string,*>} message Plain object to verify
+     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+     */
+    GetAdSpotsAck.verify = function verify(message) {
+        if (typeof message !== "object" || message === null)
+            return "object expected";
+        if (message.errCode != null && message.hasOwnProperty("errCode"))
+            if (!$util.isInteger(message.errCode))
+                return "errCode: integer expected";
+        if (message.errMsg != null && message.hasOwnProperty("errMsg"))
+            if (!$util.isString(message.errMsg))
+                return "errMsg: string expected";
+        if (message.records != null && message.hasOwnProperty("records")) {
+            if (!Array.isArray(message.records))
+                return "records: array expected";
+            for (var i = 0; i < message.records.length; ++i) {
+                var error = $root.Record.verify(message.records[i]);
+                if (error)
+                    return "records." + error;
+            }
+        }
+        return null;
+    };
+
+    /**
+     * Creates a GetAdSpotsAck message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof GetAdSpotsAck
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {GetAdSpotsAck} GetAdSpotsAck
+     */
+    GetAdSpotsAck.fromObject = function fromObject(object) {
+        if (object instanceof $root.GetAdSpotsAck)
+            return object;
+        var message = new $root.GetAdSpotsAck();
+        if (object.errCode != null)
+            message.errCode = object.errCode | 0;
+        if (object.errMsg != null)
+            message.errMsg = String(object.errMsg);
+        if (object.records) {
+            if (!Array.isArray(object.records))
+                throw TypeError(".GetAdSpotsAck.records: array expected");
+            message.records = [];
+            for (var i = 0; i < object.records.length; ++i) {
+                if (typeof object.records[i] !== "object")
+                    throw TypeError(".GetAdSpotsAck.records: object expected");
+                message.records[i] = $root.Record.fromObject(object.records[i]);
+            }
+        }
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a GetAdSpotsAck message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof GetAdSpotsAck
+     * @static
+     * @param {GetAdSpotsAck} message GetAdSpotsAck
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    GetAdSpotsAck.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.arrays || options.defaults)
+            object.records = [];
+        if (options.defaults) {
+            object.errCode = 0;
+            object.errMsg = "";
+        }
+        if (message.errCode != null && message.hasOwnProperty("errCode"))
+            object.errCode = message.errCode;
+        if (message.errMsg != null && message.hasOwnProperty("errMsg"))
+            object.errMsg = message.errMsg;
+        if (message.records && message.records.length) {
+            object.records = [];
+            for (var j = 0; j < message.records.length; ++j)
+                object.records[j] = $root.Record.toObject(message.records[j], options);
+        }
+        return object;
+    };
+
+    /**
+     * Converts this GetAdSpotsAck to JSON.
+     * @function toJSON
+     * @memberof GetAdSpotsAck
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    GetAdSpotsAck.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    return GetAdSpotsAck;
 })();
 
 module.exports = $root;

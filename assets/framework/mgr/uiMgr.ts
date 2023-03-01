@@ -238,6 +238,7 @@ export namespace UiMgr {
 
                 cb && cb(ui)
                 ui.scheduleOnce(ui.onOpen.bind(ui), .0)
+                _scenes[obj.name] = obj
             })
         }
 
@@ -356,7 +357,7 @@ export namespace UiMgr {
                     let mask = getMask()
                     obj.addChild(mask)
                     mask.setSiblingIndex(-999)
-                    mask.opacity = 200
+                    mask.opacity = 150
                     if (opt.maskClose) {
                         mask.on(cc.Node.EventType.TOUCH_END, (t) => {
                             for (let node of obj.children) {
@@ -462,4 +463,38 @@ export namespace UiMgr {
         } else if (typeof bundleName === "string")
             _stackScenes[_stackScenes.length - 1].popDialog(bundleName + "_" + name.replace("/", "_"))
     }
+
+
+    export function loadPic(bundleName, pathName, callback) {
+        let bundle = cc.assetManager.getBundle(bundleName)
+        pathName = "pics/" + pathName
+        if (bundle) {
+          let asset = bundle.get(pathName, cc.SpriteFrame)
+          if (asset) {
+            callback(asset)
+          } else {
+            bundle.load(pathName, cc.SpriteFrame, (err, res)=>{
+              if (err) {
+                  
+              } else {
+                callback(res)
+              }
+            })
+          }
+        } else {
+          cc.assetManager.loadBundle(bundleName,(err, bundle)=>{
+            if (err) {
+              
+            } else {
+              bundle.load(pathName, cc.SpriteFrame, (err, res)=>{
+                if (err) {
+                  
+                } else {
+                  callback(res)
+                }
+              })
+            }
+         });
+        }
+      }
 }

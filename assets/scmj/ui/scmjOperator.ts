@@ -219,10 +219,10 @@ export default class GameOperator extends cc.Component {
     }
 
     OperateHideAll(msg: proto_mj.IOperateNot) {
-        if (msg.opCode == OperatorCode.OP_HU_DIANPAO || msg.opCode == OperatorCode.OP_HU_AFTER_KONG_TURN 
-            || msg.opCode == OperatorCode.OP_HU_ZIMO || msg.opCode == OperatorCode.OP_CHOW_OXX
-            || msg.opCode == OperatorCode.OP_CHOW_XOX || msg.opCode == OperatorCode.OP_CHOW_XXO
-            || msg.opCode == OperatorCode.OP_PONG || msg.opCode == OperatorCode.OP_KONG) {
+        if (msg.opCode == OperatorCode.OP_HU_DIANPAO || msg.opCode == OperatorCode.OP_HU_AFTER_KONG_TURN || msg.opCode == OperatorCode.OP_HU_ZIMO 
+            || msg.opCode == OperatorCode.OP_CHOW_OXX || msg.opCode == OperatorCode.OP_CHOW_XOX || msg.opCode == OperatorCode.OP_CHOW_XXO
+            || msg.opCode == OperatorCode.OP_PONG || msg.opCode == OperatorCode.OP_KONG_TURN_RECOVER_TO_PONG
+            || msg.opCode == OperatorCode.OP_KONG || msg.opCode == OperatorCode.OP_KONG_DARK || msg.opCode == OperatorCode.OP_KONG_TURN) {
                 
             this.node.active = false
             this.btnGuo.active = false 
@@ -239,6 +239,10 @@ export default class GameOperator extends cc.Component {
             this.vecPeng = []
             this.vecChi = []
         }
+    }
+
+    onDestroy() {
+        izx.offByTag(this)
     }
     
 }

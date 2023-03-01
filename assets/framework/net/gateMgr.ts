@@ -4,7 +4,7 @@
  * @Autor: liuhongbin
  * @Date: 2020-05-20 17:07:41
  * @LastEditors: liuhongbin
- * @LastEditTime: 2021-01-20 14:22:53
+ * @LastEditTime: 2021-01-26 15:50:10
  */
 // import proto = require("./lhd_proto")
 
@@ -69,7 +69,7 @@ export namespace GateMgr {
 
         starx.off('onKick')
         starx.on('onKick', function (data) {
-            LogMgr.log('#########error#########', data)
+            LogMgr.log('#########onKick#########', data)
             onDisconnect()
             EventMgr.dispatchEvent("SOCKET_KICK")
         })
@@ -78,11 +78,10 @@ export namespace GateMgr {
         starx.on("onData", function (data) {
             if (data) {
                 if (data.route === "SysError") {
-                    LogMgr.warn("socket sys err")
-                    return
+                    LogMgr.warn("socket sys err", data)
                 }                
-                let body = _decodePacket(data.route, data.body)
                 LogMgr.info(data.route)
+                let body = _decodePacket(data.route, data.body)
                 LogMgr.log(body)
                 EventMgr.dispatchEvent(data.route, body)
             }
@@ -255,6 +254,7 @@ export namespace GateMgr {
 
     export function close() {
         // 手动关闭，清空发送队列
+        _connected = false
         _sendQueue.length = 0
         cc.Canvas.instance.unschedule(sendMsg)
         starx.disconnect(true)

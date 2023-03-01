@@ -13,7 +13,7 @@ export namespace JsmjAudioUtil {
         let audioUrl = this.addSoundPath(AudioConfig.audio_sounds_table['sound'][name])
         scmjUtil.loadRes(audioUrl, (res) => {
             if (!res) {
-                cc.log(res)
+                izx.log(res)
             }else {
                 cc.audioEngine.playMusic(res, true)
             }
@@ -22,7 +22,7 @@ export namespace JsmjAudioUtil {
 
 	export function playSound(name, sex) {
 		if (sex != null) {
-			var sexname = name + ((sex == 1) ? 'woman' : 'man')
+			var sexname = name + "woman"//((sex == 1) ? 'woman' : 'man')
 			if (this.ccPlaySound(sexname)) {
 				return
 			}
@@ -34,6 +34,9 @@ export namespace JsmjAudioUtil {
 		this.playMusic('bg_music')
 	}
 
+    export function stopBackground() {
+        cc.audioEngine.stopMusic()
+    }
 	
 	export function ccPlaySound(audioName) {		
 		
@@ -43,7 +46,7 @@ export namespace JsmjAudioUtil {
         let audioUrl = this.addSoundPath(AudioConfig.audio_sounds_table['sound'][audioName])
         scmjUtil.loadRes(audioUrl, (res) => {
             if (!res) {
-                cc.log(res)
+                izx.log(res)
             }else {
                 cc.audioEngine.playEffect(res, false)
             }

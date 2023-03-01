@@ -5,20 +5,16 @@
   "bundleName": "",
   "priority": "3",
   "compressionType": {
-    "web-mobile": "merge_all_json",
-    "wechatgame": "subpackage"
+    "web-mobile": "merge_all_json"
   },
   "optimizeHotUpdate": {
-    "web-mobile": false,
-    "wechatgame": false
+    "web-mobile": false
   },
   "inlineSpriteFrames": {
-    "web-mobile": false,
-    "wechatgame": false
+    "web-mobile": false
   },
   "isRemoteBundle": {
-    "web-mobile": false,
-    "wechatgame": false
+    "web-mobile": false
   },
   "subMetas": {}
 }

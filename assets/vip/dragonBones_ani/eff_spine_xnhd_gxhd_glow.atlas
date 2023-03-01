@@ -1,0 +1,41 @@
+
+eff_spine_xnhd_gxhd_glow.png
+size: 711,711
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+glow
+  rotate: false
+  xy: 1, 356
+  size: 354, 354
+  orig: 354, 354
+  offset: 0, 0
+  index: -1
+lizi
+  rotate: false
+  xy: 356, 4
+  size: 93, 94
+  orig: 93, 94
+  offset: 0, 0
+  index: -1
+shanguang
+  rotate: false
+  xy: 356, 99
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+znq_cy_hdzg2
+  rotate: false
+  xy: 1, 1
+  size: 354, 354
+  orig: 354, 354
+  offset: 0, 0
+  index: -1
+znq_cy_hdzg3
+  rotate: false
+  xy: 356, 356
+  size: 354, 354
+  orig: 354, 354
+  offset: 0, 0
+  index: -1

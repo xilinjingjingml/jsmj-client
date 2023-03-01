@@ -4,7 +4,7 @@
  * @Autor: wangxinfeng
  * @Date: 2020-11-4
  * @LastEditors: liuhongbin
- * @LastEditTime: 2021-01-14 15:05:23
+ * @LastEditTime: 2021-01-26 11:18:34
  */
 import BaseUi from "../../framework/base/baseUI";
 import { izx } from "../../framework/izx";
@@ -63,6 +63,7 @@ export default class mjLayer extends BaseUi {
 	onClose() {
 		console.log("mjLayer onClose")
 		super.onClose()
+		izx.offByTag(this)
 	}
 
 	adjustTopAndBottomAreaPosition() {
@@ -133,8 +134,10 @@ export default class mjLayer extends BaseUi {
 		if (state == 0) {
 			return
 		}
-
-		izx.dispatchEvent(SCMJ_EVENT.READY_RSP, { errCode: 0 })
+		izx.log("completeDataNot chairId:", Scmj.getInstance()._scmj.serverChairId)
+		izx.dispatchEvent(SCMJ_EVENT.INIT_SELF_VIEW_SERVER_CHAIR_ID, Scmj.getInstance()._scmj.serverChairId)
+		
+		izx.dispatchEvent(SCMJ_EVENT.READY_RSP, { errCode: 0, isComplete:true })
 		//显示麻将张数
 		izx.dispatchEvent(SCMJ_EVENT.OPERATE_NOTI, msg)
 		izx.dispatchEvent(SCMJ_EVENT.COUNT_DOWN_NOTI, { chairID: msg.curPlayer, seconds: msg.leftSeconds })
@@ -148,7 +151,18 @@ export default class mjLayer extends BaseUi {
 			changeCard["isComplete"] = true
 			izx.dispatchEvent(SCMJ_EVENT.CHANGE_CARD_NOTI, changeCard)
 		});
-		izx.dispatchEvent(SCMJ_EVENT.SET_DEALER_NOTI_BANKER, { uid: banker, is_ready: true })
+
+		let autoDatas = msg.autoData
+		autoDatas.forEach((autoData, index) => {
+			let autoD = {}
+			autoD = autoData
+			autoD["chairID"] = index
+			izx.dispatchEvent(SCMJ_EVENT.AUTO_NOTI, autoD)
+		});
+
+		setTimeout(() => {
+			izx.dispatchEvent(SCMJ_EVENT.SET_DEALER_NOTI_BANKER_CHAIR, { chairId: banker, is_ready: true })
+		}, 500);
 	}
 	beginGameNot() {
 		let maxPlyNum = 4
@@ -254,8 +268,10 @@ export default class mjLayer extends BaseUi {
 		}
 		else if (msg.opCode == OperatorCode.OP_PLAY) {
 			izx.dispatchEvent(SCMJ_EVENT.OPERATE_FINISH, msg)
+			this.vecChu = []
 		} else if (msg.opCode == OperatorCode.OP_HU_DIANPAO || msg.opCode == OperatorCode.OP_HU_AFTER_KONG_TURN || msg.opCode == OperatorCode.OP_HU_ZIMO) {
 			this.isHu = true
+			this.vecChu = []
 		}
 	}
 
@@ -306,7 +322,7 @@ export default class mjLayer extends BaseUi {
 				}
 				break
 			case 2:
-				gap = -13
+				gap = -8
 				if (area == CardArea.HuCard) {
 					gap = -10
 				} else if (area == CardArea.HandCard) {
@@ -319,7 +335,7 @@ export default class mjLayer extends BaseUi {
 				gap = 2
 				break
 			case 4:
-				gap = 13
+				gap = 8
 				if (area == CardArea.HuCard) {
 					gap = 10
 				} else if (area == CardArea.HandCard) {
@@ -533,9 +549,9 @@ export default class mjLayer extends BaseUi {
 					groups[1].push(element)
 				}
 			}
-			cc.log("curCardNum:", curCardNum, "curHandGroup:", curHandGroup, "leftHandGroup:", leftHandGroup)
-			cc.log(groups[0])
-			cc.log(groups[1])
+			izx.log("curCardNum:", curCardNum, "curHandGroup:", curHandGroup, "leftHandGroup:", leftHandGroup)
+			izx.log(groups[0])
+			izx.log(groups[1])
 		}
 		else {
 			groups[0] = cards
@@ -587,6 +603,9 @@ export default class mjLayer extends BaseUi {
 				nodeCard.basePos = nodeCard.node.position
 				if (i == tempCards.length - 1) {
 					offset += 10 * ratio
+					if (this.isHu && chairId == 1) {
+						offset += 28
+					}
 					this.mapCurCardOffset[chairId] = offset
 				}
 				if (chairId == 1) {
@@ -602,7 +621,7 @@ export default class mjLayer extends BaseUi {
 		console.log("cards = ", card)
 
 		if (card == -1) {
-			cc.log("refreshCurCard")
+			izx.log("refreshCurCard")
 			return
 		}
 
@@ -781,6 +800,7 @@ export default class mjLayer extends BaseUi {
 		izx.on(SCMJ_EVENT.MJ_TOUCH_BEGIN, this.onMjTouchBegin, this)
 		izx.on(SCMJ_EVENT.MJ_TOUCH_END, this.onMjTouchEnd, this)
 		izx.on(SCMJ_EVENT.MJ_TOUCH_MOVE, this.onMjTouchMove, this)
+		izx.on(SCMJ_EVENT.MJ_TOUCH_CANCEL, this.onMjTouchEnd, this)
 	}
 
 	touchCardPos = cc.v2(0, 0)
@@ -791,7 +811,11 @@ export default class mjLayer extends BaseUi {
 	putCardMinDisY = 80
 
 	onTouchBegin(event) {
-		cc.log("onTouchBegin")
+		izx.log("onTouchBegin")
+		if (this.isHu) {
+			izx.log("is already hu")
+			return
+		}
 		let nodeAreas = this.getHandcardsAreas(1)
 		if (nodeAreas.length == 0) {
 			return
@@ -801,11 +825,11 @@ export default class mjLayer extends BaseUi {
 		let pos = null
 		let selectedCardNode = null
 		nodeAreas.forEach(nodeArea => {
-			pos = nodeArea.convertToNodeSpace(event.getLocation())
+			pos = nodeArea.convertToNodeSpaceAR(event.getLocation())
 			let tocuCardNode = this.itemForTouch(nodeArea, pos)
 			if (tocuCardNode) {
 				selectedCardNode = tocuCardNode
-				cc.log("onTouchBegin", selectedCardNode)
+				izx.log("onTouchBegin", selectedCardNode)
 				return
 			}
 		})
@@ -835,7 +859,7 @@ export default class mjLayer extends BaseUi {
 				this.curSelectedCardNode.zIndex = this.inputCardZorder++
 				// GameLogic.Instance().playSound('audio_card_hover')
 				// this.tipMaskCard(this.curSelectedCardNode.cardValue)
-				cc.log("onTouchBegin1")
+				izx.log("onTouchBegin1")
 			}
 		} else {
 			if (this.curSelectedCardNode) {
@@ -843,13 +867,17 @@ export default class mjLayer extends BaseUi {
 				this.curSelectedCardNode = null
 				this.doubleClick = false
 				//this.unTipMaskCard()
-				cc.log("onTouchBegin2")
+				izx.log("onTouchBegin2")
 			}
 		}
 	}
 
 	onTouchMove(event) {
-		cc.log("onTouchMove")
+		izx.log("onTouchMove")
+		if (this.isHu) {
+			izx.log("is already hu")
+			return
+		}
 		let nodeAreas = this.getHandcardsAreas(1)
 		if (nodeAreas.length == 0) {
 			return
@@ -861,17 +889,17 @@ export default class mjLayer extends BaseUi {
 		let y2 = event.getStartLocation().y
 		let distance = Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2))
 		if (distance < 10) {
-			cc.log("不是有效移动距离", distance)
+			izx.log("不是有效移动距离", distance)
 			return
 		}
 		let pos = null
 		let selectedCardNode = null
 		nodeAreas.forEach(nodeArea => {
-			pos = nodeArea.convertToNodeSpace(event.getLocation())
+			pos = nodeArea.convertToNodeSpaceAR(event.getLocation())
 			let tocuCardNode = this.itemForTouch(nodeArea, pos)
 			if (tocuCardNode) {
 				selectedCardNode = tocuCardNode
-				cc.log("onTouchMove", selectedCardNode)
+				izx.log("onTouchMove", selectedCardNode)
 				return
 			}
 		})
@@ -890,29 +918,33 @@ export default class mjLayer extends BaseUi {
 
 				// GameLogic.Instance().playSound('audio_card_hover')
 				// this.tipMaskCard(this.curSelectedCardNode.cardValue)
-				cc.log("onTouchMove1")
+				izx.log("onTouchMove1")
 			} else {
 				if (this.curSelectedCardNode) {
 					this.curSelectedCardNode.position = pos
 					this.doubleClick = false
-					cc.log("onTouchMove2")
+					izx.log("onTouchMove2")
 				}
 			}
 		} else {
 			let rect = cc.rect(-50, -50, 100, 100)
 			if (rect.contains(pos.sub(this.touchCardPos))) {
 				this.touchCardMove = true
-				cc.log("onTouchMove3")
+				izx.log("onTouchMove3")
 			} else {
-				cc.log("onTouchMove4")
+				izx.log("onTouchMove4")
 			}
 		}
 	}
 
 	onTouchEnd(event) {
-		cc.log("onTouchEnd")
+		izx.log("onTouchEnd")
+		if (this.isHu) {
+			izx.log("is already hu")
+			return
+		}
 		if (!this.curSelectedCardNode) {
-			cc.log("onTouchEnd11")
+			izx.log("onTouchEnd11")
 			return
 		}
 		// 触摸结束手指移动牌高度大于手牌初始高度+可出牌高度，认为玩家出牌
@@ -922,29 +954,29 @@ export default class mjLayer extends BaseUi {
 
 		let nodeAreas = this.getHandcardsAreas(1)
 		if (nodeAreas.length == 0) {
-			cc.log("onTouchEnd00")
+			izx.log("onTouchEnd00")
 			return
 		}
 
 		let pos = null
 		let selectedCardNode = null
 		nodeAreas.forEach(nodeArea => {
-			pos = nodeArea.convertToNodeSpace(event.getLocation())
+			pos = nodeArea.convertToNodeSpaceAR(event.getLocation())
 			let tocuCardNode = this.itemForTouch(nodeArea, pos)
 			if (tocuCardNode) {
 				selectedCardNode = tocuCardNode
-				cc.log("onTouchEnd", selectedCardNode)
+				izx.log("onTouchEnd", selectedCardNode)
 				return
 			}
 		})
 		let isDoubleClick = this.curSelectedCardNode == selectedCardNode
 		if (move || (this.doubleClick && isDoubleClick)) {
 			//this.putCard(this.curSelectedCardNode)
-			cc.log("onTouchEnd1")
+			izx.log("onTouchEnd1")
 			if (move) {
-				cc.log("拖动出牌")
+				izx.log("拖动出牌")
 			} else if (this.doubleClick && isDoubleClick) {
-				cc.log("双击出牌")
+				izx.log("双击出牌")
 			}
 
 			let ackOpcode = OperatorCode.OP_PLAY
@@ -971,12 +1003,12 @@ export default class mjLayer extends BaseUi {
 				}, 0.01)
 			}
 		} else {
-			cc.log("onTouchEnd2")
+			izx.log("onTouchEnd2")
 		}
 	}
 
 	onTouchCancle(event) {
-		cc.log("onTouchCancle")
+		izx.log("onTouchCancle")
 		this.onTouchEnd(event)
 	}
 
@@ -1015,11 +1047,11 @@ export default class mjLayer extends BaseUi {
 		cc.find("CenterArea/CenterMjArea/HandArea2", this.node).removeAllChildren()
 		cc.find("CenterArea/CenterMjArea/HandArea4", this.node).removeAllChildren()
 		cc.find("TopArea/HandArea3", this.node).removeAllChildren()
-
 		for (let index = 1; index <= 4; index++) {
 			cc.find("CenterArea/CenterMjArea/DisplayArea" + index, this.node).removeAllChildren()
 			cc.find("CenterArea/CenterMjArea/HuArea" + index, this.node).removeAllChildren()
 		}
+		izx.dispatchEvent(SCMJ_EVENT.UPDATE_USER_TUOGUAN, {status: false})
 		this.isHu = false
 	}
 
@@ -1030,17 +1062,18 @@ export default class mjLayer extends BaseUi {
 	_z = 0
 	_zindex = 0
 	onMjTouchBegin(event) {
-		cc.log("onMjTouchBegin")
+		izx.log("onMjTouchBegin")
 
 		this._x = event.target.x
 		this._y = event.target.y
 		this._z = event.target.z
 		this._zindex = event.target.zIndex
 
-		for (var i = 0; i < this._myMJArr.length; ++i) {
-			if (event.target == this._myMJArr[i]) {
+		// for (var i = 0; i < this._myMJArr.length; ++i) {
+			// if (event.target == this._myMJArr[i]) {
 				if (this._selectedMJ == null) {
 					event.target.y = 20
+					event.target.x = event.target.getComponent("scmjPrefab").basePos.x
 					this._selectedMJ = event.target
 					return
 				}
@@ -1048,6 +1081,7 @@ export default class mjLayer extends BaseUi {
 				if (this._selectedMJ != null && this._selectedMJ != event.target) {
 					this._selectedMJ.y = 0;
 					event.target.y = 20
+					event.target.x = event.target.getComponent("scmjPrefab").basePos.x
 					this._selectedMJ = event.target
 					return
 				}
@@ -1057,6 +1091,7 @@ export default class mjLayer extends BaseUi {
 					// 判断是否是自己的回合
 					if (this.vecChu.length == 0) {
 						event.target.y = 0
+						event.target.x = event.target.getComponent("scmjPrefab").basePos.x
 						this._selectedMJ = null;
 						return
 					}
@@ -1080,23 +1115,24 @@ export default class mjLayer extends BaseUi {
 					}
 
 					event.target.y = 0
+					event.target.x = event.target.getComponent("scmjPrefab").basePos.x
 					this._selectedMJ = null;
 				}
-			}
-		}
+			// }
+		// }
 	}
 
 	onMjTouchEnd(event) {
-		cc.log("MJ_TOUCH_END")
+		izx.log("MJ_TOUCH_END")
 		//TODO 判断当前是否是自己的回合，否则return
 
-		for (var i = 0; i < this._myMJArr.length; ++i) {
-			if (event.target == this._myMJArr[i]) {
+		// for (var i = 0; i < this._myMJArr.length; ++i) {
+			// if (event.target == this._myMJArr[i]) {
 				if (this._isMove) {
 					this._isMove = false
 					let move = this._selectedMJ.y > this._selectedMJ.getComponent("scmjPrefab").basePos.y + this.putCardMinDisY
 					this._selectedMJ.position.y = this._selectedMJ.getComponent("scmjPrefab").basePos.y + this._selectedMJ.getComponent("scmjPrefab").touchToHeight
-
+					this._selectedMJ.position.x = this._selectedMJ.getComponent("scmjPrefab").basePos.x
 					if (move) {
 						//TODO调用出牌逻辑
 						let ackOpcode = OperatorCode.OP_PLAY
@@ -1124,12 +1160,12 @@ export default class mjLayer extends BaseUi {
 					}
 					this._selectedMJ = null;
 				}
-			}
-		}
+			// }
+		// }
 	}
 
 	onMjTouchMove(event) {
-		cc.log("onTouchMove:")
+		izx.log("onTouchMove:")
 		if (this.vecChu.length <= 0) {
 			return
 		}
@@ -1142,7 +1178,7 @@ export default class mjLayer extends BaseUi {
 		let y2 = event.getStartLocation().y
 		let distance = Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2))
 		if (distance < 10) {
-			cc.log("不是有效移动距离", distance)
+			izx.log("不是有效移动距离", distance)
 			return
 		}
 
@@ -1151,7 +1187,7 @@ export default class mjLayer extends BaseUi {
 		let nodeAreas = this.getHandcardsAreas(1)
 		nodeAreas.forEach(nodeArea => {
 			if (nodeArea.name == event.target.parent.name) {
-				pos = nodeArea.convertToNodeSpace(event.getLocation())
+				pos = nodeArea.convertToNodeSpaceAR(event.getLocation())
 			}
 		})
 		this._selectedMJ.position = pos

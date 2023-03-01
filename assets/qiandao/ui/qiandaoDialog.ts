@@ -179,7 +179,7 @@ export default class QiandaoDialog extends BaseUI {
                 state: AdOrderState.Accept
             })   
         }else{
-            izx.pushDialog("tips","prefabs/tipsDialog", null, {"initParam":{tips:this.ackParams.errMsg,callback:null}})
+            izx.pushDialog("tips","prefabs/tipsDialog", null, {mask:true, maskClose:true,"initParam":{tips:this.ackParams.errMsg,callback:null}})
         } 
     }
 
@@ -203,7 +203,7 @@ export default class QiandaoDialog extends BaseUI {
             } 
         }else {
             //提示
-            izx.pushDialog("tips","prefabs/tipsDialog", null, {"initParam":{tips:msg.errMsg,callback:null}})
+            izx.pushDialog("tips","prefabs/tipsDialog", null, {mask:true, maskClose:true,"initParam":{tips:msg.errMsg,callback:null}})
         }
     }
 
@@ -241,17 +241,18 @@ export default class QiandaoDialog extends BaseUI {
     }
 
     getAdOrderAwardAck(msg: adOrder.IGetAdOrderAwardAck) {
-        cc.log("getAdOrderAwardAck",msg)
+        izx.log("getAdOrderAwardAck",msg)
         if (msg.service !== this.ackParams.AllItems[this.adSelectId].service || msg.orderId !== this.ackParams.AllItems[this.adSelectId].orderId) {
             return
         }
         
         if (msg.errCode == 0) {
-            izx.pushDialog("bonus","prefabs/gxhdDialog", null, {initParam:{
-                award:msg.award
-            }})
+            // izx.pushDialog("bonus","prefabs/gxhdDialog", null, {mask:true, maskClose:false,initParam:{
+            //     award:msg.award
+            // }})
+            izx.pushDialog("unipop","prefabs/AwardsMain", null, {"initParam":{"award":msg.award}, mask:true})
         }else {
-            izx.pushDialog("tips","prefabs/tipsDialog", null, {initParam:{
+            izx.pushDialog("tips","prefabs/tipsDialog", null, {mask:true, maskClose:true,initParam:{
                 tips:msg.errMsg,
                 callback:()=>{
 

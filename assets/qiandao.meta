@@ -1,20 +1,12 @@
 {
   "ver": "1.1.2",
-  "uuid": "73cf011b-44c1-48a7-8e3b-61b21e657315",
+  "uuid": "fe51fb9e-2f6b-4f91-9fdb-aaad68f8b224",
   "isBundle": true,
-  "bundleName": "",
+  "bundleName": "qiandao",
   "priority": 1,
-  "compressionType": {
-    "wechatgame": "subpackage"
-  },
-  "optimizeHotUpdate": {
-    "wechatgame": false
-  },
-  "inlineSpriteFrames": {
-    "wechatgame": false
-  },
-  "isRemoteBundle": {
-    "wechatgame": false
-  },
+  "compressionType": {},
+  "optimizeHotUpdate": {},
+  "inlineSpriteFrames": {},
+  "isRemoteBundle": {},
   "subMetas": {}
 }

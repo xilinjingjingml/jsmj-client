@@ -37,8 +37,12 @@ export default class GameOperatorChiGang extends cc.Component {
             cc.find("SptGray", element).active = false
         });
         this.itemData.cardsInfo.forEach((itemCard,index) => {
-            //杠牌只显示一张牌
+            // 杠牌只显示一张牌
+            // 暗杠特殊处理000N,取最后一张明牌
             if (this.itemData.cardsInfo.length == 4) {
+                if (itemCard == 0) {
+                    itemCard = this.itemData.cardsInfo[3]
+                }
                 if (index > 0) {
                     return
                 }
@@ -68,6 +72,12 @@ export default class GameOperatorChiGang extends cc.Component {
           cards: ackArr,
           serial:this.itemData.serial
         })
+        // 点击按钮操作界面消失
+        this.cards.forEach(element => {
+            element.active = false
+            cc.find("SptGray", element).active = false
+        });
+        this.node.active = false
         izx.dispatchEvent(SCMJ_EVENT.OPERATE_FINISH)
         
     }

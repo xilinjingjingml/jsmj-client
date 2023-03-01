@@ -13,6 +13,8 @@ service AdSpot {
 	rpc XinShouHaoLi(GetXinShouHaoLiReq) returns(GetXinShouHaoLiAck){}
 	// 领取转盘奖励
 	rpc GetLotteryReward(GetZhuanPanChouJiangAwardReq) returns(GetZhuanPanChouJiangAwardAck){}
+    // 获取送vip广告点
+    rpc GetAdSpots(GetAdSpotsReq) returns(GetAdSpotsAck){}
 }
 
 message Empty{}
@@ -52,4 +54,34 @@ message GetXinShouHaoLiAck {
 	int32 	errCode				= 1;
 	string	errMsg				= 2;
 	AdOrderNot			adOrder = 4;
+}
+
+message AwardConfig {
+  int32 index = 1;
+  int32 min_num = 2;
+  int32 max_num = 3;
+}
+message IdItem {
+  int32 channel = 1;
+  string id = 2;
+  int32 percentage = 3;
+}
+message Record {
+  int32 area = 1;
+  int32 type = 2;
+  int32 cur_num = 3;
+  int32 max_num = 4;
+  repeated AwardConfig awards = 5;
+  string desc = 6;
+  repeated IdItem ids = 7;
+}
+// 获取广告点
+message GetAdSpotsReq {
+  int64  uid = 1;
+}
+
+message GetAdSpotsAck {
+  int32  err_code = 1;
+  string err_msg  = 2;
+  repeated Record records = 3;
 }

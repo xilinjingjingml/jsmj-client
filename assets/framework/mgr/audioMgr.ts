@@ -15,7 +15,7 @@ export namespace AudioMgr {
     }
 
     export function setEffectVolume(value: number) {
-        cc.audioEngine.setMusicVolume(_effectVolume)
+        cc.audioEngine.setEffectsVolume(_effectVolume)
         localStorage.setItem("effectVolume", value.toString())
     }
 
@@ -24,14 +24,26 @@ export namespace AudioMgr {
     }
 
     export function playMusic(name: string) {
-        cc.resources.load(name, cc.AudioClip, (err, res: cc.AudioClip) => {
-            if (err) {
+        let callback = (bundle) => {
+        if (bundle) {
+            bundle.load("sounds/" + name, cc.AudioClip, (err1, res: cc.AudioClip)=>{
+            if (err1) {
                 LogMgr.info(name + " music not exists!")
-                return 
+            } else {
+                cc.audioEngine.playMusic(res, true) 
             }
-
-            cc.audioEngine.playMusic(res, true) 
-        })
+            })
+        }
+        }
+        let bundle = cc.assetManager.getBundle("unires")
+        if (bundle) {
+            callback(bundle)
+        } else {
+            cc.assetManager.loadBundle("unires",(err, bundle)=>{
+                callback(bundle)
+            });
+        }
+        
     }
 
     export function playEffect(name: string, loop?: boolean | Function, cb?: Function) {
@@ -39,21 +51,33 @@ export namespace AudioMgr {
             cb = loop
             loop = null
         }
-        cc.resources.load(name, cc.AudioClip, (err, res: cc.AudioClip) => {
-            if (err) {
-                LogMgr.info(name + " music not exists!")
-                return 
+        let callback = (bundle) => {
+            if (bundle) {
+              bundle.load("sounds/" + name, cc.AudioClip, (err, res: cc.AudioClip)=>{
+                if (err) {
+                  LogMgr.info(name + " music not exists!")
+                  return 
+                }
+          
+                if (typeof loop !== "boolean") {
+                  loop = false
+                }
+          
+                let id = cc.audioEngine.playEffect(res, loop)
+                if (cb) {
+                  cc.audioEngine.setFinishCallback(id, cb);
+                }
+              })
             }
-
-            if (typeof loop !== "boolean") {
-                loop = false
-            }
-
-            let id = cc.audioEngine.playEffect(res, loop)
-            if (cb) {
-                cc.audioEngine.setFinishCallback(id, cb);
-            }
-        })
+          }
+          let bundle = cc.assetManager.getBundle("unires")
+          if (bundle) {
+            callback(bundle)
+          } else {
+            cc.assetManager.loadBundle("unires",(err, bundle)=>{
+              callback(bundle)
+            });
+          }
     }
 
     export function init() {
@@ -63,6 +87,13 @@ export namespace AudioMgr {
 
         cc.audioEngine.setMusicVolume(_soundVolume)
         cc.audioEngine.setEffectsVolume(_effectVolume)
+    }
+
+    export function playBtn() {
+        this.playEffect("btn")
+    }
+    export function playAward() {
+      this.playEffect("award")
     }
 }
 

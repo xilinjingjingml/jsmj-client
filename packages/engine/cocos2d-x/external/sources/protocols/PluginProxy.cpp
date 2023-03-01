@@ -1,12 +1,10 @@
 
 #include <external/sources/protocols/ext/Json/lib_json/reader.h>
 #include <external/sources/protocols/ext/Json/lib_json/writer.h>
-#include <platform/CCApplication.h>
 #include "PluginProxy.h"
 #include "PluginManager.h"
 #include "PluginFactory.h"
 #include "json_lib.h"
-#include "base/CCScheduler.h"
 
 namespace cocos2d {namespace plugin {
 
@@ -442,10 +440,7 @@ namespace cocos2d {namespace plugin {
 		function<void(string)>& cb = mCallBack[type];
 		if (!cb)
 			return;
-        cocos2d::Application::getInstance()->getScheduler()->performFunctionInCocosThread([cb, json](){
-            cb(json);
-        });
-//		cb(json);
+		cb(json);
 	}
 
 	std::map<std::string, std::string> PluginProxy::JsonStringToMap(const char* json_string)

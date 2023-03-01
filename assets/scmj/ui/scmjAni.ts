@@ -37,11 +37,6 @@ export default class GameAni extends cc.Component {
     chairId = 0
 
     onLoad() {
-
-        izx.on(SCMJ_EVENT.INIT_SELF_VIEW_SERVER_CHAIR_ID, this.init_self_view_chair_id, this)
-        izx.on(SCMJ_EVENT.OPERATE_NOTI, this.OperateNoti, this)
-        izx.on(SCMJ_EVENT.OP_SCORE_NOTI, this.OperateScoreNoti, this)
-
         for (let index = 0; index < 4; index++) {
             let pathAni = "DisplayArea"+(index+1)+"/Ani"
             let disAniNode = cc.find(pathAni, this.node)
@@ -56,6 +51,11 @@ export default class GameAni extends cc.Component {
                 this.disPlayScoreNodes.push(disScoreNode)
             }
         }
+
+
+        izx.on(SCMJ_EVENT.INIT_SELF_VIEW_SERVER_CHAIR_ID, this.init_self_view_chair_id, this)
+        izx.on(SCMJ_EVENT.OPERATE_NOTI, this.OperateNoti, this)
+        izx.on(SCMJ_EVENT.OP_SCORE_NOTI, this.OperateScoreNoti, this)
     }
 
     init_self_view_chair_id(chairId) {
@@ -109,21 +109,156 @@ export default class GameAni extends cc.Component {
     }
 
     OperateScoreNoti(event: proto_mj.OpScoreNot) {
+        if (this.disPlayScoreNodes == null) {
+            return
+        }
+
+        let mapScore = {}
         event.score.forEach(element => {
             let loseScore = 0
             element.sendChairIDs.forEach(element1 => {
                 let loseChairId = element1.chairID
                 loseScore += element1.score
-                let loseParent = this.disPlayScoreNodes[this.s2c(loseChairId)]
+
+                if (mapScore.hasOwnProperty(loseChairId)) {
+                    mapScore[loseChairId] = mapScore[loseChairId] + element1.score
+                } else {
+                    mapScore[loseChairId] = element1.score
+                }
+                // let loseParent = this.disPlayScoreNodes[this.s2c(loseChairId)]
+                // if (loseParent) {
+                //     loseParent.active = true
+                    
+                //     if (element1.score > 0) {
+                //         loseParent.getChildByName("ScoreLabel").getComponent(cc.Label).font = this.label_win
+                //         loseParent.getChildByName("ScoreLabel").getComponent(cc.Label).string = "+" + izx.getMoneyformat(Number(element1.score))
+                //     }else {
+                //         loseParent.getChildByName("ScoreLabel").getComponent(cc.Label).font = this.label_lose
+                //         loseParent.getChildByName("ScoreLabel").getComponent(cc.Label).string = "" + izx.getMoneyformat(Number(element1.score))
+                //     }
+                //     loseParent.getChildByName("ScoreLabel").active = true
+                //     loseParent.getChildByName("ScoreLabel").runAction(cc.sequence(
+                //         cc.delayTime(0.01), 
+                //         cc.moveBy(0.8,new cc.Vec2(0,80)),
+                //         cc.delayTime(0.7),
+                //         //cc.hide(),
+                //         cc.callFunc(function(){
+                //             loseParent.getChildByName("ScoreLabel").active = false
+                //             loseParent.getChildByName("ScoreLabel").position = new cc.Vec3(0,0,0)
+                //         }))
+                //     )
+
+                //     loseParent.getChildByName("hbIcon").active = true
+                //     loseParent.getChildByName("hbIcon").runAction(cc.sequence(
+                //         cc.delayTime(0.01), 
+                //         cc.moveBy(0.8,new cc.Vec2(0,80)),
+                //         cc.delayTime(0.7),
+                //         //cc.hide(),
+                //         cc.callFunc(function(){
+                //             loseParent.getChildByName("hbIcon").active = false
+                //             loseParent.getChildByName("hbIcon").position = new cc.Vec3(145,-25,0)
+                //         }))
+                //     )
+                //     izx.dispatchEvent(SCMJ_EVENT.UPDATE_USER_GOLD_CHAIR, {chairId: loseChairId, gold: element1.score})
+                // }
+            });
+
+            let winChairId = element.receiveChairID
+            if (mapScore.hasOwnProperty(winChairId)) {
+                mapScore[winChairId] = mapScore[winChairId] - loseScore
+            } else {
+                mapScore[winChairId] = -loseScore
+            }
+
+            // let winParent = this.disPlayScoreNodes[this.s2c(element.receiveChairID)]
+            // if (winParent) {
+            //     winParent.active = true
+            //     let winScore = -loseScore
+            //     if (winScore > 0) {
+            //         winParent.getChildByName("ScoreLabel").getComponent(cc.Label).font = this.label_win
+            //         winParent.getChildByName("ScoreLabel").getComponent(cc.Label).string = "+" + izx.getMoneyformat(Number(winScore))
+            //     }else {
+            //         winParent.getChildByName("ScoreLabel").getComponent(cc.Label).font = this.label_lose
+            //         winParent.getChildByName("ScoreLabel").getComponent(cc.Label).string = "" + izx.getMoneyformat(Number(winScore))
+            //     }
+            //     winParent.getChildByName("ScoreLabel").active = true
+            //     winParent.getChildByName("ScoreLabel").runAction(cc.sequence(
+            //         cc.delayTime(0.01), 
+            //         cc.moveBy(0.8,new cc.Vec2(0,80)),
+            //         cc.delayTime(0.7),
+            //         //cc.hide(),
+            //         cc.callFunc(function(){
+            //             winParent.getChildByName("ScoreLabel").active = false
+            //             winParent.getChildByName("ScoreLabel").position = new cc.Vec3(0,0,0)
+            //         }))
+            //     )
+
+            //     winParent.getChildByName("hbIcon").active = true
+            //     winParent.getChildByName("hbIcon").runAction(cc.sequence(
+            //         cc.delayTime(0.01), 
+            //         cc.moveBy(0.8,new cc.Vec2(0,80)),
+            //         cc.delayTime(0.7),
+            //         //cc.hide(),
+            //         cc.callFunc(function(){
+            //             winParent.getChildByName("hbIcon").active = false
+            //             winParent.getChildByName("hbIcon").position = new cc.Vec3(145,-25,0)
+            //         }))
+            //     )
+            //     izx.dispatchEvent(SCMJ_EVENT.UPDATE_USER_GOLD_CHAIR, {chairId: element.receiveChairID, gold: winScore})
+            // }
+        });
+
+        for (const key in mapScore) {
+            const element = mapScore[key];
+            if (element > 0) {
+                let winParent = this.disPlayScoreNodes[this.s2c(key)]
+                if (winParent) {
+                    winParent.active = true
+                    let winScore = element
+                    if (winScore > 0) {
+                        winParent.getChildByName("ScoreLabel").getComponent(cc.Label).font = this.label_win
+                        winParent.getChildByName("ScoreLabel").getComponent(cc.Label).string = "+" + izx.getMoneyformat(Number(winScore))
+                    }else {
+                        winParent.getChildByName("ScoreLabel").getComponent(cc.Label).font = this.label_lose
+                        winParent.getChildByName("ScoreLabel").getComponent(cc.Label).string = "" + izx.getMoneyformat(Number(winScore))
+                    }
+                    winParent.getChildByName("ScoreLabel").active = true
+                    winParent.getChildByName("ScoreLabel").runAction(cc.sequence(
+                        cc.delayTime(0.01), 
+                        cc.moveBy(0.8,new cc.Vec2(0,80)),
+                        cc.delayTime(0.7),
+                        //cc.hide(),
+                        cc.callFunc(function(){
+                            winParent.getChildByName("ScoreLabel").active = false
+                            winParent.getChildByName("ScoreLabel").position = new cc.Vec3(0,0,0)
+                        }))
+                    )
+
+                    winParent.getChildByName("hbIcon").active = true
+                    winParent.getChildByName("hbIcon").runAction(cc.sequence(
+                        cc.delayTime(0.01), 
+                        cc.moveBy(0.8,new cc.Vec2(0,80)),
+                        cc.delayTime(0.7),
+                        //cc.hide(),
+                        cc.callFunc(function(){
+                            winParent.getChildByName("hbIcon").active = false
+                            winParent.getChildByName("hbIcon").position = new cc.Vec3(145,-25,0)
+                        }))
+                    )
+                    izx.dispatchEvent(SCMJ_EVENT.UPDATE_USER_GOLD_CHAIR, {chairId: key, gold: winScore})
+                }
+
+            } else {
+                let loseParent = this.disPlayScoreNodes[this.s2c(key)]
                 if (loseParent) {
                     loseParent.active = true
-                    
-                    if (element1.score > 0) {
+                    let loseScore = element
+                    if (loseScore > 0) {
                         loseParent.getChildByName("ScoreLabel").getComponent(cc.Label).font = this.label_win
-                        loseParent.getChildByName("ScoreLabel").getComponent(cc.Label).string = "+" + izx.getMoneyformat(Number(element1.score))
+                        loseParent.getChildByName("ScoreLabel").getComponent(cc.Label).string = "+" + izx.getMoneyformat(Number(loseScore))
                     }else {
                         loseParent.getChildByName("ScoreLabel").getComponent(cc.Label).font = this.label_lose
-                        loseParent.getChildByName("ScoreLabel").getComponent(cc.Label).string = "" + izx.getMoneyformat(Number(element1.score))
+                        loseParent.getChildByName("ScoreLabel").getComponent(cc.Label).string = "" + izx.getMoneyformat(Number(loseScore))
                     }
                     loseParent.getChildByName("ScoreLabel").active = true
                     loseParent.getChildByName("ScoreLabel").runAction(cc.sequence(
@@ -145,55 +280,34 @@ export default class GameAni extends cc.Component {
                         //cc.hide(),
                         cc.callFunc(function(){
                             loseParent.getChildByName("hbIcon").active = false
-                            loseParent.getChildByName("hbIcon").position = new cc.Vec3(85,-25,0)
+                            loseParent.getChildByName("hbIcon").position = new cc.Vec3(145,-25,0)
                         }))
                     )
-                    
+                    izx.dispatchEvent(SCMJ_EVENT.UPDATE_USER_GOLD_CHAIR, {chairId: key, gold: loseScore})
                 }
-            });
-
-            let winParent = this.disPlayScoreNodes[this.s2c(element.receiveChairID)]
-            if (winParent) {
-                winParent.active = true
-                let winScore = -loseScore
-                if (winScore > 0) {
-                    winParent.getChildByName("ScoreLabel").getComponent(cc.Label).font = this.label_win
-                    winParent.getChildByName("ScoreLabel").getComponent(cc.Label).string = "+" + izx.getMoneyformat(Number(winScore))
-                }else {
-                    winParent.getChildByName("ScoreLabel").getComponent(cc.Label).font = this.label_lose
-                    winParent.getChildByName("ScoreLabel").getComponent(cc.Label).string = "" + izx.getMoneyformat(Number(winScore))
-                }
-                winParent.getChildByName("ScoreLabel").active = true
-                winParent.getChildByName("ScoreLabel").runAction(cc.sequence(
-                    cc.delayTime(0.01), 
-                    cc.moveBy(0.8,new cc.Vec2(0,80)),
-                    cc.delayTime(0.7),
-                    //cc.hide(),
-                    cc.callFunc(function(){
-                        winParent.getChildByName("ScoreLabel").active = false
-                        winParent.getChildByName("ScoreLabel").position = new cc.Vec3(0,0,0)
-                    }))
-                )
-
-                winParent.getChildByName("hbIcon").active = true
-                winParent.getChildByName("hbIcon").runAction(cc.sequence(
-                    cc.delayTime(0.01), 
-                    cc.moveBy(0.8,new cc.Vec2(0,80)),
-                    cc.delayTime(0.7),
-                    //cc.hide(),
-                    cc.callFunc(function(){
-                        winParent.getChildByName("hbIcon").active = false
-                        winParent.getChildByName("hbIcon").position = new cc.Vec3(85,-25,0)
-                    }))
-                )
             }
-        });
+        }
     }
     OperateNoti(event) {
+        if (event.chairId == null) {
+            return
+        }
+        if (!this.disPlayAniNodes) {
+            return
+        }
+        
         let chairId = event.chairId
+
         let opCode = event.opCode
         let fromChairId = event.fromChairId
 
+        let viewChairId = this.s2c(chairId)
+        izx.log("OperateNoti",event,viewChairId,this.chairId)
+        if (viewChairId < 0 || viewChairId > 3) {
+            izx.log("OperateNoti",event,viewChairId,this.chairId)
+            return
+        }
+   
         let selfNode = this.disPlayAniNodes[this.s2c(chairId)]
         //let fromNode = this.disPlayAniNodes[this.s2c(fromChairId)]
         let selfItem = null
@@ -218,10 +332,10 @@ export default class GameAni extends cc.Component {
             selfItem.parent = selfNode
             let ske = selfItem.getComponent(sp.Skeleton)
             ske.setEndListener(function(){
-                cc.log("setEnd");
+                izx.log("setEnd");
             });
             ske.setCompleteListener(function(){
-                cc.log("play_once");
+                izx.log("play_once");
                 selfNode.removeAllChildren()
             });
         }

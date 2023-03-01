@@ -19,11 +19,12 @@ export enum SCMJ_EVENT{
   READY_RSP = "ready_rsp",
   READY_NOTI = "ready_noti",
   UPDATE_USER_GOLD = "update_user_gold",
-
+  UPDATE_USER_GOLD_CHAIR = "update_user_gold_chair",
 
   BEGIN_GAME_NOTI = "begin_game_not",
   SET_DEALER_NOTI = "set_dealer_not",
   SET_DEALER_NOTI_BANKER = "set_dealer_not_banker",
+  SET_DEALER_NOTI_BANKER_CHAIR="set_dealer_not_banker_chairid",
   HAND_CARDS_NOTI = "hand_cards_not",
   
   CHANGE_CARD_NOTI = "change_card_not",
@@ -48,7 +49,12 @@ export enum SCMJ_EVENT{
   MJ_TOUCH_BEGIN="mj_touch_begin",
   MJ_TOUCH_END="mj_touch_end",
   MJ_TOUCH_MOVE="mj_touch_move",
+  MJ_TOUCH_CANCEL="mj_touch_cancel",
 
-  Get_Chai_Hong_Bao_Req = "get_chai_hong_bao_req",
-  Get_Chai_Hong_Bao_Ack = "get_chai_hong_bao_ack"
+  AUTO_REQ = "auto_req",
+  AUTO_NOTI = "auto_noti",
+  TUO_GUAN_DISPATCH = "tuo_guan_dispatch",
+
+  UPDATE_USER_TUOGUAN="update_user_tuoguan"
+
 }

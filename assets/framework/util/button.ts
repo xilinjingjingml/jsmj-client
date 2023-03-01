@@ -1,7 +1,7 @@
 import { LogMgr } from "../mgr/logMgr"
 
 export namespace Button{
-    export function bindButtonClick(comp: string | cc.Node, node: cc.Node | Function, callback?: Function) {
+    export function bindButtonClick(comp: string | cc.Node, node: cc.Node | Function, callback?: Function, customData?: string) {
         if (typeof comp === "string" && node instanceof cc.Node) {
             comp = cc.find(comp, node)
         }
@@ -28,6 +28,7 @@ export namespace Button{
         clickEventHandler.target = comp
         clickEventHandler.component = "cc.Button"
         clickEventHandler.handler = eventName
+        clickEventHandler.customEventData = customData
 
         btn.clickEvents.push(clickEventHandler)
     }

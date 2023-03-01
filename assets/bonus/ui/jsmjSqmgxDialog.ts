@@ -19,6 +19,7 @@ export default class jsmjSqmgxDialog extends BaseUI {
 
     ackParams: adOrder.IAdOrderNot = {}
     gameAdId: string = "105"
+    isNeedDispathch = true 
 
     onLoad() {
         this.initEvent()
@@ -27,10 +28,14 @@ export default class jsmjSqmgxDialog extends BaseUI {
 
     start() {
         izx.ad.showBanner()
+        izx.UnBlockUI()
     }
 
     onClose() {
         izx.ad.hideBanner()
+        if (this.isNeedDispathch) {
+            izx.dispatchEvent(Constants.EventName.Game_Hong_Bao_Dispatch)
+        }
     }
 
     onOpen() {
@@ -83,7 +88,7 @@ export default class jsmjSqmgxDialog extends BaseUI {
                 state: adOrder.AdOrderState.Accept
             })
         }else {
-            izx.pushDialog("tips","prefabs/tipsDialog", null, {"initParam":{tips:this.ackParams.errMsg,callback:null}}) 
+            izx.pushDialog("tips","prefabs/tipsDialog", null, {mask:true, maskClose:true,"initParam":{tips:this.ackParams.errMsg,callback:null}}) 
         }
     }
     updateAdOrderStatusAck(msg: adOrder.UpdateAdOrderStatusAck) {
@@ -106,7 +111,7 @@ export default class jsmjSqmgxDialog extends BaseUI {
             }
         }else {
             //提示
-            izx.pushDialog("tips","prefabs/tipsDialog", null, {"initParam":{tips:msg.errMsg,callback:null}})
+            izx.pushDialog("tips","prefabs/tipsDialog", null, {mask:true, maskClose:true,"initParam":{tips:msg.errMsg,callback:null}})
         }
     }
 
@@ -131,14 +136,15 @@ export default class jsmjSqmgxDialog extends BaseUI {
     }
 
     getAdOrderAwardAck(msg: adOrder.IGetAdOrderAwardAck) {
-        cc.log("getAdOrderAwardAck",msg)
+        izx.log("getAdOrderAwardAck",msg)
         if (msg.service !== this.ackParams.service || msg.orderId !== this.ackParams.orderId) {
             return
         }
         if (msg.errCode == 0) {
-            izx.pushDialog("bonus","prefabs/gxhdDialog", null, {"initParam":msg})
+            this.isNeedDispathch = false
+            izx.pushDialog("bonus","prefabs/gxhdDialog", null, {mask:true, maskClose:false,"initParam":msg})
         }else {
-            izx.pushDialog("tips","prefabs/tipsDialog", null, {"initParam":{tips:msg.errMsg,callback:null}})
+            izx.pushDialog("tips","prefabs/tipsDialog", null, {mask:true, maskClose:true,"initParam":{tips:msg.errMsg,callback:null}})
         }
         this.pop()
     }

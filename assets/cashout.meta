@@ -2,19 +2,11 @@
   "ver": "1.1.2",
   "uuid": "e3feaa14-f912-43da-8907-d835307d5d0b",
   "isBundle": true,
-  "bundleName": "",
+  "bundleName": "cashout",
   "priority": 1,
-  "compressionType": {
-    "wechatgame": "subpackage"
-  },
-  "optimizeHotUpdate": {
-    "wechatgame": false
-  },
-  "inlineSpriteFrames": {
-    "wechatgame": false
-  },
-  "isRemoteBundle": {
-    "wechatgame": false
-  },
+  "compressionType": {},
+  "optimizeHotUpdate": {},
+  "inlineSpriteFrames": {},
+  "isRemoteBundle": {},
   "subMetas": {}
 }

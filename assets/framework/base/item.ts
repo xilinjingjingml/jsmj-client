@@ -1,4 +1,3 @@
-import { izx } from "../izx"
 import { EventMgr } from "../mgr/eventMgr"
 import { LogMgr } from "../mgr/logMgr"
 
@@ -23,29 +22,18 @@ export class Items{
             }
             _items[it.id] = it
         })
-        if (items.length == 0) {
-            let it = {
-                id: 0,
-                num: izx.user.money || 0,
-                pic: izx.user.pic || "",
-                typs: 0,
-                expire: 0
-            }
-            _items[0] = it
-        }
     }
 
     static getItem(id: number) {
         return _items[id]
     }
 
-    static setItem(data: Item) {
+    static setItem(data: any) {
         LogMgr.log(data.id)
         if (!data.id && data.id !== 0) {
             LogMgr.info("set item id is null")
             return
         }
-        
         let item = _items[data.id]
         if (!item) {
             item = <Item>{id: 0, num: 0, pic: "", typs: 0, expire: 0}
@@ -54,7 +42,7 @@ export class Items{
             item[key] = data[key]
         }
         _items[data.id] = item
-        EventMgr.dispatchEvent("ITEM_DATA_FEED", item)
+        EventMgr.dispatchEvent("ITEM_DATA_FEED", {id: item.id})
     }
 
     static getItemNum(id: number): number {
@@ -67,7 +55,9 @@ export class Items{
     static setItemNum(id: number, num: number) {
         if (_items[id]) {
             _items[id].num = num
-            EventMgr.dispatchEvent("ITEM_DATA_FEED", _items[id])
+            EventMgr.dispatchEvent("ITEM_DATA_FEED", {id: id})
+        } else {
+            this.setItem({id: id, num: num})
         }
     }
 
@@ -84,7 +74,16 @@ export class Items{
 
     static feed(id: number | number[], callback: Function, target: any) {
         EventMgr.on("ITEM_DATA_FEED", (msg) => {
-            callback && callback.call(target, msg)
+            if (typeof id === "number" && id === msg.id) {
+                callback && callback.call(target, _items[msg.id])
+            } else if (id instanceof Array) {
+                for (let n in id) {
+                    if (n === msg.id) {
+                        callback && callback.call(target, _items[msg.id])
+                        break;
+                    }
+                }
+            }
         }, target)
     }
 }

@@ -46,7 +46,7 @@ export default class RoomMode extends BaseMode {
         // this._fsm.regState(ROOM_STATUS.STAET_GAME_NOTIFY, [ROOM_STATUS.ROOM_NONE, ROOM_STATUS.START_GAME], this._joinRoom.bind(this))
         this._fsm.regState(ROOM_STATUS.CONFIRM_ENTER, [ROOM_STATUS.ROOM_NONE, ROOM_STATUS.START_GAME], this._confirmEnter.bind(this))
         this._fsm.regState(ROOM_STATUS.ENTER_ROOM, [ROOM_STATUS.ROOM_NONE, ROOM_STATUS.START_GAME, ROOM_STATUS.CONFIRM_ENTER], this._enterRoom.bind(this))
-        this._fsm.regState(ROOM_STATUS.LEAVE_ROOM, [ROOM_STATUS.START_GAME, ROOM_STATUS.STAET_GAME_NOTIFY, ROOM_STATUS.ENTER_ROOM], this._leaveRoom.bind(this))        
+        this._fsm.regState(ROOM_STATUS.LEAVE_ROOM, [ROOM_STATUS.ROOM_NONE, ROOM_STATUS.START_GAME, ROOM_STATUS.STAET_GAME_NOTIFY, ROOM_STATUS.ENTER_ROOM], this._leaveRoom.bind(this))        
         this._fsm.regState(ROOM_STATUS.ROOM_NONE, [ROOM_STATUS.ENTER_ROOM, ROOM_STATUS.START_GAME, ROOM_STATUS.STAET_GAME_NOTIFY, ROOM_STATUS.LEAVE_ROOM], this._leaveRoom.bind(this))        
         this._fsm.regState(ROOM_STATUS.CANCEL_GAME, ROOM_STATUS.START_GAME, this._closeGame.bind(this))
         this._fsm.regState(ROOM_STATUS.SOCKET_CLOSE, [ROOM_STATUS.START_GAME, ROOM_STATUS.STAET_GAME_NOTIFY, ROOM_STATUS.ENTER_ROOM], this._closeGame.bind(this))
@@ -60,6 +60,10 @@ export default class RoomMode extends BaseMode {
     InLobby() {
         izx.log("==State==", this._fsm.getState())
         return this._fsm.getState() === ROOM_STATUS.ROOM_NONE
+    }
+
+    ReSetInTable() {
+        this._fsm.updateState(ROOM_STATUS.ROOM_NONE)
     }
 
     private _startGame(msg) {
@@ -77,6 +81,7 @@ export default class RoomMode extends BaseMode {
     }
 
     private _enterRoom(msg) {
+        izx.log("_enterRoom", msg)
         let room = msg.roomInfo as RoomInfo
         room.ruleHead = room.serverId + "." + room.ruleId
         izx.setData("room", room)
@@ -85,6 +90,7 @@ export default class RoomMode extends BaseMode {
     }
 
     private _leaveRoom(msg) {
+        izx.log("_leaveRoom", msg)
         this._room = null
         izx.dispatchEvent(Constants.EventName.ROOM_EXIT_GAME, msg)
     }
@@ -93,7 +99,6 @@ export default class RoomMode extends BaseMode {
         this._room = null
         izx.dispatchEvent(Constants.EventName.ROOM_CANCEL_GAME, msg)
     }
-
 
     UpdateItemNotHandler(msg) {
         msg = msg.packet
@@ -201,12 +206,20 @@ export default class RoomMode extends BaseMode {
       
     ExitRoomReq(msg = null) {
         //this._fsm.updateState(ROOM_STATUS.LEAVE_ROOM)
-        this._fsm.updateState(ROOM_STATUS.ROOM_NONE, {backToLobby: false})
+        let needReq = false
+        if (!msg || msg.needReq) {
+            needReq = true
+        }
+        izx.log("ExitRoomReq", needReq, this._fsm.getState())
+        if (ROOM_STATUS.ROOM_NONE == this._fsm.getState()) {
+            this._leaveRoom({backToLobby: needReq})
+        }
+        this._fsm.updateState(ROOM_STATUS.ROOM_NONE, {backToLobby: needReq})
         let room = izx.getData("room")
         if (!room)
             return
 
-        if (!msg || msg.needReq) {
+        if (needReq) {
             izx.notify(room.gameId + ".Base.ExitRoom", "ExitRoomReq", {})
         }
 

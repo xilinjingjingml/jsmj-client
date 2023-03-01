@@ -1,3 +1,5 @@
+import { izx } from "../framework/izx"
+
 export namespace scmjUtil {   
   
   export function pathNode(name, mapPaths, parent): cc.Node {
@@ -78,7 +80,7 @@ export namespace scmjUtil {
   }
 
   export function playDiceAni(vecDices, parent, callback) {
-    cc.log("playDiceAni")
+    izx.log("playDiceAni")
     loadRes("pics/dice/ani", (res)=> {
       if (!res) {
         callback()

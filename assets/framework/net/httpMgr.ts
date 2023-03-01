@@ -20,7 +20,8 @@ export namespace HttpMgr {
         let platStr = cc.sys.platform
         if (platStr === cc.sys.MOBILE_BROWSER || platStr === cc.sys.DESKTOP_BROWSER) {
             izx.log("==isBrowser==")
-            return window.location.protocol + "//" + url
+            // return window.location.protocol + "//" + url
+            return "https://" + url
         }
         if (platStr == cc.sys.WECHAT_GAME) {
             return "https://" + url
