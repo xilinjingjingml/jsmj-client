@@ -1,0 +1,32 @@
+{
+    "PacketName": "com.mircogame.majang.jsmj",
+    "Mid": "1",
+    "plugins": [
+        {
+            "name": "SessionGuest",
+            "type": 5,
+            "tag": 2,
+            "default": 1,
+            "order": 1
+        },
+        {
+            "name": "AdsQQAds",
+            "type": 1,
+            "tag": 2,
+            "default": 1,
+            "order": 1
+        },
+        {
+            "name": "AdsTTAds",
+            "type": 1,
+            "tag": 2,
+            "default": 1,
+            "order": 2
+        },
+        {
+            "name": "PlatformWP",
+            "type": 9,
+            "default": 1
+        }
+    ]
+}

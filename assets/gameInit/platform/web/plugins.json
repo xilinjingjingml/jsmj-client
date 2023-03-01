@@ -1,0 +1,13 @@
+{
+    "PacketName": "com.mircogame.majang.jsmj",
+    "Mid": "1",
+    "plugins": [
+        {
+            "name": "SessionGuest",
+            "type": 5,
+            "tag": 2,
+            "default": 1,
+            "order": 1
+        }
+    ]
+}

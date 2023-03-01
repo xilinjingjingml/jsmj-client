@@ -1,0 +1,84 @@
+syntax = "proto3";
+package gamebase;
+
+service Base {
+
+  // 踢下玩家
+  // rpc KickPlayer(KickPlayerReq) returns (KickPlayerRsp){}
+
+  // 创建房间
+  // rpc CreateRoom(CreateRoomReq)returns (CreateRoomRsp) {}
+
+  // 解散房间
+  // rpc DismissRoom(DismissRoomReq) returns (DismissRoomRsp) {}
+}
+
+message RoomInfo {
+  string room_id = 1;
+  string server_id = 2;
+  string game_id = 3;
+  string rule_id = 4;
+  string meta_data = 10;
+}
+
+// ----------------------------
+// 进入房间
+message EnterRoomReq {
+  int64 uid = 1;
+  string token = 2;
+  string room_id = 3;
+}
+
+message EnterRoomRsp {
+  int32 err_code = 1;
+  string err_msg = 2;
+  RoomInfo room_info = 3;
+}
+
+message EnterRoomNot {
+  string room_id = 1;
+  int64 uid = 2;
+  string nickname = 3;
+  int64 money = 4;
+}
+
+// ----------------------------
+// 进入房间
+message ExitRoomReq {
+
+}
+
+message ExitRoomRsp {
+  int32 err_code = 1;
+  string err_msg = 2;
+}
+
+message ExitRoomNot {
+  string room_id = 1;
+  int64 uid = 2;
+}
+
+// 解散房间
+message DismissRoomReq {
+  string room_id = 1;
+}
+
+message DismissRoomRsp {
+  int32 err_code = 1;
+  string err_msg = 2;
+}
+
+message HeartBeatReq {
+  // 请求时间戳，单位s
+  int64 req_time = 1;
+}
+
+message HeartBeatRsp {
+  int64 req_time = 1;
+  int64 ack_time = 2;
+}
+
+message KickPlayerNot {
+  int32 reason = 1; // 原因
+  string msg = 2;
+}

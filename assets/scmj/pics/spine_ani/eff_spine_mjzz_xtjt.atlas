@@ -1,0 +1,62 @@
+
+eff_spine_mjzz_xtjt.png
+size: 617,617
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+guangyun
+  rotate: false
+  xy: 436, 524
+  size: 81, 92
+  orig: 81, 92
+  offset: 0, 0
+  index: -1
+jiantou.01
+  rotate: false
+  xy: 1, 395
+  size: 220, 221
+  orig: 512, 512
+  offset: 146, 123
+  index: -1
+jiantou.02
+  rotate: false
+  xy: 1, 174
+  size: 213, 220
+  orig: 512, 512
+  offset: 146, 123
+  index: -1
+jiantou.03
+  rotate: false
+  xy: 215, 178
+  size: 192, 216
+  orig: 512, 512
+  offset: 154, 123
+  index: -1
+jiantou.04
+  rotate: true
+  xy: 1, 1
+  size: 172, 211
+  orig: 512, 512
+  offset: 170, 123
+  index: -1
+jiantou.05
+  rotate: false
+  xy: 408, 179
+  size: 192, 216
+  orig: 512, 512
+  offset: 166, 123
+  index: -1
+jiantou.06
+  rotate: false
+  xy: 222, 396
+  size: 213, 220
+  orig: 512, 512
+  offset: 153, 123
+  index: -1
+star
+  rotate: false
+  xy: 436, 461
+  size: 63, 62
+  orig: 64, 64
+  offset: 0, 1
+  index: -1

@@ -1,0 +1,19 @@
+syntax = "proto3";
+option go_package = "proto;proto_mj";
+
+//package proto_mj;
+
+service Ad {
+  // 拆红包
+  rpc ChaiHongBao(GetChaiHongBaoReq) returns(GetChaiHongBaoAck){}
+}
+// 获取拆红包数据
+message GetChaiHongBaoReq {
+  int64 uid = 1;
+}
+message GetChaiHongBaoAck {
+  int32 	errCode				= 1;
+  string	errMsg				= 2;
+  int32 CurrentCount = 3;			// 当前局数
+  int32 TaskCount = 4;				// 需要局数
+}

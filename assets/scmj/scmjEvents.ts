@@ -1,0 +1,54 @@
+/*
+ * @Description: 
+ * @Version: 1.0
+ * @Autor: liuhongbin
+ * @Date: 2020-11-13 13:42:51
+ * @LastEditors: liuhongbin
+ * @LastEditTime: 2021-01-15 17:18:15
+ */
+export enum SCMJ_EVENT{
+  INIT_GAME_START = "init_game_start",
+  INIT_GAME_END = "init_game_end",
+
+  CLICK_READY = "CLICK_READY",
+  
+  INIT_SELF_VIEW_SERVER_CHAIR_ID = "init_self_view_server_chair_id",
+  ENTER_ACK = "enter_ack",
+  ENTER_NOTI = "enter_noti",
+  READY_REQ = "ready_req",
+  READY_RSP = "ready_rsp",
+  READY_NOTI = "ready_noti",
+  UPDATE_USER_GOLD = "update_user_gold",
+
+
+  BEGIN_GAME_NOTI = "begin_game_not",
+  SET_DEALER_NOTI = "set_dealer_not",
+  SET_DEALER_NOTI_BANKER = "set_dealer_not_banker",
+  HAND_CARDS_NOTI = "hand_cards_not",
+  
+  CHANGE_CARD_NOTI = "change_card_not",
+  COUNT_DOWN_NOTI = "count_down_not",
+  OPERATE_NOTI = "operate_not",
+  OPERATE_REQ = "operate_req",
+  OPERATE_MENU_HIDE = "operate_menu_hide",
+  OPERATE_MENU_ChiGang = "operate_menu_chigang",
+  OPERATE_MENU_Ting = "operate_menu_ting",
+  OPERATE_ACK = "operate_ack",
+  OPERATE_FINISH = "operate_finish",
+  OP_SCORE_NOTI = "op_score_not",
+
+  COMPLETE_REQ = "complete_req",
+  COMPLETE_DATA_NOTI = "complete_data_noti",
+
+  GAME_RESULT_NOTI = "game_result_not",
+  SETTLEMENT_NOTI = "settlement_noti",
+
+  GAME_DESK_CLEAR="game_desk_clear",
+
+  MJ_TOUCH_BEGIN="mj_touch_begin",
+  MJ_TOUCH_END="mj_touch_end",
+  MJ_TOUCH_MOVE="mj_touch_move",
+
+  Get_Chai_Hong_Bao_Req = "get_chai_hong_bao_req",
+  Get_Chai_Hong_Bao_Ack = "get_chai_hong_bao_ack"
+}

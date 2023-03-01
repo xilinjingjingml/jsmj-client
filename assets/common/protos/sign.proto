@@ -1,0 +1,63 @@
+syntax = "proto3";
+option go_package = "proto;sign";
+
+//package ad;
+
+service Sign {
+	// 登录送红包
+	rpc DengLuJiangLi(GetMeiRiDengLuJiangLiReq) returns(GetMeiRiDengLuJiangLiAck){}
+	// 领取登录奖励
+	rpc GetLoginReward(GetLoginRewardReq) returns(Empty){}
+	// 每日首次登录
+	rpc DailyFirstLogin(GetDailyFirstLoginReq) returns(GetDailyFirstLoginAck){}
+}
+
+message Empty{}
+
+message Pair {
+	string key = 1;
+	string value = 2;
+}
+
+message Award {
+	int32 index = 1;
+	int64 num = 2;
+	repeated Pair param = 3; // 道具详情
+}
+
+// 连续登陆奖励
+message DayItem {
+	repeated Award award = 1;
+	int32	day = 2;
+	int32 State = 3;
+	string desc = 4;
+	string service = 5;
+	string orderId = 6;
+}
+message GetMeiRiDengLuJiangLiAck {
+	int32 	errCode				= 1;
+	string	errMsg				= 2;
+	repeated DayItem AllItems = 3;
+	int32 today = 4;
+}
+// 获取连续登录奖励数据
+message GetMeiRiDengLuJiangLiReq {
+	int64 uid = 1;
+}
+// 领取登录奖励
+message GetLoginRewardReq {
+	int64 	uid = 1;
+	int32 day = 2;
+	string	service = 3;
+	string	orderId = 4;
+}
+
+// 每日首次登录
+message GetDailyFirstLoginReq {
+	int64 uid = 1;
+}
+message GetDailyFirstLoginAck {
+	int32 	errCode				= 1;
+	string	errMsg				= 2;
+	bool isFirst = 3;
+}

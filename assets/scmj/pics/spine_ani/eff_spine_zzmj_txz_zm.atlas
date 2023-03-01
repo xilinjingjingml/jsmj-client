@@ -1,0 +1,181 @@
+
+eff_spine_zzmj_txz_zm.png
+size: 504,527
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+caihong_0
+  rotate: false
+  xy: 315, 162
+  size: 104, 110
+  orig: 128, 128
+  offset: 12, 9
+  index: -1
+gaungshu_0
+  rotate: true
+  xy: 250, 103
+  size: 226, 64
+  orig: 256, 256
+  offset: 15, 98
+  index: -1
+glow1
+  rotate: false
+  xy: 315, 273
+  size: 120, 117
+  orig: 128, 128
+  offset: 4, 5
+  index: -1
+liang_0
+  rotate: false
+  xy: 400, 82
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+light
+  rotate: false
+  xy: 1, 330
+  size: 284, 196
+  orig: 284, 196
+  offset: 0, 0
+  index: -1
+liuguang_0
+  rotate: true
+  xy: 468, 220
+  size: 84, 35
+  orig: 128, 64
+  offset: 23, 13
+  index: -1
+liuguang_1
+  rotate: false
+  xy: 420, 147
+  size: 83, 34
+  orig: 128, 64
+  offset: 23, 14
+  index: -1
+liuguang_2
+  rotate: true
+  xy: 468, 305
+  size: 85, 35
+  orig: 128, 64
+  offset: 21, 13
+  index: -1
+liuguang_3
+  rotate: false
+  xy: 420, 182
+  size: 83, 37
+  orig: 128, 64
+  offset: 23, 12
+  index: -1
+liuguang_4
+  rotate: false
+  xy: 400, 41
+  size: 82, 40
+  orig: 128, 64
+  offset: 25, 11
+  index: -1
+liuguang_5
+  rotate: false
+  xy: 93, 10
+  size: 85, 41
+  orig: 128, 64
+  offset: 23, 11
+  index: -1
+liuguang_6
+  rotate: false
+  xy: 315, 120
+  size: 84, 41
+  orig: 128, 64
+  offset: 23, 11
+  index: -1
+liuguang_7
+  rotate: false
+  xy: 315, 80
+  size: 84, 39
+  orig: 128, 64
+  offset: 23, 12
+  index: -1
+liuguang_8
+  rotate: false
+  xy: 314, 41
+  size: 85, 38
+  orig: 128, 64
+  offset: 23, 12
+  index: -1
+liuguang_9
+  rotate: false
+  xy: 228, 3
+  size: 86, 37
+  orig: 128, 64
+  offset: 22, 12
+  index: -1
+text
+  rotate: false
+  xy: 286, 391
+  size: 206, 135
+  orig: 206, 135
+  offset: 0, 0
+  index: -1
+text_0
+  rotate: false
+  xy: 1, 52
+  size: 186, 117
+  orig: 256, 256
+  offset: 37, 74
+  index: -1
+text_guang
+  rotate: false
+  xy: 1, 170
+  size: 248, 159
+  orig: 248, 159
+  offset: 0, 0
+  index: -1
+yanwu
+  rotate: false
+  xy: 179, 1
+  size: 48, 39
+  orig: 48, 39
+  offset: 0, 0
+  index: -1
+yezi1
+  rotate: false
+  xy: 244, 49
+  size: 69, 53
+  orig: 69, 53
+  offset: 0, 0
+  index: -1
+yezi2
+  rotate: true
+  xy: 436, 294
+  size: 96, 31
+  orig: 96, 31
+  offset: 0, 0
+  index: -1
+yezi3
+  rotate: true
+  xy: 188, 41
+  size: 16, 33
+  orig: 18, 35
+  offset: 1, 1
+  index: -1
+yezi4
+  rotate: false
+  xy: 465, 114
+  size: 37, 32
+  orig: 39, 34
+  offset: 1, 1
+  index: -1
+zhuziL
+  rotate: true
+  xy: 1, 1
+  size: 50, 91
+  orig: 50, 91
+  offset: 0, 0
+  index: -1
+zhuziR
+  rotate: false
+  xy: 188, 58
+  size: 55, 111
+  orig: 55, 111
+  offset: 0, 0
+  index: -1

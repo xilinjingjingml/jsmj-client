@@ -1,0 +1,153 @@
+syntax = "proto3";
+option go_package = "proto;proto_mj";
+
+//package proto_mj;
+
+service Dzmj {
+  // 操作请求
+  rpc Operate(OperateAck) returns (Empty) {}
+  // 托管请求
+  rpc Auto(AutoReq) returns (Empty) {}
+  // 完整数据包请求
+  rpc CompleteData(CompleteReq) returns (CompleteDataNot) {}
+}
+
+message Empty {}
+
+// 用户数据
+message UserItem {
+  int64 uid = 1;
+  // 昵称
+  string nickname = 2;
+  // 计算分的货币数量
+  int64 score = 3;
+}
+// 入桌通知item
+message EnterNotiItem {
+  int32 chair_id = 1;
+  // 1:已准备 2:未准备
+  int32 ready = 2;
+  // 用户数据
+  UserItem data = 3;
+}
+// 入桌通知
+message EnterNoti {
+  EnterNotiItem item = 1;
+}
+message EnterAck {
+  int32 ret = 1;
+  repeated EnterNotiItem items = 2;
+}
+message CountdownNot {
+  int32 chairID = 1;
+  int32 seconds = 2;
+}
+// 托管
+message AutoReq {
+  int32 autoFlag = 1;   // 0取消托管，1托管
+  int32 autoType = 2;   // 0手动托管，1自动托管
+}
+message AutoNot {
+  int32 chairID = 1;
+  int32 autoFlag = 2;   // 0取消托管，1托管
+  int32 autoType = 3;   // 0手动托管，1自动托管
+}
+message BeginGameNot {
+  int32 totalCardsNum = 1;
+}
+message SetDealerNot {
+  repeated int32 dices = 1;
+  int64 uid = 2;
+}
+message HandCardsNot {
+  int32 leftCardsNum = 1;
+  repeated int32 handCards = 2;
+}
+message OperateWrapper {
+  int32 serial = 1;
+  int32 opcode = 2;
+  int32 card  = 3;
+  repeated int32 cardsInfo = 4;
+}
+message OperateReq {
+  repeated OperateWrapper ops = 1;
+}
+message OperateAck {
+  int32 serial = 1;
+  int32 opCode = 2;
+  repeated int32 cards = 3;
+}
+message OperateOk {
+
+}
+message OperateNot {
+  int32 chairId = 1;
+  int32 opCode = 2;
+  int32 fromChairId = 3;
+  int32 leftCardsNum = 4;
+  repeated int32 cards = 5;
+}
+message CardGroup {
+  int32 opCode = 1;
+  int32 fromChair = 2;
+  repeated int32 cards = 3;
+}
+
+message ChangeCardNot {
+  int32 chairId = 1;
+  int32 currCard = 2;      // 当前摸到的牌
+  repeated int32 handCards = 3;
+  repeated CardGroup showCards = 4;
+  repeated int32 displayCards = 5;
+}
+message Score {
+  int32 chairID = 1;
+  int64 score = 2;
+}
+message FanData {
+  int32 fanType = 1;
+  int32 fanScore = 2;
+}
+message FanScore {
+  int32 receiveChairID = 1;
+  int32 fanType = 2;
+  repeated Score sendChairIDs = 3;
+}
+message GameResult {
+  int32 chairId = 1;
+  int64 score = 3;  // 得多少分
+//  repeated FanData fanData = 7;
+}
+message GameResultNot {
+  int32 huChair = 4;  // 胡的椅子号
+  int32 huType = 5; // 0自摸，1放炮
+  int32 huFrom = 6; // 如果是点炮，表示点炮的人
+  repeated FanScore score = 1;
+  repeated GameResult result = 2;
+}
+message OpScore {
+  int32 receiveChairID = 1;
+  int32 opcode = 2;
+  repeated Score sendChairIDs = 3;
+}
+message OpScoreNot {
+  repeated OpScore score = 1;
+}
+message CompleteReq {
+
+}
+message CompleteDataNot {
+  int32 state = 1;      // 0非游戏中，1游戏中
+  int32 diZhu = 2;
+  int32 leftCardsNum = 3;
+  int32 banker = 4;
+  int64 leftSeconds = 5;
+  int32 curPlayer = 6;
+  OperateReq req = 7;
+  repeated AutoNot autoData = 9;
+  repeated ChangeCardNot plyData = 10;
+}
+message UpdatePlyData {
+  int64 uid = 1;
+  int64 num = 2;
+}

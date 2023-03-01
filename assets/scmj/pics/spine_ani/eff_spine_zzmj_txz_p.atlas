@@ -1,0 +1,27 @@
+
+eff_spine_zzmj_txz_p.png
+size: 342,349
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+text
+  rotate: false
+  xy: 1, 1
+  size: 150, 146
+  orig: 150, 146
+  offset: 0, 0
+  index: -1
+text_0
+  rotate: false
+  xy: 152, 1
+  size: 150, 146
+  orig: 150, 146
+  offset: 0, 0
+  index: -1
+text_glow_0
+  rotate: false
+  xy: 1, 148
+  size: 340, 200
+  orig: 340, 200
+  offset: 0, 0
+  index: -1

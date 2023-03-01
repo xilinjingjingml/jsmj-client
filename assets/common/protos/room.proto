@@ -1,0 +1,86 @@
+syntax = "proto3";
+import "../../common/protos/common_proto.proto";
+package servermanager;
+
+message RoomInfo {
+  string room_id = 1;
+  string server_id = 2;
+  string game_id = 3;
+  string rule_id = 4;
+  string meta_data = 10;
+}
+
+// ----------------------------
+// 进入游戏匹配请求
+message StartJoinRoomReq {
+  int64 uid = 1;
+  string game_id = 2;
+  string rule_id = 3;
+}
+
+message StartJoinRoomRsp {
+  int32 err_code = 1;
+  string err_msg = 2;
+  common.GameData game_data = 3;
+}
+
+// 通知入桌消息
+message StartJoinRoomNot {
+  string game_id = 1;
+  string rule_id = 2;
+}
+
+// ----------------------------
+// 取消游戏匹配请求
+message CancelJoinRoomReq {
+  int64 uid = 1;
+}
+
+message CancelJoinRoomRsp {
+  int32 err_code = 1;
+  string err_msg = 2;
+}
+
+// ----------------------------
+// 获取房间信息
+message GetRoomInfoReq {
+  string roomId = 1;
+}
+
+message GetRoomInfoRsp {
+  int32 err_code = 1;
+  string err_msg = 2;
+  RoomInfo room = 3;
+}
+
+// 查询玩家当前进行中的房间
+message GetCurRoomInfoReq {
+  int64 uid = 1;
+}
+
+message GetCurRoomInfoRsp {
+  int32 err_code = 1;
+  string err_msg = 2;
+  RoomInfo room = 3;
+}
+
+message RoomListReq {
+
+}
+
+message RoomListRsp {
+  int32 err_code = 1;
+  string err_msg = 2;
+  repeated RoomInfo room_list = 3;
+}
+
+// 确认入桌协议
+message EnterRoomConfirmReq {
+  bool confirmed = 1; // ture 进入房间,其他false
+}
+
+message EnterRoomConfirmRsp {
+  int32 err_code = 1;
+  string err_msg = 2;
+  RoomInfo room = 3;
+}

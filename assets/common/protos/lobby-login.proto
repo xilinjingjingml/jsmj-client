@@ -1,0 +1,71 @@
+syntax = "proto3";
+import "../../common/protos/common.proto";
+package lobby_login;
+
+message LoginReq {
+  string guid = 1;
+  string token = 2;
+  string mid = 3;
+  string pn = 4;
+}
+
+message LoginRsp {
+  int32 err_code = 1;
+  string err_msg = 2;
+  int64 uid = 3;
+  int32 sex = 4;
+  int32 level = 5;
+  int64 money = 6;
+  int32 vip = 7;
+  common.GameData game_data = 8;
+  repeated Item items = 15;
+}
+
+message Item {
+  int32 id = 1;
+  int64 num = 2;
+  int32 expire_at = 3;
+}
+
+// ----------------------------
+message ItemOpt {
+  int32 id = 1;
+  int64 num = 2;
+  int32 expire_at = 3;
+}
+
+message ItemUpdate {
+  int32 id = 1;
+  //  变更值
+  int64 change = 2;
+  //  当前数量
+  int64 num = 3;
+  //  过期时间
+  int32 expire_at = 4;
+}
+
+// 道具变更通知
+message UpdateItemNot {
+  // 客户端参数
+  string cli_param = 1;
+
+  // 更新列表
+  repeated ItemUpdate update = 10;
+}
+
+// ----------------------------
+// 获取玩家信息
+message GetPlayerInfoReq {
+  repeated int64 uid_list = 1;
+}
+
+message PlayerInfo {
+  int64 uid = 1;
+  int32 sex = 2;
+  string face_url = 3;
+  int64 money = 4;
+}
+
+message GetPlayerInfoRsp {
+  repeated PlayerInfo info_list = 1;
+}

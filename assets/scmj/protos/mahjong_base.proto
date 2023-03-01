@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package mahjong_base;
+
+// 准备
+message ReadyReq {
+  bool is_ready = 1;
+}
+
+message ReadyRsp {
+  int32 err_code = 1;
+  string err_msg = 2;
+}
+
+message ReadyNot {
+  int64 uid = 1;
+  bool is_ready = 2;
+}

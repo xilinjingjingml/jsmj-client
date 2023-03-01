@@ -1,0 +1,55 @@
+syntax = "proto3";
+option go_package = "proto;ad";
+
+import "proto/ad-order.proto";
+import "proto/ad-common.proto";
+
+//package ad;
+
+service AdSpot {
+	// 转盘抽奖
+	rpc ZhuanPan(GetZhuanPanChouJiangReq) returns(GetZhuanPanChouJiangAck){}
+	// 新手豪礼
+	rpc XinShouHaoLi(GetXinShouHaoLiReq) returns(GetXinShouHaoLiAck){}
+	// 领取转盘奖励
+	rpc GetLotteryReward(GetZhuanPanChouJiangAwardReq) returns(GetZhuanPanChouJiangAwardAck){}
+}
+
+message Empty{}
+
+// 转盘抽奖
+message ZhuanPanItem {
+	repeated Award		award = 1;
+	string	desc = 2;
+}
+message GetZhuanPanChouJiangReq {
+	int64 uid = 1;
+}
+message GetZhuanPanChouJiangAck {
+	int32 	errCode				= 1;
+	string	errMsg				= 2;
+	int32 	hitIndex = 3;
+	int32 remainCount = 4;
+	repeated ZhuanPanItem 	AllItems = 5;
+	AdOrderNot			adOrder = 6;
+}
+// 领取转盘奖励
+message GetZhuanPanChouJiangAwardReq {
+	int64 	uid = 1;
+	string	service = 3;
+	string	orderId = 4;
+}
+message GetZhuanPanChouJiangAwardAck {
+	int32 errCode = 1;
+	string errMsg = 2;
+}
+
+// 获取新手豪礼数据
+message GetXinShouHaoLiReq {
+	int64 uid = 1;
+}
+message GetXinShouHaoLiAck {
+	int32 	errCode				= 1;
+	string	errMsg				= 2;
+	AdOrderNot			adOrder = 4;
+}

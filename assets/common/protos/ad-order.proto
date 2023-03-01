@@ -1,0 +1,84 @@
+syntax = "proto3";
+option go_package = "proto;ad";
+
+import "proto/ad-common.proto";
+
+//package ad;
+
+service Ad {
+	// 请求广告点订单
+	rpc InitOrder(AdOrderReq) returns(AdOrderNot){}
+	// 领取广告订单奖励
+	rpc OrderAward(GetAdOrderAwardReq) returns(GetAdOrderAwardAck){}
+	// 更新广告订单状态
+	rpc UpdateOrderStatus(UpdateAdOrderStatusReq) returns(UpdateAdOrderStatusAck){}
+}
+
+message AwardItem {
+	int32 id = 1;
+	int32 sequence = 2;					// 奖励顺序 可包括多天奖励，代表奖励次数时sequence设为默认0
+	repeated Award award = 3;		// 奖励列表 奖励道具index；为-1时num代表奖励次数.奖励数量或奖励次数
+}
+
+message AdTimes {
+	int32 adArea = 1;
+	int64 adTimes = 2;
+}
+
+message AdInfo {
+	string service = 1;
+	int32 adArea = 2;					// 广告区域 1 签到处 2 免费抽奖 3 低保 4 结算
+	int32 adType = 3;					// 广告类型 1 banner 2 video 3 interact 4 flash
+	int32 awardId = 4;				// 奖励模版id
+	AwardItem award = 5;			// 奖励详情
+}
+
+message AdInfoBundle {
+	AdInfo info = 1;
+	repeated Pair params = 2;
+}
+
+// 客户端请求广告点订单
+message AdOrderReq {
+	int64 	uid 		= 1;
+	int32		areaId 	= 2;
+}
+
+// 通知客户端有广告奖励订单
+message AdOrderNot {
+	int32 	errCode				= 1;
+	string	errMsg				= 2;
+	string service = 3;
+	string orderId = 4;
+	int32 areaId = 5;
+	repeated Award award = 9;	// 奖励详情
+	repeated Pair params = 10;
+}
+// 更新广告订单号状态
+message UpdateAdOrderStatusReq {
+	int64 uid = 1;
+	string service = 2;
+	string orderId = 3;
+	AdOrderState state = 4;
+}
+message UpdateAdOrderStatusAck {
+	int32 	errCode				= 1;
+	string	errMsg				= 2;
+	string service = 3;
+	string orderId = 4;
+	AdOrderState state = 5;
+}
+// 根据广告订单号领取奖励
+message GetAdOrderAwardReq {
+	int64 	uid = 1;
+	string	service = 2;
+	string	orderId = 3;
+}
+message GetAdOrderAwardAck {
+	int32 	errCode				= 1;
+	string	errMsg				= 2;
+	string service = 3;
+	string orderId = 4;
+	repeated Award award = 5;	// 奖励详情
+	repeated Pair params = 6;
+}

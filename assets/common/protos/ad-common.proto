@@ -1,0 +1,23 @@
+syntax = "proto3";
+option go_package = "proto;ad";
+
+//package ad;
+
+enum AdOrderState {
+  Init = 0;     // 创建订单
+  Reject = 1;   // 拒绝广告
+  Accept = 2;   // 接受广告
+  Complete = 3; // 完成广告
+  Expired = 4;  // 超时过期
+}
+
+message Pair {
+  string key = 1;
+  string value = 2;
+}
+
+message Award {
+  int32 index = 1;
+  int64 num = 2;
+  repeated Pair param = 3; // 道具详情
+}
